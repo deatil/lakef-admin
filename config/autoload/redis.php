@@ -1,0 +1,44 @@
+<?php
+
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
+return [
+    'default' => [
+        'host' => env('REDIS_HOST', 'redis'),
+        'auth' => env('REDIS_AUTH', '123456'),
+        'port' => (int) env('REDIS_PORT', 6379),
+        'db' => (int) env('REDIS_DB', 0),
+        'pool' => [
+            'min_connections' => 1,
+            'max_connections' => 10,
+            'connect_timeout' => 10.0,
+            'wait_timeout' => 3.0,
+            'heartbeat' => -1,
+            'max_idle_time' => (float) env('REDIS_MAX_IDLE_TIME', 60),
+        ],
+    ],
+    'session' => [
+        'host' => env('REDIS_HOST', 'redis'),
+        'auth' => env('REDIS_AUTH', '123456'),
+        'port' => (int) env('REDIS_PORT', 6379),
+        'db' => (int) 3,
+        'pool' => [
+            'min_connections' => 1,
+            'max_connections' => 10,
+            'connect_timeout' => 1000.0,
+            'wait_timeout' => 30.0,
+            'heartbeat' => -1,
+            'max_idle_time' => (float) env('REDIS_MAX_IDLE_TIME', 60),
+        ],
+        //        'options' => [
+        //            Redis::OPT_READ_TIMEOUT => -1,
+        //        ],
+    ],
+];
