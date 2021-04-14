@@ -1,6 +1,6 @@
 @extends('admin.layout')
 
-@section('title', '角色')
+@section('title', '权限')
 
 @section('container')
 <div class="layuimini-main">
@@ -11,7 +11,7 @@
             <form class="layui-form layui-form-pane" action="">
                 <div class="layui-form-item">
                     <div class="layui-inline">
-                        <label class="layui-form-label">角色名称</label>
+                        <label class="layui-form-label">权限名称</label>
                         <div class="layui-input-inline">
                             <input type="text" name="name" autocomplete="off" class="layui-input">
                         </div>
@@ -35,7 +35,6 @@
     <script type="text/html" id="toolbarDemo">
         <div class="layui-btn-container">
             <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加 </button>
-            <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button>
         </div>
     </script>
 
@@ -59,7 +58,7 @@ layui.use(['form', 'table'], function () {
 
     table.render({
         elem: '#currentTableId',
-        url: "{{ admin_url('role/data') }}",
+        url: "{{ admin_url('permission/data') }}",
         method: 'get',
         toolbar: '#toolbarDemo',
         defaultToolbar: ['filter', 'exports', 'print', {
@@ -68,12 +67,14 @@ layui.use(['form', 'table'], function () {
             icon: 'layui-icon-tips'
         }],
         cols: [[
-            {type: "checkbox", width: 50},
             {field: 'id', width: 80, title: 'ID', sort: true},
-            {field: 'name', title: '角色名'},
+            {field: 'name', title: '权限'},
+            {field: 'display_name', title: '权限名'},
             {field: 'guard_name', width: 135, title: '守护类型'},
+            {field: 'url', title: '路由'},
+            {field: 'sort', width: 80, title: '排序'},
             {field: 'created_at', width: 160, title: '创建时间', sort: true},
-            {title: '操作', minWidth: 120, toolbar: '#currentTableBar', align: "center"}
+            {title: '操作', minWidth: 80, toolbar: '#currentTableBar', align: "center"}
         ]],
         limits: [10, 15, 20, 25, 50, 100],
         limit: 15,
@@ -107,48 +108,16 @@ layui.use(['form', 'table'], function () {
     table.on('toolbar(currentTableFilter)', function (obj) {
         if (obj.event === 'add') {  // 监听添加操作
             var index = layer.open({
-                title: '创建角色',
+                title: '创建权限',
                 type: 2,
                 shade: 0.2,
                 maxmin:true,
                 shadeClose: true,
                 area: ['100%', '100%'],
-                content: "{{ admin_url('role/create') }}",
+                content: "{{ admin_url('permission/create') }}",
             });
             $(window).on("resize", function () {
                 layer.full(index);
-            });
-        } else if (obj.event === 'delete') {  // 监听删除操作
-            layer.confirm('真的要删除选中的数据吗？', function (index) {
-                var checkStatus = table.checkStatus('currentTableId')
-                    , data = checkStatus.data;
-                var ids = [];
-                $.each(data, function(index, item) {
-                    ids.push(item.id);
-                });
-                
-                var url = "{{ admin_url('role/delete') }}";
-                $.post(url, {
-                    id: ids
-                }, function(data) {
-                    if (data.code == 0) {
-                        layer.msg(data.message, function () {
-                            table.reload('currentTableId', {
-                                page: {
-                                    curr: 1
-                                }, 
-                                where: {
-                                    name: '',
-                                    guard_name: '',
-                                }
-                            }, 'data');
-                            
-                            layer.close(index);
-                        });
-                    } else {
-                        layer.msg(data.message);
-                    }
-                });
             });
         }
     });
@@ -162,13 +131,13 @@ layui.use(['form', 'table'], function () {
         var data = obj.data;
         if (obj.event === 'edit') {
             var index = layer.open({
-                title: '编辑角色',
+                title: '编辑权限',
                 type: 2,
                 shade: 0.2,
                 maxmin:true,
                 shadeClose: true,
                 area: ['100%', '100%'],
-                content: "{{ admin_url('role/update') }}?id=" + data.id,
+                content: "{{ admin_url('permission/update') }}?id=" + data.id,
             });
             $(window).on("resize", function () {
                 layer.full(index);
@@ -176,7 +145,7 @@ layui.use(['form', 'table'], function () {
             return false;
         } else if (obj.event === 'delete') {
             layer.confirm('真的要删除该条数据吗？', function (index) {
-                var url = "{{ admin_url('role/delete') }}";
+                var url = "{{ admin_url('permission/delete') }}";
                 $.post(url, {
                     id: data.id
                 }, function(data) {

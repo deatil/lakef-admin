@@ -28,12 +28,22 @@ Router::addGroup('/admin/', function ($router) {
 
     // 角色
     $router->get('role/index', [Controller\Role::class, 'getIndex']);
-    $router->post('role/index', [Controller\Role::class, 'postIndex']);
+    $router->get('role/data', [Controller\Role::class, 'getData']);
     $router->get('role/create', [Controller\Role::class, 'getCreate']);
     $router->post('role/create', [Controller\Role::class, 'postCreate']);
     $router->get('role/update', [Controller\Role::class, 'getUpdate']);
     $router->post('role/update', [Controller\Role::class, 'postUpdate']);
     $router->post('role/delete', [Controller\Role::class, 'postDelete']);
+
+    // 权限
+    $router->get('permission/index', [Controller\Permission::class, 'getIndex']);
+    $router->get('permission/data', [Controller\Permission::class, 'getData']);
+    $router->get('permission/create', [Controller\Permission::class, 'getCreate']);
+    $router->post('permission/create', [Controller\Permission::class, 'postCreate']);
+    $router->get('permission/update', [Controller\Permission::class, 'getUpdate']);
+    $router->post('permission/update', [Controller\Permission::class, 'postUpdate']);
+    $router->post('permission/delete', [Controller\Permission::class, 'postDelete']);
+    $router->post('permission/sort', [Controller\Permission::class, 'postSort']);
 
 }, [
     // 中间件

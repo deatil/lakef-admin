@@ -1,6 +1,6 @@
 @extends('admin.layout')
 
-@section('title', '创建角色')
+@section('title', '更新角色')
 
 @section('container')
 <div class="layuimini-main">
@@ -8,7 +8,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">角色名</label>
             <div class="layui-input-block">
-                <input type="text" name="name" lay-verify="required" lay-reqtext="角色名不能为空" placeholder="请输入角色名" autocomplete="off" class="layui-input">
+                <input type="text" name="name" value="{{ $info['name'] }}" lay-verify="required" lay-reqtext="角色名不能为空" placeholder="请输入角色名" autocomplete="off" class="layui-input">
             </div>
         </div>
         
@@ -17,7 +17,11 @@
             <div class="layui-input-block">
                 <select name="guard_name" lay-filter="guard_name">
                     <option value=""></option>
-                    <option value="server" selected="">server</option>
+                    @if($info['guard_name'] == 'server')
+                        <option value="server" selected="">server</option>
+                    @else
+                        <option value="server">server</option>
+                    @endif
                 </select>
             </div>
         </div>
@@ -25,7 +29,7 @@
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">角色描述</label>
             <div class="layui-input-block">
-                <textarea name="description" placeholder="请输入角色描述" class="layui-textarea"></textarea>
+                <textarea name="description" placeholder="请输入角色描述" class="layui-textarea">{{ $info['description'] }}</textarea>
             </div>
         </div>
         
@@ -59,7 +63,7 @@ layui.use(['form'], function () {
             return false;
         }
         
-        var href = "{{ admin_url('role/create') }}";
+        var href = "{{ admin_url('role/update') }}?id={{ $info['id'] }}";
         
         $.post(href, {
             'name': data.name,

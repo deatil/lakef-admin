@@ -66,6 +66,26 @@ abstract class Base
     }
     
     /**
+     * 成功
+     */
+    protected function success(string $message)
+    {
+        return $this->view('admin.view.success', [
+            'message' => $message,
+        ]);
+    }
+    
+    /**
+     * 失败
+     */
+    protected function error(string $message)
+    {
+        return $this->view('admin.view.error', [
+            'message' => $message,
+        ]);
+    }
+    
+    /**
      * 表格数据 json
      */
     protected function tableJson($list, $count, $msg = '获取成功')
