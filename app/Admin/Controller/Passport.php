@@ -73,7 +73,9 @@ class Passport extends Base
         $password = $this->request->post('password');
         $captcha = $this->request->post('captcha');
         
-        if (strtolower($captcha) != strtolower($this->session->get('captcha_id'))) {
+        $sessionCaptcha = strtolower($this->session->get('captcha_id'));
+        $this->session->remove('captcha_id');
+        if (strtolower($captcha) != $sessionCaptcha) {
             return $this->errorJson('验证码错误');
         }
         
@@ -85,7 +87,7 @@ class Passport extends Base
             return $this->errorJson('账户不存在或者密码错误');
         }
         
-        $encryptPassword = (new Password)
+        $encryptPassword = make(Password::class)
             ->setSalt($this->config->get('serverlog.passport_salt'))
             ->encrypt($password, $info['salt']);
         if ($info['password'] != $encryptPassword) {

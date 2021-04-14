@@ -70,6 +70,7 @@
 <script src="lib/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
 <script src="lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
 <script src="lib/jq-module/jquery.particleground.min.js" charset="utf-8"></script>
+<script src="lib/md5.js" charset="utf-8"></script>
 <script>
     layui.use(['form'], function () {
         var form = layui.form,
@@ -119,7 +120,7 @@
             
             $.post(href, {
                 'email': data.username,
-                'password': data.password,
+                'password': hex_md5(data.password),
                 'captcha': data.captcha,
             }, function(data) {
                 if (data.code == 0) {

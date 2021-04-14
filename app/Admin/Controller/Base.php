@@ -66,6 +66,19 @@ abstract class Base
     }
     
     /**
+     * 表格数据 json
+     */
+    protected function tableJson($list, $count, $msg = '获取成功')
+    {
+        return $this->response->json([
+            'code' => 0,
+            'msg' => $msg,
+            'data' => $list,
+            'count' => $count,
+        ]);
+    }
+    
+    /**
      * json
      */
     protected function json(

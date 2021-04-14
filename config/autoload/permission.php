@@ -1,12 +1,13 @@
 <?php
 
 return [
-    //model设置
+    // model设置
     'models' => [
-        'user' => App\Model\User::class,
+        'user' => App\Admin\Model\User::class,
         'permission' => Donjan\Permission\Models\Permission::class,
         'role' => Donjan\Permission\Models\Role::class,
     ],
+    
     //表名设置
     'table_names' => [
         'roles' => 'roles',

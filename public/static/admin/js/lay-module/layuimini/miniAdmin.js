@@ -254,12 +254,12 @@ layui.define(["jquery", "miniMenu", "element","miniTab", "miniTheme"], function 
                 // 判断是否清理服务端
                 var clearUrl = $(this).attr('data-href');
                 if (clearUrl != undefined && clearUrl != '' && clearUrl != null) {
-                    $.getJSON(clearUrl, function (data, status) {
+                    $.post(clearUrl, function (data, status) {
                         layer.close(loading);
-                        if (data.code != 1) {
-                            return miniAdmin.error(data.msg);
+                        if (data.code != 0) {
+                            return miniAdmin.error(data.message);
                         } else {
-                            return miniAdmin.success(data.msg);
+                            return miniAdmin.success(data.message);
                         }
                     }).fail(function () {
                         layer.close(loading);

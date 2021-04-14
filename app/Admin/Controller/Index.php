@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Admin\Controller;
 
+use Psr\SimpleCache\CacheInterface;
+
 /**
  * 首页
  */
@@ -25,7 +27,6 @@ class Index extends Base
      */
     public function getMain()
     {
-        
         return $this->view('admin.index.main');
     }
     
@@ -52,15 +53,21 @@ class Index extends Base
                     'target' => '_self',
                     'child' => [
                         [
-                            'title' => '主页模板',
-                            'icon' => 'fa fa-home',
+                            'title' => '权限管理',
+                            'icon' => 'fa fa-cogs',
                             'href' => '',
                             'target' => '_self',
                             'child' => [
                                 [
-                                    'title' => '主页一',
-                                    'icon' => 'fa fa-tachometer',
-                                    'href' => '/admin/index/main',
+                                    'title' => '角色',
+                                    'icon' => 'fa fa-user',
+                                    'href' => '/admin/role/index',
+                                    'target' => '_self',
+                                ],
+                                [
+                                    'title' => '权限',
+                                    'icon' => 'fa fa-list',
+                                    'href' => '/admin/permission/index',
                                     'target' => '_self',
                                 ],
                             ],
@@ -76,8 +83,10 @@ class Index extends Base
     /**
      * 缓存清理
      */
-    public function postClear()
+    public function postClear(CacheInterface $cache)
     {
+        $cache->clear();
+        
         return $this->successJson('缓存清理成功');
     }
 }
