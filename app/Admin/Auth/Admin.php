@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Admin\Auth;
 
-use App\Admin\Model\User as UserModel;
+use App\Admin\Model\Admin as AdminModel;
 
 class Admin
 {
@@ -52,7 +52,7 @@ class Admin
     public function getData()
     {
         if (empty($this->data)) {
-            $this->data = UserModel::query()
+            $this->data = AdminModel::query()
                 ->where([
                     'id' => $this->id,
                 ])

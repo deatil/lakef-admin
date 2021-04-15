@@ -9,17 +9,9 @@ use Donjan\Permission\Traits\HasRoles;
 use Hyperf\DbConnection\Model\Model;
 
 /**
- * @property int $id
- * @property string $name
- * @property string $email
- * @property string $password
- * @property string $remember_token
- * @property int $rid
- * @property int $status
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
+ * 管理员
  */
-class User extends Model
+class Admin extends Model
 {
     use HasRoles;
     
@@ -28,7 +20,7 @@ class User extends Model
      *
      * @var string
      */
-    protected $table = 'user';
+    protected $table = 'admin';
 
     /**
      * The attributes that are mass assignable.
@@ -40,7 +32,8 @@ class User extends Model
         'email', 
         'password', 
         'salt', 
-        'status'
+        'remark', 
+        'status', 
     ];
 
     /**

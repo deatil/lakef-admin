@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Admin\Controller;
 
 use App\Admin\Support\Password;
-use App\Admin\Model\User as UserModel;
+use App\Admin\Model\Admin as AdminModel;
 
 /**
  * 个人资料
@@ -56,7 +56,7 @@ class Profile extends Base
         // 登陆用户信息
         $authAdmin = $this->request->getAttribute('authAdmin');
         
-        $info = UserModel::query()
+        $info = AdminModel::query()
             ->where([
                 'name' => $name,
             ])
@@ -66,7 +66,7 @@ class Profile extends Base
             return $this->errorJson('用户名已经存在');
         }
         
-        $info2 = UserModel::query()
+        $info2 = AdminModel::query()
             ->where([
                 'email' => $email,
             ])
@@ -76,7 +76,7 @@ class Profile extends Base
             return $this->errorJson('用户邮箱已经存在');
         }
         
-        $status = UserModel::query()
+        $status = AdminModel::query()
             ->where([
                 'id' => $authAdmin['id'],
             ])
@@ -148,7 +148,7 @@ class Profile extends Base
             ->setSalt($this->config->get('serverlog.passport_salt'))
             ->encrypt($newPassword);
         
-        $status = UserModel::query()
+        $status = AdminModel::query()
             ->where([
                 'id' => $authAdmin['id'],
             ])

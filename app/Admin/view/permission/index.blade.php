@@ -78,7 +78,7 @@ layui.use(['form', 'table', 'miniAdmin'], function () {
         cols: [
             [
                 {field: 'id', width: 80, title: 'ID', sort: true},
-                { width: 80, title: '图标',align: 'center', templet:'#iconTpl' },
+                {title: '图标', width: 80, align: 'center', templet:'#iconTpl' },
                 {field: 'display_name', width: 120, title: '权限名称'},
                 {field: 'name', title: '权限'},
                 {field: 'guard_name', width: 135, title: '守护类型'},

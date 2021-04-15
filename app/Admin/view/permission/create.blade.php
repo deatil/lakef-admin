@@ -19,7 +19,7 @@
                 <select name="parent_id" lay-verify="required" lay-filter="parent_id">
                     <option value="0">作为顶级权限</option>
                     @foreach($permissions as $key => $permission)
-                        <option value="{{ $permission['id'] }}" {{ ($parentid == $permission['id'] ? 'selected=""' : '') }}>{{ $permission['display_name'] }}</option>
+                        <option value="{{ $permission['id'] }}" {{ ($parentid == $permission['id'] ? 'selected=""' : '') }}>{!! $permission['spacer'] !!}{{ $permission['display_name'] }}</option>
                     @endforeach
                 </select>
             </div>

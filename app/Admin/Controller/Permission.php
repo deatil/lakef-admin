@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Admin\Controller;
 
-use Donjan\Permission\Models\Permission as PermissionModel;
 use App\Admin\Support\Tree;
+use App\Admin\Model\Permission as PermissionModel;
 
 /**
  * 权限

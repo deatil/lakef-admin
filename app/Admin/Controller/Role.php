@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Admin\Controller;
 
-use Donjan\Permission\Models\Role as RoleModel;
+use App\Admin\Support\Tree;
+use App\Admin\Model\Role as RoleModel;
 
 /**
  * 角色
@@ -52,11 +53,52 @@ class Role extends Base
     }
     
     /**
+     * 结构
+     */
+    public function getTree()
+    {
+        return $this->view('serverlog::role.tree');
+    }
+    
+    /**
+     * 结构数据
+     */
+    public function getTreeData()
+    {
+        $list = RoleModel
+            ::orderBy('sort', 'DESC')
+            ->orderBy('id', 'DESC')
+            ->get()
+            ->toArray();
+        
+        $count = RoleModel::count();
+        
+        return $this->tableJson($list, $count);
+    }
+    
+    /**
      * 创建
      */
     public function getCreate()
     {
-        return $this->view('serverlog::role.create');
+        $parentid = (int) $this->request->input('parentid');
+        
+        $list = RoleModel
+            ::orderBy('sort', 'DESC')
+            ->orderBy('id', 'DESC')
+            ->get()
+            ->toArray();
+        
+        $tree = make(Tree::class);
+        $treeData = $tree->withData($list)
+            ->withConfig('parentidKey', 'parent_id')
+            ->buildArray(0);
+        $parents = $tree->buildFormatList($treeData);
+        
+        return $this->view('serverlog::role.create', [
+            'parentid' => $parentid,
+            'parents' => $parents,
+        ]);
     }
     
     /**
@@ -81,6 +123,7 @@ class Role extends Base
             return $this->errorJson($validator->errors()->first());
         }
         
+        $parentId = (int) $this->request->post('parent_id');
         $name = $this->request->post('name');
         $guardName = $this->request->post('guard_name');
         $description = $this->request->post('description');
@@ -95,6 +138,7 @@ class Role extends Base
         }
         
         $role = RoleModel::create([
+            'parent_id' => $parentId,
             'name' => $name,
             'guard_name' => $guardName,
             'description' => $description,
@@ -125,7 +169,34 @@ class Role extends Base
             return $this->error('角色信息不存在');
         }
         
+        // 父级
+        $list = RoleModel
+            ::orderBy('sort', 'DESC')
+            ->orderBy('id', 'DESC')
+            ->get()
+            ->toArray();
+        
+        $tree = make(Tree::class);
+        $childsId = $tree->getListChildsId($list, $info['id']);
+        $childsId[] = $info['id'];
+        
+        $parentList = [];
+        foreach ($list as $r) {
+            if (in_array($r['id'], $childsId)) {
+                continue;
+            }
+            
+            $parentList[] = $r;
+        }
+        
+        $parentTree = $tree->withData($parentList)
+            ->withConfig('parentidKey', 'parent_id')
+            ->buildArray(0);
+        $parents = $tree->buildFormatList($parentTree);
+        
         return $this->view('serverlog::role.update', [
+            'parentid' => $info['parent_id'],
+            'parents' => $parents,
             'info' => $info,
         ]);
     }
@@ -166,6 +237,7 @@ class Role extends Base
             return $this->errorJson($validator->errors()->first());
         }
         
+        $parentId = (int) $this->request->post('parent_id');
         $name = $this->request->post('name');
         $guardName = $this->request->post('guard_name');
         $description = $this->request->post('description');
@@ -182,6 +254,7 @@ class Role extends Base
         $update = RoleModel::where([
             ['id', '=', $id],
         ])->update([
+            'parent_id' => $parentId,
             'name' => $name,
             'guard_name' => $guardName,
             'description' => $description,
@@ -214,5 +287,29 @@ class Role extends Base
         }
         
         return $this->successJson('删除成功');
+    }
+
+    /**
+     * 菜单排序
+     */
+    public function postSort()
+    {
+        $id = $this->request->input('id');
+        if (empty($id)) {
+            $this->errorJson('参数不能为空');
+        }
+        
+        $sort = $this->request->post('value', 1000);
+        
+        $update = RoleModel::where([
+            'id' => $id,
+        ])->update([
+            'sort' => $sort,
+        ]);
+        if ($update === false) {
+            return $this->errorJson("排序失败");
+        }
+        
+        return $this->successJson('排序成功');
     }
 }

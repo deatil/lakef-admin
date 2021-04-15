@@ -12,6 +12,7 @@ use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\HttpServer\Contract\ResponseInterface;
 use Hyperf\Validation\Contract\ValidatorFactoryInterface;
 use Hyperf\View\RenderInterface;
+use Hyperf\Utils\Arr;
 
 abstract class Base
 {
@@ -136,5 +137,23 @@ abstract class Base
         $code = 0
     ) {
         return $this->json(true, $code, $message, $data);
+    }
+    
+    /**
+     * 当前管理员信息
+     */
+    public function getAuthAdmin()
+    {
+        return $this->request->getAttribute('authAdmin');
+    }
+    
+    /**
+     * 当前管理员ID
+     */
+    public function getAuthAdminId()
+    {
+        $authAdmin = $this->getAuthAdmin();
+        
+        return Arr::get($authAdmin, 'id');
     }
 }

@@ -1,5 +1,5 @@
 ﻿# Host: 192.168.56.105  (Version: 5.5.5-10.5.8-MariaDB-1:10.5.8+maria~focal)
-# Date: 2021-04-14 13:35:06
+# Date: 2021-04-15 13:49:31
 # Generator: MySQL-Front 5.3  (Build 4.234)
 
 /*!40101 SET NAMES utf8 */;
@@ -55,19 +55,22 @@ CREATE TABLE `server_permissions` (
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `display_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名称',
   `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `target` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '__self' COMMENT '跳转',
   `icon` varchar(35) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '图标',
   `guard_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_menu` tinyint(1) NOT NULL DEFAULT 0 COMMENT '1-菜单',
   `sort` smallint(6) NOT NULL COMMENT '排序，数字越大越在前面',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 #
 # Data for table "server_permissions"
 #
 
 /*!40000 ALTER TABLE `server_permissions` DISABLE KEYS */;
+INSERT INTO `server_permissions` VALUES (2,0,'GET:/admin/action','首页','/admin/action','__self','fa-align-justify','server',0,1000,'2021-03-31 03:35:16','2021-03-31 04:56:07'),(4,2,'GET:/admin/role','角色','/admin/role','__self','fa-address-card-o','server',1,1000,'2021-03-31 04:23:37','2021-03-31 04:51:25');
 /*!40000 ALTER TABLE `server_permissions` ENABLE KEYS */;
 
 #
@@ -102,13 +105,14 @@ CREATE TABLE `server_roles` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 #
 # Data for table "server_roles"
 #
 
 /*!40000 ALTER TABLE `server_roles` DISABLE KEYS */;
+INSERT INTO `server_roles` VALUES (5,'是否大概','地方广东省','server','2021-03-31 03:29:20','2021-03-31 03:29:20');
 /*!40000 ALTER TABLE `server_roles` ENABLE KEYS */;
 
 #

@@ -7,7 +7,7 @@ namespace App\Admin\Controller;
 use Gregwar\Captcha\CaptchaBuilder;
 use Gregwar\Captcha\PhraseBuilder;
 
-use App\Admin\Model\User as UserModel;
+use App\Admin\Model\Admin as AdminModel;
 use App\Admin\Support\Password;
 
 /**
@@ -79,7 +79,7 @@ class Passport extends Base
             return $this->errorJson('验证码错误');
         }
         
-        $info = UserModel::query()->where([
+        $info = AdminModel::query()->where([
             'email' => $email,
         ])->first();
         

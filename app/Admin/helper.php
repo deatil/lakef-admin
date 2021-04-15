@@ -2,7 +2,10 @@
 
 use Psr\SimpleCache\CacheInterface;
 use Hyperf\Contract\StdoutLoggerInterface;
+use Hyperf\Contract\ConfigInterface;
 use Hyperf\Logger\LoggerFactory;
+use Hyperf\HttpServer\Contract\RequestInterface;
+use Hyperf\HttpServer\Contract\ResponseInterface;
 use Hyperf\ExceptionHandler\Formatter\FormatterInterface;
 use Hyperf\Utils\ApplicationContext;
 use Hyperf\Redis\Redis;
@@ -49,6 +52,36 @@ if (! function_exists('di')) {
             return $container->get($id);
         }
         return $container;
+    }
+}
+
+if (! function_exists('config')) {
+    /**
+     * 配置
+     */
+    function config()
+    {
+        return di()->get(ConfigInterface::class);
+    }
+}
+
+if (! function_exists('request')) {
+    /**
+     * 请求
+     */
+    function request()
+    {
+        return di()->get(RequestInterface::class);
+    }
+}
+
+if (! function_exists('response')) {
+    /**
+     * 响应
+     */
+    function response()
+    {
+        return di()->get(ResponseInterface::class);
     }
 }
 
