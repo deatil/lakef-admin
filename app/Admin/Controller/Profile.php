@@ -22,7 +22,7 @@ class Profile extends Base
     {
         $authAdmin = $this->request->getAttribute('authAdmin');
         
-        return $this->view('admin.profile.setting', [
+        return $this->view('serverlog::profile.setting', [
             'admin' => $authAdmin,
         ]);
     }
@@ -97,7 +97,7 @@ class Profile extends Base
      */
     public function getPassword()
     {
-        return $this->view('admin.profile.password');
+        return $this->view('serverlog::profile.password');
     }
     
     /**

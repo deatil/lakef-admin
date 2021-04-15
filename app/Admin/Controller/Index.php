@@ -17,7 +17,7 @@ class Index extends Base
     public function getIndex()
     {
         $authAdmin = $this->request->getAttribute('authAdmin');
-        return $this->view('admin.index.index', [
+        return $this->view('serverlog::index.index', [
             'admin' => $authAdmin,
         ]);
     }
@@ -27,7 +27,7 @@ class Index extends Base
      */
     public function getMain()
     {
-        return $this->view('admin.index.main');
+        return $this->view('serverlog::index.main');
     }
     
     /**
@@ -68,6 +68,12 @@ class Index extends Base
                                     'title' => '权限',
                                     'icon' => 'fa fa-list',
                                     'href' => '/admin/permission/index',
+                                    'target' => '_self',
+                                ],
+                                [
+                                    'title' => '管理员',
+                                    'icon' => 'fa fa-user-md',
+                                    'href' => '/admin/admin/index',
                                     'target' => '_self',
                                 ],
                             ],

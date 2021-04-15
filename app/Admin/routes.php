@@ -38,12 +38,15 @@ Router::addGroup('/admin/', function ($router) {
     // 权限
     $router->get('permission/index', [Controller\Permission::class, 'getIndex']);
     $router->get('permission/data', [Controller\Permission::class, 'getData']);
+    $router->get('permission/menu', [Controller\Permission::class, 'getMenu']);
+    $router->get('permission/menu-data', [Controller\Permission::class, 'getMenuData']);
     $router->get('permission/create', [Controller\Permission::class, 'getCreate']);
     $router->post('permission/create', [Controller\Permission::class, 'postCreate']);
     $router->get('permission/update', [Controller\Permission::class, 'getUpdate']);
     $router->post('permission/update', [Controller\Permission::class, 'postUpdate']);
     $router->post('permission/delete', [Controller\Permission::class, 'postDelete']);
     $router->post('permission/sort', [Controller\Permission::class, 'postSort']);
+    $router->post('permission/setmenu', [Controller\Permission::class, 'postSetMenu']);
 
 }, [
     // 中间件

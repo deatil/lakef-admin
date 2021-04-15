@@ -1,4 +1,4 @@
-@extends('admin.layout')
+@extends('serverlog::layout')
 
 @section('title', '首页')
 

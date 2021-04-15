@@ -17,7 +17,7 @@ class Permission extends Base
      */
     public function getIndex()
     {
-        return $this->view('admin.permission.index');
+        return $this->view('serverlog::permission.index');
     }
     
     /**
@@ -58,11 +58,52 @@ class Permission extends Base
     }
     
     /**
+     * 结构
+     */
+    public function getMenu()
+    {
+        return $this->view('serverlog::permission.menu');
+    }
+    
+    /**
+     * 结构数据
+     */
+    public function getMenuData()
+    {
+        $list = PermissionModel
+            ::orderBy('sort', 'DESC')
+            ->orderBy('id', 'DESC')
+            ->get()
+            ->toArray();
+        
+        $count = PermissionModel::count();
+        
+        return $this->tableJson($list, $count);
+    }
+    
+    /**
      * 创建
      */
     public function getCreate()
     {
-        return $this->view('admin.permission.create');
+        $parentid = (int) $this->request->input('parentid');
+        
+        $permissionList = PermissionModel
+            ::orderBy('sort', 'DESC')
+            ->orderBy('id', 'DESC')
+            ->get()
+            ->toArray();
+        
+        $tree = make(Tree::class);
+        $permissionTree = $tree->withData($permissionList)
+            ->withConfig('parentidKey', 'parent_id')
+            ->buildArray(0);
+        $permissions = $tree->buildFormatList($permissionTree);
+        
+        return $this->view('serverlog::permission.create', [
+            'parentid' => $parentid,
+            'permissions' => $permissions,
+        ]);
     }
     
     /**
@@ -73,13 +114,14 @@ class Permission extends Base
         $validator = $this->validationFactory->make(
             $this->request->all(),
             [
-                'name' => 'required|min:1',
+                'url' => 'required',
+                'method' => 'required',
                 'display_name' => 'required|min:2',
                 'guard_name' => 'required|min:2',
             ],
             [
-                'name.required' => '权限必填',
-                'name.min' => '权限最少1位',
+                'url.required' => '请求链接必填',
+                'method.required' => '请求方式必填',
                 'display_name.required' => '权限名必填',
                 'display_name.min' => '权限名最少2位',
                 'guard_name.required' => '守护类型必填',
@@ -91,20 +133,28 @@ class Permission extends Base
         }
         
         $parentId = (int) $this->request->post('parent_id');
-        $name = $this->request->post('name');
         $displayName = $this->request->post('display_name');
         $guardName = $this->request->post('guard_name');
         $url = $this->request->post('url');
+        $method = $this->request->post('method');
         $icon = $this->request->post('icon');
         $sort = $this->request->post('sort', 1000);
         
+        $is_menu = $this->request->post('is_menu');
+        if (! empty($is_menu)) {
+            $is_menu = 1;
+        } else {
+            $is_menu = 0;
+        }
+        
         $permission = PermissionModel::create([
             'parent_id' => $parentId,
-            'name' => $name,
+            'name' => $method.':'.$url,
             'display_name' => $displayName,
             'guard_name' => $guardName,
             'url' => $url,
             'icon' => $icon,
+            'is_menu' => $is_menu,
             'sort' => $sort,
         ]);
         if ($permission === false) {
@@ -133,10 +183,11 @@ class Permission extends Base
             return $this->error('权限信息不存在');
         }
         
-        $permissionList = PermissionModel::order([
-            'sort' => 'DESC', 
-            'id' => 'DESC',
-        ])->get()->toArray();
+        $permissionList = PermissionModel
+            ::orderBy('sort', 'DESC')
+            ->orderBy('id', 'DESC')
+            ->get()
+            ->toArray();
         
         $tree = make(Tree::class);
         $childsId = $tree->getListChildsId($permissionList, $info['id']);
@@ -151,11 +202,18 @@ class Permission extends Base
             $permissionParentList[] = $r;
         }
         
-        $permissionTree = $Tree->withData($permissionParentList)->buildArray(0);
-        $permissions = $Tree->buildFormatList($permissionTree, 'title');
+        $permissionTree = $tree->withData($permissionParentList)
+            ->withConfig('parentidKey', 'parent_id')
+            ->buildArray(0);
+        $permissions = $tree->buildFormatList($permissionTree);
         
-        return $this->view('admin.permission.update', [
-            'parentid' => $info['parentid'],
+        // 格式化出来请求链接
+        [$method, $url] = explode(':', $info['name'], 2);
+        $info['method'] = $method;
+        $info['url'] = $url;
+        
+        return $this->view('serverlog::permission.update', [
+            'parentid' => $info['parent_id'],
             'permissions' => $permissions,
             'info' => $info,
         ]);
@@ -183,13 +241,14 @@ class Permission extends Base
         $validator = $this->validationFactory->make(
             $this->request->all(),
             [
-                'name' => 'required|min:1',
+                'url' => 'required',
+                'method' => 'required',
                 'display_name' => 'required|min:2',
                 'guard_name' => 'required|min:2',
             ],
             [
-                'name.required' => '权限必填',
-                'name.min' => '权限最少1位',
+                'url.required' => '请求链接必填',
+                'method.required' => '请求方式必填',
                 'display_name.required' => '权限名必填',
                 'display_name.min' => '权限名最少2位',
                 'guard_name.required' => '守护类型必填',
@@ -201,22 +260,30 @@ class Permission extends Base
         }
         
         $parentId = (int) $this->request->post('parent_id');
-        $name = $this->request->post('name');
         $displayName = $this->request->post('display_name');
         $guardName = $this->request->post('guard_name');
         $url = $this->request->post('url');
+        $method = $this->request->post('method');
         $icon = $this->request->post('icon');
         $sort = $this->request->post('sort', 1000);
+        
+        $is_menu = $this->request->post('is_menu');
+        if (! empty($is_menu)) {
+            $is_menu = 1;
+        } else {
+            $is_menu = 0;
+        }
         
         $update = PermissionModel::where([
             ['id', '=', $id],
         ])->update([
             'parent_id' => $parentId,
-            'name' => $name,
+            'name' => $method.':'.$url,
             'display_name' => $displayName,
             'guard_name' => $guardName,
             'url' => $url,
             'icon' => $icon,
+            'is_menu' => $is_menu,
             'sort' => $sort,
         ]);
         if ($update === false) {
@@ -260,6 +327,30 @@ class Permission extends Base
     }
 
     /**
+     * 菜单设置是否显示
+     */
+    public function postSetMenu()
+    {
+        $id = $this->request->input('id');
+        if (empty($id)) {
+            $this->errorJson('参数不能为空');
+        }
+        
+        $status = (int) $this->request->post('status', 0);
+        
+        $update = PermissionModel::where([
+            'id' => $id,
+        ])->update([
+            'is_menu' => $status,
+        ]);
+        if ($update === false) {
+            return $this->errorJson("设置失败");
+        }
+        
+        return $this->successJson('设置成功');
+    }
+
+    /**
      * 菜单排序
      */
     public function postSort()
@@ -269,14 +360,14 @@ class Permission extends Base
             $this->errorJson('参数不能为空');
         }
         
-        $sort = $this->request->post('value', 100);
+        $sort = $this->request->post('value', 1000);
         
-        $rs = PermissionModel::where([
+        $update = PermissionModel::where([
             'id' => $id,
         ])->update([
             'sort' => $sort,
         ]);
-        if ($rs === false) {
+        if ($update === false) {
             return $this->errorJson("排序失败");
         }
         

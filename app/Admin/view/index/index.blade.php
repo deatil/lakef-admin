@@ -2,9 +2,9 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>layuimini-iframe版 v2 - 基于Layui的后台管理系统前端模板</title>
-    <meta name="keywords" content="layuimini,layui,layui模板,layui后台,后台模板,admin,admin模板,layui mini">
-    <meta name="description" content="layuimini基于layui的轻量级前端后台管理框架，最简洁、易用的后台框架模板，面向所有层次的前后端程序,只需提供一个接口就直接初始化整个框架，无需复杂操作。">
+    <title>ServeLog后台</title>
+    <meta name="keywords" content="ServeLog后台,日志记录,日志分析,swoole,hyperf,api,微服务">
+    <meta name="description" content="基于hyperf的ServeLog后台,日志记录及日志分析">
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
@@ -131,11 +131,10 @@
 <script src="lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
 <script src="js/lay-config.js?v=2.0.0" charset="utf-8"></script>
 <script>
-    layui.use(['jquery', 'layer', 'miniAdmin','miniTongji'], function () {
+    layui.use(['jquery', 'layer', 'miniAdmin'], function () {
         var $ = layui.jquery,
             layer = layui.layer,
-            miniAdmin = layui.miniAdmin,
-            miniTongji = layui.miniTongji;
+            miniAdmin = layui.miniAdmin;
 
         var options = {
             iniUrl: "/admin/index/menu",    // 初始化接口

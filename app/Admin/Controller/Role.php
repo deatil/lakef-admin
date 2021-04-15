@@ -16,7 +16,7 @@ class Role extends Base
      */
     public function getIndex()
     {
-        return $this->view('admin.role.index');
+        return $this->view('serverlog::role.index');
     }
     
     /**
@@ -56,7 +56,7 @@ class Role extends Base
      */
     public function getCreate()
     {
-        return $this->view('admin.role.create');
+        return $this->view('serverlog::role.create');
     }
     
     /**
@@ -125,7 +125,7 @@ class Role extends Base
             return $this->error('角色信息不存在');
         }
         
-        return $this->view('admin.role.update', [
+        return $this->view('serverlog::role.update', [
             'info' => $info,
         ]);
     }

@@ -70,7 +70,7 @@ abstract class Base
      */
     protected function success(string $message)
     {
-        return $this->view('admin.view.success', [
+        return $this->view('serverlog::view.success', [
             'message' => $message,
         ]);
     }
@@ -80,7 +80,7 @@ abstract class Base
      */
     protected function error(string $message)
     {
-        return $this->view('admin.view.error', [
+        return $this->view('serverlog::view.error', [
             'message' => $message,
         ]);
     }
@@ -120,21 +120,21 @@ abstract class Base
      * 返回错误json
      */
     protected function errorJson(
-        $msg = null, 
+        $message = null, 
         $code = 1, 
         $data = []
     ) {
-        return $this->json(false, $code, $msg, $data);
+        return $this->json(false, $code, $message, $data);
     }
     
     /**
      * 返回成功json
      */
     protected function successJson(
-        $msg = null, 
+        $message = null, 
         $data = [], 
         $code = 0
     ) {
-        return $this->json(true, $code, $msg, $data);
+        return $this->json(true, $code, $message, $data);
     }
 }
