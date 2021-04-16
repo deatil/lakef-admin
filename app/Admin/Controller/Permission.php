@@ -47,6 +47,7 @@ class Permission extends Base
         
         $page = max($page, 1);
         $list = PermissionModel::where($where)
+            ->orderBy('id', 'ASC')
             ->offset($page - 1)
             ->limit($limit)
             ->get();
@@ -136,7 +137,8 @@ class Permission extends Base
         $displayName = $this->request->post('display_name');
         $guardName = $this->request->post('guard_name');
         $url = $this->request->post('url');
-        $method = $this->request->post('method');
+        $method = $this->request->post('method', 'GET');
+        $target = $this->request->post('target', '_self');
         $icon = $this->request->post('icon');
         $sort = $this->request->post('sort', 1000);
         
@@ -153,6 +155,8 @@ class Permission extends Base
             'display_name' => $displayName,
             'guard_name' => $guardName,
             'url' => $url,
+            'method' => $method,
+            'target' => $target,
             'icon' => $icon,
             'is_menu' => $is_menu,
             'sort' => $sort,
@@ -263,7 +267,8 @@ class Permission extends Base
         $displayName = $this->request->post('display_name');
         $guardName = $this->request->post('guard_name');
         $url = $this->request->post('url');
-        $method = $this->request->post('method');
+        $method = $this->request->post('method', 'GET');
+        $target = $this->request->post('target', '_self');
         $icon = $this->request->post('icon');
         $sort = $this->request->post('sort', 1000);
         
@@ -282,6 +287,8 @@ class Permission extends Base
             'display_name' => $displayName,
             'guard_name' => $guardName,
             'url' => $url,
+            'method' => $method,
+            'target' => $target,
             'icon' => $icon,
             'is_menu' => $is_menu,
             'sort' => $sort,

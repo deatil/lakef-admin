@@ -47,4 +47,9 @@ class Admin extends Model
         'created_at' => 'datetime', 
         'updated_at' => 'datetime'
     ];
+
+    public function getRoleIds()
+    {
+        return $this->roles->pluck('id');
+    }
 }

@@ -13,13 +13,11 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Hyperf\Utils\Context;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\Contract\ConfigInterface;
-use Hyperf\Contract\SessionInterface;
 use Hyperf\HttpServer\Contract\ResponseInterface;
 use Hyperf\HttpServer\Contract\RequestInterface;
+use Hyperf\View\RenderInterface;
 
-use App\Admin\Auth\Admin as AuthAdmin;
-
-class Auth implements MiddlewareInterface
+class Permission implements MiddlewareInterface
 {
     /**
      * @var ContainerInterface
@@ -37,25 +35,25 @@ class Auth implements MiddlewareInterface
     protected $response;
 
     /**
-     * @var SessionInterface
-     */
-    private $session;
-
-    /**
      * @var ConfigInterface
      */
     protected $config;
 
+    /**
+     * @var RenderInterface
+     */
+    protected $view;
+
     public function __construct(
         ContainerInterface $container, 
-        SessionInterface $session,
         ConfigInterface $config,
+        RenderInterface $view,
         RequestInterface $request,
         ResponseInterface $response
     ) {
         $this->container = $container;
-        $this->session = $session;
         $this->config = $config;
+        $this->view = $view;
         $this->request = $request;
         $this->response = $response;
     }
@@ -66,16 +64,25 @@ class Auth implements MiddlewareInterface
     ): PsrResponseInterface 
     {
         if (! $this->shouldPassThrough($this->request)) {
-            $adminid = $this->session->get('adminid');
-            if (empty($adminid)) {
-                return $this->response->redirect(admin_url('passport/login'));
+            // 当前登陆账号信息
+            $info = $this->request->getAttribute('authAdmin');
+            if (empty($info) || $info['status'] != 1) {
+                return $this->view->render('serverlog::no-permission', [
+                    'message' => '账号不存在或者已被锁定',
+                ]);
             }
             
-            $authAdmin = make(AuthAdmin::class)->withId($adminid)->getData();
-            
-            $request = Context::get(ServerRequestInterface::class);
-            $request = $request->withAttribute('authAdmin', $authAdmin);
-            Context::set(ServerRequestInterface::class, $request);
+            if ($info['id'] != $this->config->get('serverlog.passport.super_id')) {
+                $uri = $this->request->path();
+                $method = $this->request->getMethod();
+                
+                $permission = strtoupper($method).':/'.$uri;
+                if (! $info->can($permission)) {
+                    return $this->view->render('serverlog::no-permission', [
+                        'message' => '权限被限制',
+                    ]);
+                }
+            }
         }
         
         return $handler->handle($request);
@@ -83,9 +90,10 @@ class Auth implements MiddlewareInterface
     
     protected function shouldPassThrough($request)
     {
-        $excepts = array_merge($this->config->get('serverlog.auth.authenticate_excepts', []), [
+        $excepts = array_merge($this->config->get('serverlog.auth.permission_excepts', []), [
             ltrim(admin_url('passport/captcha'), '/'),
             ltrim(admin_url('passport/login'), '/'),
+            ltrim(admin_url('passport/logout'), '/'),
         ]);
         
         return $request->is($excepts);

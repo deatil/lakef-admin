@@ -6,6 +6,7 @@ namespace App\Admin\Controller;
 
 use App\Admin\Support\Tree;
 use App\Admin\Model\Role as RoleModel;
+use App\Admin\Model\Permission as PermissionModel;
 
 /**
  * 角色
@@ -312,4 +313,103 @@ class Role extends Base
         
         return $this->successJson('排序成功');
     }
+    
+    /**
+     * 授权
+     */
+    public function getAccess()
+    {
+        $id = (int) $this->request->input('id');
+        if (empty($id)) {
+            return $this->error('ID不能为空');
+        }
+        
+        $info = RoleModel::query()
+            ->where([
+                'id' => $id,
+            ])
+            ->first();
+        if (empty($info)) {
+            return $this->error('角色信息不存在');
+        }
+        
+        // 权限
+        $permissionList = PermissionModel
+            ::orderBy('sort', 'DESC')
+            ->orderBy('id', 'DESC')
+            ->get()
+            ->toArray();
+        
+        $permissions = [];
+        if (!empty($permissionList)) {
+            foreach ($permissionList as $rs) {
+                $data = [
+                    'id' => $rs['id'],
+                    'parentid' => $rs['parent_id'],
+                    'title' => (empty($rs['method']) ? $rs['display_name'] : ($rs['display_name'] . '[' . strtoupper($rs['method']) . ']')),
+                    // 'checked' => in_array($rs['id'], $rules) ? true : false,
+                    'field' => 'roleid',
+                    'spread' => false,
+                ];
+                $permissions[] = $data;
+            }
+        }
+        
+        $permissions = make(Tree::class)
+            ->withConfig('buildChildKey', 'children')
+            ->withData($permissions)
+            ->buildArray(0);
+        
+        try {
+            $accessPermissions = $info->permissions
+                ->pluck('id')
+                ->toArray();
+        } catch(\Exception $e) {
+            return $this->error('获取角色授权信息失败');
+        }
+
+        return $this->view('serverlog::role.access', [
+            'info' => $info,
+            'permissions' => $permissions,
+            'access_permissions' => $accessPermissions,
+        ]);
+    }
+    
+    /**
+     * 授权
+     */
+    public function postAccess()
+    {
+        $id = (int) $this->request->input('id');
+        if (empty($id)) {
+            return $this->errorJson('ID不能为空');
+        }
+        
+        $permissions = $this->request->input('permissions');
+        
+        $info = RoleModel::query()
+            ->where([
+                'id' => $id,
+            ])
+            ->first();
+        if (empty($info)) {
+            return $this->errorJson('角色信息不存在');
+        }
+        
+        $permissions = collect(explode(',', $permissions))
+            ->map(function($item) {
+                return (int) $item;
+            })
+            ->values()
+            ->toArray();
+        
+        try {
+            $info->syncPermissions($permissions);
+        } catch(\Exception $e) {
+            return $this->errorJson('角色授权失败');
+        }
+        
+        return $this->successJson("角色授权成功");
+    }
+    
 }

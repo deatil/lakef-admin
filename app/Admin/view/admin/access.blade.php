@@ -20,7 +20,7 @@
                     xm-select-search="" 
                     lay-filter="roleid">
                     @foreach($roles as $vo)
-                        <option value="{{ $vo['id'] }}" {{ in_array($vo['id'], $admin_roles) ? 'selected' : '' }}>{{ $vo['name'] }}</option>
+                        <option value="{{ $vo['id'] }}" {{ in_array($vo['id'], $admin_roles) ? 'selected' : '' }}>{!! $vo['spacer'] !!}{{ $vo['name'] }}</option>
                     @endforeach
                 </select>
             </div>

@@ -19,7 +19,10 @@
             <button class="layui-btn" id="btn-expand">全部展开</button>
             <button class="layui-btn layui-btn-normal" id="btn-fold">全部折叠</button>
         </div>
-        <table id="munu-table" class="layui-table" lay-filter="munu-table"></table>
+        
+        <button class="layui-btn layui-btn-normal" id="btn-add"> 添加 </button>
+        
+        <table id="menu-table" class="layui-table" lay-filter="menu-table"></table>
     </div>
 </div>
 
@@ -53,7 +56,7 @@ layui.use(['table', 'treetable', 'miniAdmin'], function () {
         treeSpid: 0,
         treeIdName: 'id',
         treePidName: 'parent_id',
-        elem: '#munu-table',
+        elem: '#menu-table',
         url: "{{ admin_url('permission/menu-data') }}",
         page: false,
         cols: [
@@ -71,17 +74,29 @@ layui.use(['table', 'treetable', 'miniAdmin'], function () {
             layer.closeAll('loading');
         }
     });
-
+    
     $('#btn-expand').click(function () {
-        treetable.expandAll('#munu-table');
+        treetable.expandAll('#menu-table');
     });
-
+    
     $('#btn-fold').click(function () {
-        treetable.foldAll('#munu-table');
+        treetable.foldAll('#menu-table');
+    });
+    
+    $('#btn-add').click(function (obj) {
+        var index = layer.open({
+            title: '创建权限',
+            type: 2,
+            shade: 0.2,
+            maxmin:true,
+            shadeClose: true,
+            area: ['100%', '100%'],
+            content: "{{ admin_url('permission/create') }}",
+        });
     });
 
-    //监听工具条
-    table.on('tool(munu-table)', function (obj) {
+    // 监听工具条
+    table.on('tool(menu-table)', function (obj) {
         var data = obj.data;
         var layEvent = obj.event;
 
@@ -132,7 +147,7 @@ layui.use(['table', 'treetable', 'miniAdmin'], function () {
     });
     
     // 监听单元格编辑
-    table.on('edit(munu-table)', function(obj) {
+    table.on('edit(menu-table)', function(obj) {
         var value = obj.value,
             data = obj.data;
             

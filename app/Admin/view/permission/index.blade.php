@@ -53,6 +53,18 @@
 <script type="text/html" id="iconTpl">
     <span title="{{d.display_name}}：{{d.id}}"><i class='fa {{d.icon}}'></i></span>
 </script>
+
+<script type="text/html" id="targetTpl">
+    {{#  if(d.target == '_self'){ }}
+        <span class="layui-btn layui-btn-normal layui-btn-xs">本页</span>
+    {{#  } }}
+    {{#  if(d.target == '_blank'){ }}
+        <span class="layui-btn layui-btn-green layui-btn-xs">跳出</span>
+    {{#  } }}
+    {{#  if(d.target == '_top'){ }}
+        <span class="layui-btn layui-btn-primary layui-btn-xs">顶页</span>
+    {{#  } }}
+</script>
 @endverbatim
 
 <script type="text/html" id="menuTpl">
@@ -81,7 +93,7 @@ layui.use(['form', 'table', 'miniAdmin'], function () {
                 {title: '图标', width: 80, align: 'center', templet:'#iconTpl' },
                 {field: 'display_name', width: 120, title: '权限名称'},
                 {field: 'name', title: '权限'},
-                {field: 'guard_name', width: 135, title: '守护类型'},
+                {field: 'target', width: 120, title: '跳转方式', align: "center", templet: '#targetTpl'},
                 {field: 'is_menu', align: 'center', width: 95, title: '菜单', templet: '#menuTpl', unresize: true },
                 {field: 'sort', width: 80, title: '排序', edit: 'text'},
                 {field: 'created_at', width: 160, title: '创建时间', sort: true},

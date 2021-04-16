@@ -66,6 +66,21 @@
         </div>
         
         <div class="layui-form-item">
+            <label class="layui-form-label">跳转方式</label>
+            <div class="layui-input-block w300">
+                <select name="target" lay-verify="required">
+                    <option value="">选择跳转方式</option>
+                    <option value="_self">本页【_self】</option>
+                    <option value="_blank">跳出【_blank】</option>
+                    <option value="_top">顶页【_top】</option>
+                </select>
+            </div>
+            <div class="layui-input-block">
+                <div class="layui-form-mid layui-word-aux">菜单的跳转方式</div>
+            </div>
+        </div>
+        
+        <div class="layui-form-item">
             <label class="layui-form-label">菜单图标</label>
             <div class="layui-input-block">
                 <div class="layui-inline w200">
@@ -82,7 +97,7 @@
             <div class="layui-input-block">
                 <select name="guard_name" lay-filter="guard_name" lay-verify="required" lay-reqtext="守护类型不能为空">
                     <option value=""></option>
-                    <option value="server" selected="">server</option>
+                    <option value="web" selected="">web</option>
                 </select>
             </div>
         </div>

@@ -53,13 +53,12 @@ class Passport extends Base
         $validator = $this->validationFactory->make(
             $this->request->all(),
             [
-                'email' => 'required|email|bail',
+                'name' => 'required',
                 'password' => 'required|min:6',
                 'captcha' => 'required',
             ],
             [
-                'email.required' => '邮箱必填',
-                'email.email' => '邮箱格式错误',
+                'name.required' => '账号必填',
                 'password.required' => '密码必填',
                 'password.min' => '密码最少6位',
                 'captcha.required' => '验证码必填',
@@ -69,26 +68,32 @@ class Passport extends Base
             return $this->errorJson($validator->errors()->first());
         }
         
-        $email = $this->request->post('email');
+        $name = $this->request->post('name');
         $password = $this->request->post('password');
         $captcha = $this->request->post('captcha');
         
-        $sessionCaptcha = strtolower($this->session->get('captcha_id'));
-        $this->session->remove('captcha_id');
-        if (strtolower($captcha) != $sessionCaptcha) {
+        $sessionCaptcha = $this->session->get('captcha_id');
+        if (empty($sessionCaptcha)) {
             return $this->errorJson('验证码错误');
         }
         
-        $info = AdminModel::query()->where([
-            'email' => $email,
-        ])->first();
+        $this->session->remove('captcha_id');
+        if (strtolower($captcha) != strtolower($sessionCaptcha)) {
+            return $this->errorJson('验证码错误');
+        }
+        
+        $info = AdminModel::query()
+            ->where([
+                'name' => $name,
+            ])
+            ->first();
         
         if (empty($info)) {
             return $this->errorJson('账户不存在或者密码错误');
         }
         
         $encryptPassword = make(Password::class)
-            ->setSalt($this->config->get('serverlog.passport_salt'))
+            ->setSalt($this->config->get('serverlog.passport.salt'))
             ->encrypt($password, $info['salt']);
         if ($info['password'] != $encryptPassword) {
             return $this->errorJson('账户不存在或者密码错误');

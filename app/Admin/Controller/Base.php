@@ -156,4 +156,14 @@ abstract class Base
         
         return Arr::get($authAdmin, 'id');
     }
+    
+    /**
+     * 管理员是否为超级管理员
+     */
+    public function getIsSuperAdmin()
+    {
+        $adminId = $this->getAuthAdminId();
+        
+        return ($adminId == $this->config->get('serverlog.passport.super_id'));
+    }
 }

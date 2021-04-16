@@ -306,7 +306,7 @@ class Admin extends Base
         
         // 对密码进行处理
         $encryptPassword = make(Password::class)
-            ->setSalt($this->config->get('serverlog.passport_salt'))
+            ->setSalt($this->config->get('serverlog.passport.salt'))
             ->encrypt($password);
         
         $data = [];
@@ -343,7 +343,7 @@ class Admin extends Base
             return $this->error('账号信息不存在');
         }
         
-        $adminRoles = $info->getRoleNames();
+        $adminRoles = $info->getRoleIds()->toArray();
         
         $list = RoleModel
             ::orderBy('sort', 'DESC')
@@ -375,9 +375,6 @@ class Admin extends Base
         }
         
         $roleid = $this->request->input('roleid');
-        if (empty($roleid)) {
-            return $this->errorJson('角色ID列表不能为空');
-        }
         
         $info = AdminModel::query()
             ->where([
@@ -385,7 +382,7 @@ class Admin extends Base
             ])
             ->first();
         if (empty($info)) {
-            return $this->error('账号信息不存在');
+            return $this->errorJson('账号信息不存在');
         }
         
         $roleids = collect(explode(',', $roleid))
@@ -395,9 +392,13 @@ class Admin extends Base
             ->values()
             ->toArray();
         
-        $info->syncRoles($roleids);
+        try {
+            $info->syncRoles($roleids);
+        } catch(\Exception $e) {
+            return $this->errorJson('账号授权失败');
+        }
         
-        return $this->successJson("账号角色授权成功");
+        return $this->successJson("账号授权成功");
     }
 
 }

@@ -70,5 +70,6 @@ Router::addGroup('/admin/', function ($router) {
     // 中间件
     'middleware' => [
         \App\Admin\Middleware\Auth::class,
+        \App\Admin\Middleware\Permission::class,
     ],
 ]);

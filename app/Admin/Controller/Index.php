@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Admin\Controller;
 
 use Psr\SimpleCache\CacheInterface;
+use App\Admin\Support\Tree;
+use App\Admin\Model\Permission as PermissionModel;
 
 /**
  * 首页
@@ -35,52 +37,56 @@ class Index extends Base
      */
     public function getMenu()
     {
+        $info = $this->getAuthAdmin();
+        
+        if ($this->getIsSuperAdmin()) {
+            // 所有权限
+            $permissionMenus = PermissionModel
+                ::orderBy('sort', 'DESC')
+                ->orderBy('id', 'DESC')
+                ->select([
+                    'id', 'parent_id', 
+                    'display_name', 'url', 'target', 'icon'
+                ])
+                ->get()
+                ->toArray();
+        } else {
+            // 所有权限
+            $permissionMenus = $info
+                ->getAllPermissions()
+                ->sortByDesc('sort')
+                ->toArray();
+        }
+        
+        $permissionMenus = collect($permissionMenus)
+            ->map(function($data) {
+                return [
+                    'id' => $data['id'],
+                    'parentid' => $data['parent_id'],
+                    'title' => $data['display_name'],
+                    'icon' => 'fa ' . $data['icon'],
+                    'href' => $data['url'],
+                    'target' => $data['target'],
+                ];
+            })
+            ->toArray();
+        
+        $tree = make(Tree::class);
+        $permissionMenus = $tree->withData($permissionMenus)
+            ->withConfig('buildChildKey', 'child')
+            ->buildArray(0);
+        
         $menus = [
-            'homeInfo' => [
-                'title' => '首页',
-                'href' => '/admin/index/main',
-            ],
             'logoInfo' => [
-                'title' => 'ServerLog',
-                'image' => 'images/logo.png',
+                'title' => config('serverlog.admin.title'),
+                'image' => config('serverlog.admin.logo'),
+                'href' => 'javascript:;',
+            ],
+            'homeInfo' => [
+                'title' => '控制台',
                 'href' => '/admin/index/main',
             ],
-            'menuInfo' => [
-                [
-                    'title' => '常规管理',
-                    'icon' => 'fa fa-address-book',
-                    'href' => '',
-                    'target' => '_self',
-                    'child' => [
-                        [
-                            'title' => '权限管理',
-                            'icon' => 'fa fa-cogs',
-                            'href' => '',
-                            'target' => '_self',
-                            'child' => [
-                                [
-                                    'title' => '角色',
-                                    'icon' => 'fa fa-user',
-                                    'href' => '/admin/role/index',
-                                    'target' => '_self',
-                                ],
-                                [
-                                    'title' => '权限',
-                                    'icon' => 'fa fa-list',
-                                    'href' => '/admin/permission/index',
-                                    'target' => '_self',
-                                ],
-                                [
-                                    'title' => '管理员',
-                                    'icon' => 'fa fa-user-md',
-                                    'href' => '/admin/admin/index',
-                                    'target' => '_self',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
+            'menuInfo' => $permissionMenus,
         ];
         
         return $this->response->json($menus);

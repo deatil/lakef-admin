@@ -2,7 +2,6 @@
 
 use Psr\SimpleCache\CacheInterface;
 use Hyperf\Contract\StdoutLoggerInterface;
-use Hyperf\Contract\ConfigInterface;
 use Hyperf\Logger\LoggerFactory;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\HttpServer\Contract\ResponseInterface;
@@ -52,16 +51,6 @@ if (! function_exists('di')) {
             return $container->get($id);
         }
         return $container;
-    }
-}
-
-if (! function_exists('config')) {
-    /**
-     * 配置
-     */
-    function config()
-    {
-        return di()->get(ConfigInterface::class);
     }
 }
 

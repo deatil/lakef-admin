@@ -137,7 +137,7 @@ class Profile extends Base
         }
         
         $encryptPassword = make(Password::class)
-            ->setSalt($this->config->get('serverlog.passport_salt'))
+            ->setSalt($this->config->get('serverlog.passport.salt'))
             ->encrypt($oldPassword, $authAdmin['salt']);
         if ($authAdmin['password'] != $encryptPassword) {
             return $this->errorJson('旧的密码错误');
@@ -145,7 +145,7 @@ class Profile extends Base
         
         // 生成密码
         $encryptPassword2 = make(Password::class)
-            ->setSalt($this->config->get('serverlog.passport_salt'))
+            ->setSalt($this->config->get('serverlog.passport.salt'))
             ->encrypt($newPassword);
         
         $status = AdminModel::query()

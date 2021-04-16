@@ -29,11 +29,7 @@
             <div class="layui-input-block">
                 <select name="guard_name" lay-filter="guard_name">
                     <option value=""></option>
-                    @if($info['guard_name'] == 'server')
-                        <option value="server" selected="">server</option>
-                    @else
-                        <option value="server">server</option>
-                    @endif
+                    <option value="web" {{ ($info['guard_name'] == 'web' ? 'selected' : '') }}>web</option>
                 </select>
             </div>
         </div>

@@ -119,7 +119,7 @@
             var href = $('.serverlog-login-form').attr('action');
             
             $.post(href, {
-                'email': data.username,
+                'name': data.username,
                 'password': hex_md5(data.password),
                 'captcha': data.captcha,
             }, function(data) {

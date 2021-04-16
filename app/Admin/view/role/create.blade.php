@@ -27,9 +27,9 @@
         <div class="layui-form-item">
             <label class="layui-form-label">守护类型</label>
             <div class="layui-input-block">
-                <select name="guard_name" lay-filter="guard_name">
+                <select name="guard_name" lay-verify="required" lay-filter="guard_name">
                     <option value=""></option>
-                    <option value="server" selected="">server</option>
+                    <option value="web" selected="">web</option>
                 </select>
             </div>
         </div>
