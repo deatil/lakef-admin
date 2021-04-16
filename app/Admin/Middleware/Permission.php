@@ -65,12 +65,7 @@ class Permission implements MiddlewareInterface
     {
         if (! $this->shouldPassThrough($this->request)) {
             // 当前登陆账号信息
-            $info = $this->request->getAttribute('authAdmin');
-            if (empty($info) || $info['status'] != 1) {
-                return $this->view->render('serverlog::no-permission', [
-                    'message' => '账号不存在或者已被锁定',
-                ]);
-            }
+            $info = $this->request->getAttribute('authAdmin')->getData();
             
             if ($info['id'] != $this->config->get('serverlog.passport.super_id')) {
                 $uri = $this->request->path();

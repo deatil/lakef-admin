@@ -20,7 +20,7 @@ class Profile extends Base
      */
     public function getSetting()
     {
-        $authAdmin = $this->request->getAttribute('authAdmin');
+        $authAdmin = $this->getAuthAdminInfo();
         
         return $this->view('serverlog::profile.setting', [
             'admin' => $authAdmin,
@@ -54,7 +54,7 @@ class Profile extends Base
         $remark = $this->request->post('remark');
         
         // 登陆用户信息
-        $authAdmin = $this->request->getAttribute('authAdmin');
+        $authAdmin = $this->getAuthAdminInfo();
         
         $info = AdminModel::query()
             ->where([
@@ -126,7 +126,7 @@ class Profile extends Base
         }
         
         // 登陆用户信息
-        $authAdmin = $this->request->getAttribute('authAdmin');
+        $authAdmin = $this->getAuthAdminInfo();
         
         $oldPassword = $this->request->post('old_password');
         $newPassword = $this->request->post('new_password');

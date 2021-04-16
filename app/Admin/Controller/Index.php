@@ -18,7 +18,7 @@ class Index extends Base
      */
     public function getIndex()
     {
-        $authAdmin = $this->request->getAttribute('authAdmin');
+        $authAdmin = $this->getAuthAdminInfo();
         return $this->view('serverlog::index.index', [
             'admin' => $authAdmin,
         ]);
@@ -37,7 +37,7 @@ class Index extends Base
      */
     public function getMenu()
     {
-        $info = $this->getAuthAdmin();
+        $info = $this->getAuthAdminInfo();
         
         if ($this->getIsSuperAdmin()) {
             // 所有权限
@@ -60,6 +60,10 @@ class Index extends Base
         
         $permissionMenus = collect($permissionMenus)
             ->map(function($data) {
+                if ($data['url'] == '#') {
+                    $data['url'] = '';
+                }
+                
                 return [
                     'id' => $data['id'],
                     'parentid' => $data['parent_id'],
@@ -68,6 +72,9 @@ class Index extends Base
                     'href' => $data['url'],
                     'target' => $data['target'],
                 ];
+            })
+            ->filter(function($item) {
+                return !empty($item);
             })
             ->toArray();
         

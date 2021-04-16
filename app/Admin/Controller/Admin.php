@@ -43,13 +43,36 @@ class Admin extends Base
         }
         
         $page = max($page, 1);
-        $list = AdminModel::where($where)
-            ->offset($page - 1)
-            ->limit($limit)
-            ->get();
+        
+        if (! $this->getIsSuperAdmin()) {
+            $childRoleIds = $this->getAuthAdmin()->getChildRoleIds();
             
-        $count = AdminModel::where($where)
-            ->count();
+            $list = AdminModel::with('roles', function($query) use($childRoleIds) {
+                    return $query->where([
+                        ['id', 'in', $childRoleIds],
+                    ]);
+                })
+                ->where($where)
+                ->offset($page - 1)
+                ->limit($limit)
+                ->get();
+                
+            $count = AdminModel::with('roles', function($query) use($childRoleIds) {
+                    return $query->where([
+                        ['id', 'in', $childRoleIds],
+                    ]);
+                })
+                ->where($where)
+                ->count();
+        } else {
+            $list = AdminModel::where($where)
+                ->offset($page - 1)
+                ->limit($limit)
+                ->get();
+                
+            $count = AdminModel::where($where)
+                ->count();
+        }
         
         return $this->tableJson($list, $count);
     }
@@ -123,6 +146,21 @@ class Admin extends Base
             return $this->errorJson('账号创建失败');
         }
         
+        // 添加授权
+        if (! $this->getIsSuperAdmin()) {
+            $childRoleIds = $this->getAuthAdmin()->getChildRoleIds();
+            
+            if (empty($childRoleIds)) {
+                return $this->errorJson('当前账号不能创建新账号');
+            }
+            
+            try {
+                $admin->syncRoles([$childRoleIds[0]]);
+            } catch(\Exception $e) {
+                return $this->errorJson('账号创建授权失败');
+            }
+        }
+        
         return $this->successJson('账号创建成功');
     }
     
@@ -145,6 +183,15 @@ class Admin extends Base
             return $this->error('账号信息不存在');
         }
         
+        if (! $this->getIsSuperAdmin()) {
+            $childRoleIds = $this->getAuthAdmin()->getChildRoleIds();
+            $intersectRoles = AdminModel::getIntersectRoles($childRoleIds, $info->getRoleIds());
+            
+            if (empty($intersectRoles)) {
+                return $this->error('你不能修改该账号信息');
+            }
+        }
+        
         return $this->view('serverlog::admin.update', [
             'info' => $info,
         ]);
@@ -160,6 +207,12 @@ class Admin extends Base
             return $this->errorJson('ID不能为空');
         }
         
+        if (! $this->getIsSuperAdmin()) {
+            if ($id == $this->getAuthAdminId()) {
+                return $this->errorJson('你不能更新自己的账号');
+            }
+        }
+        
         $info = AdminModel::query()
             ->where([
                 'id' => $id,
@@ -167,6 +220,16 @@ class Admin extends Base
             ->first();
         if (empty($info)) {
             return $this->errorJson('账号信息不存在');
+        }
+        
+        // 账号角色检测
+        if (! $this->getIsSuperAdmin()) {
+            $childRoleIds = $this->getAuthAdmin()->getChildRoleIds();
+            $intersectRoles = AdminModel::getIntersectRoles($childRoleIds, $info->getRoleIds());
+            
+            if (empty($intersectRoles)) {
+                return $this->error('你不能修改该账号信息');
+            }
         }
         
         $validator = $this->validationFactory->make(
@@ -243,11 +306,26 @@ class Admin extends Base
             return $this->errorJson('你不能删除自己的账号');
         }
         
-        if (! is_array($id)) {
-            $id = [$id];
+        $info = AdminModel::query()
+            ->where([
+                'id' => $id,
+            ])
+            ->first();
+        if (empty($info)) {
+            return $this->errorJson('账号信息不存在');
         }
         
-        $delete = AdminModel::whereIn('id', $id)
+        // 账号角色检测
+        if (! $this->getIsSuperAdmin()) {
+            $childRoleIds = $this->getAuthAdmin()->getChildRoleIds();
+            $intersectRoles = AdminModel::getIntersectRoles($childRoleIds, $info->getRoleIds());
+            
+            if (empty($intersectRoles)) {
+                return $this->errorJson('你不能删除该账号信息');
+            }
+        }
+        
+        $delete = AdminModel::where('id', '=', $id)
             ->delete();
         if ($delete === false) {
             return $this->errorJson('删除失败');
@@ -271,6 +349,16 @@ class Admin extends Base
             return $this->error('账号不存在');
         }
         
+        // 账号角色检测
+        if (! $this->getIsSuperAdmin()) {
+            $childRoleIds = $this->getAuthAdmin()->getChildRoleIds();
+            $intersectRoles = AdminModel::getIntersectRoles($childRoleIds, $info->getRoleIds());
+            
+            if (empty($intersectRoles)) {
+                return $this->error('你不能更新该账号密码');
+            }
+        }
+        
         return $this->view('serverlog::admin.password', [
             'info' => $info,
         ]);
@@ -284,6 +372,28 @@ class Admin extends Base
         $id = (int) $this->request->input('id');
         if (empty($id)) {
             return $this->errorJson('ID不能为空');
+        }
+        
+        if ($id == $this->getAuthAdminId()) {
+            return $this->errorJson('你不能更新自己的密码');
+        }
+        
+        $info = AdminModel::where([
+                "id" => $id,
+            ])
+            ->first();
+        if (empty($info)) {
+            return $this->error('账号不存在');
+        }
+        
+        // 账号角色检测
+        if (! $this->getIsSuperAdmin()) {
+            $childRoleIds = $this->getAuthAdmin()->getChildRoleIds();
+            $intersectRoles = AdminModel::getIntersectRoles($childRoleIds, $info->getRoleIds());
+            
+            if (empty($intersectRoles)) {
+                return $this->errorJson('你不能更新该账号密码');
+            }
         }
         
         $password = $this->request->post('password');
@@ -374,6 +484,12 @@ class Admin extends Base
             return $this->errorJson('ID不能为空');
         }
         
+        if (! $this->getIsSuperAdmin()) {
+            if ($id == $this->getAuthAdminId()) {
+                return $this->errorJson('你不能更新自己的账号授权');
+            }
+        }
+        
         $roleid = $this->request->input('roleid');
         
         $info = AdminModel::query()
@@ -391,6 +507,16 @@ class Admin extends Base
             })
             ->values()
             ->toArray();
+        
+        // 过滤非当前账号子角色组
+        if (! $this->getIsSuperAdmin()) {
+            $childRoleIds = $this->getAuthAdmin()->getChildRoleIds();
+            $roleids = AdminModel::getIntersectRoles($childRoleIds, $roleids);
+            
+            if (empty($roleids)) {
+                return $this->errorJson('账号至少需要一个角色组');
+            }
+        }
         
         try {
             $info->syncRoles($roleids);

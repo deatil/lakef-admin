@@ -52,4 +52,10 @@ class Admin extends Model
     {
         return $this->roles->pluck('id');
     }
+
+    public static function getIntersectRoles(array $oldRoles = [], array $newRoles = [])
+    {
+        $intersectRoles = array_intersect_assoc($oldRoles, $newRoles);
+        return $intersectRoles;
+    }
 }

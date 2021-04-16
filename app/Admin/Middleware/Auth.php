@@ -16,6 +16,7 @@ use Hyperf\Contract\ConfigInterface;
 use Hyperf\Contract\SessionInterface;
 use Hyperf\HttpServer\Contract\ResponseInterface;
 use Hyperf\HttpServer\Contract\RequestInterface;
+use Hyperf\View\RenderInterface;
 
 use App\Admin\Auth\Admin as AuthAdmin;
 
@@ -46,16 +47,23 @@ class Auth implements MiddlewareInterface
      */
     protected $config;
 
+    /**
+     * @var RenderInterface
+     */
+    protected $view;
+
     public function __construct(
         ContainerInterface $container, 
         SessionInterface $session,
         ConfigInterface $config,
+        RenderInterface $view,
         RequestInterface $request,
         ResponseInterface $response
     ) {
         $this->container = $container;
         $this->session = $session;
         $this->config = $config;
+        $this->view = $view;
         $this->request = $request;
         $this->response = $response;
     }
@@ -71,7 +79,12 @@ class Auth implements MiddlewareInterface
                 return $this->response->redirect(admin_url('passport/login'));
             }
             
-            $authAdmin = make(AuthAdmin::class)->withId($adminid)->getData();
+            $authAdmin = make(AuthAdmin::class)->withId($adminid);
+            if (! $authAdmin->isActive()) {
+                return $this->view->render('serverlog::no-permission', [
+                    'message' => '账号不存在或者已被锁定',
+                ]);
+            }
             
             $request = Context::get(ServerRequestInterface::class);
             $request = $request->withAttribute('authAdmin', $authAdmin);

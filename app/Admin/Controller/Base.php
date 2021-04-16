@@ -140,7 +140,7 @@ abstract class Base
     }
     
     /**
-     * 当前管理员信息
+     * 当前管理员
      */
     public function getAuthAdmin()
     {
@@ -148,13 +148,19 @@ abstract class Base
     }
     
     /**
+     * 当前管理员信息
+     */
+    public function getAuthAdminInfo()
+    {
+        return $this->getAuthAdmin()->getData();
+    }
+    
+    /**
      * 当前管理员ID
      */
     public function getAuthAdminId()
     {
-        $authAdmin = $this->getAuthAdmin();
-        
-        return Arr::get($authAdmin, 'id');
+        return $this->getAuthAdmin()->getId();
     }
     
     /**
@@ -162,8 +168,6 @@ abstract class Base
      */
     public function getIsSuperAdmin()
     {
-        $adminId = $this->getAuthAdminId();
-        
-        return ($adminId == $this->config->get('serverlog.passport.super_id'));
+        return $this->getAuthAdmin()->isSuperAdmin();
     }
 }
