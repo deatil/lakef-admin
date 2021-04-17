@@ -11,6 +11,13 @@
             <form class="layui-form layui-form-pane" action="">
                 <div class="layui-form-item">
                     <div class="layui-inline">
+                        <label class="layui-form-label">权限名称</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="display_name" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
                         <label class="layui-form-label">权限</label>
                         <div class="layui-input-inline">
                             <input type="text" name="name" autocomplete="off" class="layui-input">
@@ -18,12 +25,33 @@
                     </div>
                     
                     <div class="layui-inline">
-                        <label class="layui-form-label">权限名称</label>
+                        <label class="layui-form-label">请求方式</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="display_name" autocomplete="off" class="layui-input">
+                            <select name="method">
+                                <option value="">全部方式</option>
+                                <option value="GET">GET</option>
+                                <option value="POST">POST</option>
+                                <option value="PUT">PUT</option>
+                                <option value="PATCH">PATCH</option>
+                                <option value="DELETE">DELETE</option>
+                                <option value="HEAD">HEAD</option>
+                                <option value="PATCH">PATCH</option>
+                                <option value="OPTIONS">OPTIONS</option>
+                            </select>
                         </div>
                     </div>
-
+                    
+                    <div class="layui-inline">
+                        <label class="layui-form-label">菜单</label>
+                        <div class="layui-input-inline">
+                            <select name="is_menu">
+                                <option value="">全部显示</option>
+                                <option value="1">显示</option>
+                                <option value="2">隐藏</option>
+                            </select>
+                        </div>
+                    </div>
+                    
                     <div class="layui-inline">
                         <button type="submit" class="layui-btn layui-btn-primary"  lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>
                     </div>
@@ -83,7 +111,7 @@ layui.use(['form', 'table', 'miniAdmin'], function () {
 
     table.render({
         elem: '#currentTableId',
-        url: "{{ admin_url('permission/data') }}",
+        url: "{{ admin_url('permission/index-data') }}",
         method: 'get',
         toolbar: '#toolbarDemo',
         defaultToolbar: ['filter', 'exports', 'print'],
@@ -92,12 +120,12 @@ layui.use(['form', 'table', 'miniAdmin'], function () {
                 {field: 'id', width: 80, title: 'ID', sort: true},
                 {title: '图标', width: 80, align: 'center', templet:'#iconTpl' },
                 {field: 'display_name', width: 120, title: '权限名称'},
-                {field: 'name', title: '权限'},
+                {field: 'name', minWidth: 80, title: '权限'},
                 {field: 'target', width: 120, title: '跳转方式', align: "center", templet: '#targetTpl'},
                 {field: 'is_menu', align: 'center', width: 95, title: '菜单', templet: '#menuTpl', unresize: true },
                 {field: 'sort', width: 80, title: '排序', edit: 'text'},
                 {field: 'created_at', width: 160, title: '创建时间', sort: true},
-                {title: '操作', minWidth: 80, align: "center", toolbar: '#currentTableBar', align: "center"}
+                {title: '操作', width: 160, align: "center", toolbar: '#currentTableBar', align: "center"}
             ]
         ],
         limits: [10, 15, 20, 25, 50, 100],
@@ -109,8 +137,11 @@ layui.use(['form', 'table', 'miniAdmin'], function () {
     // 监听搜索操作
     form.on('submit(data-search-btn)', function (data) {
         var data = data.field;
+        
         var name = data.name;
         var display_name = data.display_name;
+        var method = data.method;
+        var is_menu = data.is_menu;
         var guard_name = data.guard_name;
 
         // 执行搜索重载
@@ -121,6 +152,8 @@ layui.use(['form', 'table', 'miniAdmin'], function () {
             where: {
                 name: name,
                 display_name: display_name,
+                method: method,
+                is_menu: is_menu,
                 guard_name: guard_name,
             }
         }, 'data');
@@ -147,7 +180,7 @@ layui.use(['form', 'table', 'miniAdmin'], function () {
             });
         } else if (obj.event === 'menu') {
             var index = layer.open({
-                title: '查看菜单',
+                title: '权限菜单',
                 type: 2,
                 shade: 0.2,
                 maxmin:true,

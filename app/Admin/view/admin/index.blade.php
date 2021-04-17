@@ -32,22 +32,31 @@
         </div>
     </fieldset>
 
-    <script type="text/html" id="toolbarDemo">
-        <div class="layui-btn-container">
-            <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加 </button>
-        </div>
-    </script>
-
     <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 
-    <script type="text/html" id="currentTableBar">
-        <a class="layui-btn layui-btn-xs data-count-access" lay-event="access">授权</a>
-        <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
-        <a class="layui-btn layui-btn-green layui-btn-xs data-count-password" lay-event="password">密码</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs data-count-delete" lay-event="delete">删除</a>
-    </script>
-
 </div>
+
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加 </button>
+    </div>
+</script>
+
+<script type="text/html" id="currentTableBar">
+    <a class="layui-btn layui-btn-xs data-count-access" lay-event="access">授权</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-green layui-btn-xs data-count-password" lay-event="password">密码</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs data-count-delete" lay-event="delete">删除</a>
+</script>
+
+@verbatim
+<script type="text/html" id="rolesTpl">
+{{#  layui.each(d.roles, function(index, item){ }}
+    <span class="layui-badge layui-bg-green">{{ item.name }}</span>
+{{#  }); }}
+</script>
+@endverbatim
+
 @endsection
 
 @section('script_after')
@@ -66,10 +75,12 @@ layui.use(['form', 'table'], function () {
         defaultToolbar: ['filter', 'exports', 'print'],
         cols: [[
             {field: 'id', width: 80, title: 'ID', sort: true},
-            {field: 'name', title: '账号'},
+            {field: 'name', minWidth: 100, title: '账号'},
+            {field: 'nickname', width: 130, title: '账号昵称'},
             {field: 'email', title: '邮箱'},
+            {field: 'roles', width: 160, title: '所属角色', templet: '#rolesTpl'},
             {field: 'created_at', width: 160, title: '创建时间', sort: true},
-            {title: '操作', minWidth: 120, toolbar: '#currentTableBar', align: "center"}
+            {title: '操作', width: 220, toolbar: '#currentTableBar', align: "center"}
         ]],
         limits: [10, 15, 20, 25, 50, 100],
         limit: 15,

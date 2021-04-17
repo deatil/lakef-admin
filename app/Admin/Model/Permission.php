@@ -11,5 +11,15 @@ use Donjan\Permission\Models\Permission as PermissionModel;
  */
 class Permission extends PermissionModel
 {
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'id' => 'int', 
+        'is_menu' => 'integer',
+        'is_click' => 'integer',
+    ];
 
 }

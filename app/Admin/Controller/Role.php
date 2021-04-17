@@ -24,7 +24,7 @@ class Role extends Base
     /**
      * 首页
      */
-    public function getData()
+    public function getIndexData()
     {
         $page = (int) $this->request->input('page', 1);
         $limit = (int) $this->request->input('limit', 10);
@@ -67,8 +67,8 @@ class Role extends Base
     public function getTreeData()
     {
         $list = RoleModel
-            ::orderBy('sort', 'DESC')
-            ->orderBy('id', 'DESC')
+            ::orderBy('sort', 'ASC')
+            ->orderBy('id', 'ASC')
             ->get()
             ->toArray();
         
@@ -85,8 +85,8 @@ class Role extends Base
         $parentid = (int) $this->request->input('parentid');
         
         $list = RoleModel
-            ::orderBy('sort', 'DESC')
-            ->orderBy('id', 'DESC')
+            ::orderBy('sort', 'ASC')
+            ->orderBy('id', 'ASC')
             ->get()
             ->toArray();
         
@@ -172,8 +172,8 @@ class Role extends Base
         
         // 父级
         $list = RoleModel
-            ::orderBy('sort', 'DESC')
-            ->orderBy('id', 'DESC')
+            ::orderBy('sort', 'ASC')
+            ->orderBy('id', 'ASC')
             ->get()
             ->toArray();
         
@@ -335,8 +335,8 @@ class Role extends Base
         
         // 权限
         $permissionList = PermissionModel
-            ::orderBy('sort', 'DESC')
-            ->orderBy('id', 'DESC')
+            ::orderBy('sort', 'ASC')
+            ->orderBy('id', 'ASC')
             ->get()
             ->toArray();
         

@@ -23,7 +23,7 @@ class Permission extends Base
     /**
      * 首页数据
      */
-    public function getData()
+    public function getIndexData()
     {
         $page = (int) $this->request->input('page', 1);
         $limit = (int) $this->request->input('limit', 10);
@@ -36,8 +36,18 @@ class Permission extends Base
         }
         
         $displayName = $this->request->input('display_name');
-        if (! empty($guardName)) {
+        if (! empty($displayName)) {
             $where[] = ['display_name', 'like', '%'.$displayName.'%'];
+        }
+        
+        $method = $this->request->input('method');
+        if (! empty($method)) {
+            $where[] = ['method', '=', $method];
+        }
+        
+        $isMenu = $this->request->input('is_menu');
+        if (! empty($isMenu)) {
+            $where[] = ['is_menu', '=', ($isMenu == 1) ? 1 : 0];
         }
         
         $guardName = $this->request->input('guard_name');
@@ -72,8 +82,8 @@ class Permission extends Base
     public function getMenuData()
     {
         $list = PermissionModel
-            ::orderBy('sort', 'DESC')
-            ->orderBy('id', 'DESC')
+            ::orderBy('sort', 'ASC')
+            ->orderBy('id', 'ASC')
             ->get()
             ->toArray();
         
@@ -90,8 +100,8 @@ class Permission extends Base
         $parentid = (int) $this->request->input('parentid');
         
         $permissionList = PermissionModel
-            ::orderBy('sort', 'DESC')
-            ->orderBy('id', 'DESC')
+            ::orderBy('sort', 'ASC')
+            ->orderBy('id', 'ASC')
             ->get()
             ->toArray();
         
@@ -142,25 +152,38 @@ class Permission extends Base
         $icon = $this->request->post('icon');
         $sort = $this->request->post('sort', 1000);
         
-        $is_menu = $this->request->post('is_menu');
-        if (! empty($is_menu)) {
-            $is_menu = 1;
+        $isMenu = $this->request->post('is_menu');
+        if (! empty($isMenu)) {
+            $isMenu = 1;
         } else {
-            $is_menu = 0;
+            $isMenu = 0;
         }
         
-        $permission = PermissionModel::create([
-            'parent_id' => $parentId,
-            'name' => $method.':'.$url,
-            'display_name' => $displayName,
-            'guard_name' => $guardName,
-            'url' => $url,
-            'method' => $method,
-            'target' => $target,
-            'icon' => $icon,
-            'is_menu' => $is_menu,
-            'sort' => $sort,
-        ]);
+        $isClick = $this->request->post('is_click');
+        if (! empty($isClick)) {
+            $isClick = 1;
+        } else {
+            $isClick = 0;
+        }
+        
+        try {
+            $permission = PermissionModel::create([
+                'parent_id' => $parentId,
+                'name' => $method.':'.$url,
+                'display_name' => $displayName,
+                'guard_name' => $guardName,
+                'url' => $url,
+                'method' => $method,
+                'target' => $target,
+                'icon' => $icon,
+                'is_menu' => $isMenu,
+                'is_click' => $isClick,
+                'sort' => $sort,
+            ]);
+        } catch(\Exception $e) {
+            return $this->errorJson($e->getMessage());
+        }
+        
         if ($permission === false) {
             return $this->errorJson('权限创建失败');
         }
@@ -188,8 +211,8 @@ class Permission extends Base
         }
         
         $permissionList = PermissionModel
-            ::orderBy('sort', 'DESC')
-            ->orderBy('id', 'DESC')
+            ::orderBy('sort', 'ASC')
+            ->orderBy('id', 'ASC')
             ->get()
             ->toArray();
         
@@ -272,32 +295,44 @@ class Permission extends Base
         $icon = $this->request->post('icon');
         $sort = $this->request->post('sort', 1000);
         
-        $is_menu = $this->request->post('is_menu');
-        if (! empty($is_menu)) {
-            $is_menu = 1;
+        $isMenu = $this->request->post('is_menu');
+        if (! empty($isMenu)) {
+            $isMenu = 1;
         } else {
-            $is_menu = 0;
+            $isMenu = 0;
         }
         
-        $update = PermissionModel::where([
-            ['id', '=', $id],
-        ])->update([
-            'parent_id' => $parentId,
-            'name' => $method.':'.$url,
-            'display_name' => $displayName,
-            'guard_name' => $guardName,
-            'url' => $url,
-            'method' => $method,
-            'target' => $target,
-            'icon' => $icon,
-            'is_menu' => $is_menu,
-            'sort' => $sort,
-        ]);
+        $isClick = $this->request->post('is_click');
+        if (! empty($isClick)) {
+            $isClick = 1;
+        } else {
+            $isClick = 0;
+        }
+        
+        try {
+            $update = PermissionModel::where([
+                ['id', '=', $id],
+            ])->update([
+                'parent_id' => $parentId,
+                'name' => $method.':'.$url,
+                'display_name' => $displayName,
+                'guard_name' => $guardName,
+                'url' => $url,
+                'method' => $method,
+                'target' => $target,
+                'icon' => $icon,
+                'is_menu' => $isMenu,
+                'is_click' => $isClick,
+                'sort' => $sort,
+            ]);
+        } catch(\Exception $e) {
+            return $this->errorJson($e->getMessage());
+        }
         if ($update === false) {
-            return $this->errorJson('更新失败');
+            return $this->errorJson('权限更新失败');
         }
         
-        return $this->successJson('更新成功');
+        return $this->successJson('权限更新成功');
     }
     
     /**
@@ -327,10 +362,10 @@ class Permission extends Base
         $delete = PermissionModel::where('id', $id)
             ->delete();
         if ($delete === false) {
-            return $this->errorJson('删除失败');
+            return $this->errorJson('权限删除失败');
         }
         
-        return $this->successJson('删除成功');
+        return $this->successJson('权限删除成功');
     }
 
     /**
@@ -351,10 +386,10 @@ class Permission extends Base
             'is_menu' => $status,
         ]);
         if ($update === false) {
-            return $this->errorJson("设置失败");
+            return $this->errorJson("权限设置失败");
         }
         
-        return $this->successJson('设置成功');
+        return $this->successJson('权限设置成功');
     }
 
     /**
@@ -375,9 +410,9 @@ class Permission extends Base
             'sort' => $sort,
         ]);
         if ($update === false) {
-            return $this->errorJson("排序失败");
+            return $this->errorJson("权限排序失败");
         }
         
-        return $this->successJson('排序成功');
+        return $this->successJson('权限排序成功');
     }
 }

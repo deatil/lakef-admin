@@ -31,6 +31,26 @@
     <span title="{{d.display_name}}：{{d.id}}"><i class='fa {{d.icon}}'></i></span>
 </script>
 
+<script type="text/html" id="guardNameTpl">
+    <span class="layui-badge layui-bg-green">{{ d.guard_name }}</span>
+</script>
+
+<script type="text/html" id="menuTpl">
+    <div class="layui-btn-group">
+        {{# if (d.is_menu == 1) { }}
+            <span class="layui-btn layui-btn-xs layui-btn-rim">菜单</span>
+        {{# } else { }}
+            <span class="layui-btn layui-btn-xs layui-btn-danger">隐藏</span>
+        {{# } }}
+        
+        {{# if (d.is_click == 1) { }}
+            <span class="layui-btn layui-btn-xs layui-bg-gray">点击</span>
+        {{# } else { }}
+            <span class="layui-btn layui-btn-xs layui-bg-blue">禁用</span>
+        {{# } }}
+    </div>
+</script>
+
 <!-- 操作列 -->
 <script type="text/html" id="auth-state">
     <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">修改</a>
@@ -59,19 +79,22 @@ layui.use(['table', 'treetable', 'miniAdmin'], function () {
         elem: '#menu-table',
         url: "{{ admin_url('permission/menu-data') }}",
         page: false,
+        skin: 'line',
         cols: [
             [
-                {width: 80, title: '图标',align: 'center', templet:'#iconTpl' },
+                {width: 80, title: '图标',align: 'center', templet: '#iconTpl' },
                 {field: 'display_name', minWidth: 200, title: '权限名称'},
-                {field: 'name', title: '权限'},
-                {field: 'guard_name', width: 135, title: '守护类型'},
+                {field: 'name', minWidth: 80, title: '权限'},
+                {field: 'guard_name', width: 100, title: '守护类型', align: "center", templet: '#guardNameTpl'},
                 {field: 'sort', width: 80, title: '排序', edit: 'text'},
+                {field: 'isMenu', width: 100, title: '类型', align: 'center', templet: '#menuTpl' },
                 {field: 'created_at', width: 160, title: '创建时间', sort: true},
-                {title: '操作', minWidth: 80, toolbar: '#auth-state', align: "center"}
+                {title: '操作', width: 160, toolbar: '#auth-state', align: "center"}
             ]
         ],
         done: function () {
             layer.closeAll('loading');
+            treetable.foldAll('#menu-table');
         }
     });
     

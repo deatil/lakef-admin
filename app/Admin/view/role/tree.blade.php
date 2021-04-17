@@ -24,6 +24,10 @@
 </div>
 
 @verbatim
+<script type="text/html" id="guardNameTpl">
+    <span class="layui-badge layui-bg-green">{{ d.guard_name }}</span>
+</script>
+
 <!-- 操作列 -->
 <script type="text/html" id="auth-state">
     <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">修改</a>
@@ -52,14 +56,15 @@ layui.use(['table', 'treetable', 'miniAdmin'], function () {
         elem: '#munu-table',
         url: "{{ admin_url('role/tree-data') }}",
         page: false,
+        skin: 'line',
         cols: [
             [
                 {field: 'id', width: 80, title: '#', align: "center"},
-                {field: 'name', title: '角色名'},
-                {field: 'guard_name', width: 135, title: '守护类型'},
+                {field: 'name', minWidth: 100, title: '角色名'},
+                {field: 'guard_name', width: 100, title: '守护类型', align: "center", templet: '#guardNameTpl'},
                 {field: 'sort', width: 80, title: '排序', edit: 'text'},
                 {field: 'created_at', width: 160, title: '创建时间', sort: true},
-                {title: '操作', minWidth: 80, toolbar: '#auth-state', align: "center"}
+                {title: '操作', width: 160, toolbar: '#auth-state', align: "center"}
             ]
         ],
         done: function () {

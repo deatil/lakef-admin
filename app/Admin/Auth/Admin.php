@@ -100,7 +100,7 @@ class Admin
             return [];
         }
         
-        return $info->getRoleNames();
+        return $info->getRoleNames()->toArray();
     }
     
     /**
@@ -113,7 +113,7 @@ class Admin
             return [];
         }
         
-        return $info->getRoleIds();
+        return $info->getRoleIds()->toArray();
     }
     
     /**
@@ -127,8 +127,8 @@ class Admin
         }
         
         $roleList = RoleModel
-            ::orderBy('sort', 'DESC')
-            ->orderBy('id', 'DESC')
+            ::orderBy('sort', 'ASC')
+            ->orderBy('id', 'ASC')
             ->get()
             ->toArray();
         
@@ -139,10 +139,15 @@ class Admin
                 ->withConfig('parentidKey', 'parent_id')
                 ->buildArray($roleId);
             $roles = $tree->buildFormatList($treeData);
-            $childRoleIds = array_merge($childRoleIds, collect($roles)->pluck('id'));
+            $childRoleIds = array_merge($childRoleIds, collect($roles)->pluck('id')->toArray());
+            unset($tree);
         }
         
-        return array_values($childRoleIds);
+        if (! empty($childRoleIds)) {
+            $childRoleIds = array_values($childRoleIds);
+        }
+        
+        return $childRoleIds;
     }
     
     /**
@@ -168,6 +173,6 @@ class Admin
             return [];
         }
         
-        return $info->permissions->pluck('id');
+        return $info->permissions->pluck('id')->toArray();
     }
 }

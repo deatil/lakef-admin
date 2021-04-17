@@ -35,12 +35,15 @@ class Profile extends Base
         $validator = $this->validationFactory->make(
             $this->request->all(),
             [
-                'name' => 'required|min:5',
+                'name' => 'required|alpha_dash|min:1',
+                'nickname' => 'required',
                 'email' => 'required|email|bail',
             ],
             [
-                'name.required' => '用户名必填',
-                'name.min' => '用户名最少6位',
+                'name.required' => '账号名必填',
+                'name.alpha_dash' => '账号名只能包含字母、数字、中划线或下划线',
+                'name.min' => '账号名最少1位',
+                'nickname.required' => '昵称必填',
                 'email.required' => '邮箱必填',
                 'email.email' => '邮箱格式错误',
             ]
@@ -50,6 +53,7 @@ class Profile extends Base
         }
         
         $name = $this->request->post('name');
+        $nickname = $this->request->post('nickname');
         $email = $this->request->post('email');
         $remark = $this->request->post('remark');
         
@@ -82,6 +86,7 @@ class Profile extends Base
             ])
             ->update([
                 'name' => $name,
+                'nickname' => $nickname,
                 'email' => $email,
                 'remark' => $remark,
             ]);

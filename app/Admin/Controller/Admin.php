@@ -45,32 +45,36 @@ class Admin extends Base
         $page = max($page, 1);
         
         if (! $this->getIsSuperAdmin()) {
-            $childRoleIds = $this->getAuthAdmin()->getChildRoleIds();
+            try {
+                $childRoleIds = $this->getAuthAdmin()->getChildRoleIds();
+            } catch(\Exception $e) {
+                return $this->errorJson($e->getMessage());
+            }
             
-            $list = AdminModel::with('roles', function($query) use($childRoleIds) {
-                    return $query->where([
-                        ['id', 'in', $childRoleIds],
-                    ]);
+            $list = AdminModel::with('roles')
+                ->whereHas('roles', function($query) use($childRoleIds) {
+                    $query->whereIn('id', $childRoleIds);
                 })
                 ->where($where)
                 ->offset($page - 1)
                 ->limit($limit)
                 ->get();
                 
-            $count = AdminModel::with('roles', function($query) use($childRoleIds) {
-                    return $query->where([
-                        ['id', 'in', $childRoleIds],
-                    ]);
+            $count = AdminModel::with('roles')
+                ->whereHas('roles', function($query) use($childRoleIds) {
+                    $query->whereIn('id', $childRoleIds);
                 })
                 ->where($where)
                 ->count();
         } else {
-            $list = AdminModel::where($where)
+            $list = AdminModel::with('roles')
+                ->where($where)
                 ->offset($page - 1)
                 ->limit($limit)
                 ->get();
                 
-            $count = AdminModel::where($where)
+            $count = AdminModel::with('roles')
+                ->where($where)
                 ->count();
         }
         
@@ -93,12 +97,15 @@ class Admin extends Base
         $validator = $this->validationFactory->make(
             $this->request->all(),
             [
-                'name' => 'required|min:1',
+                'name' => 'required|alpha_dash|min:1',
+                'nickname' => 'required',
                 'email' => 'required|email|bail',
             ],
             [
                 'name.required' => '账号名必填',
+                'name.alpha_dash' => '账号名只能包含字母、数字、中划线或下划线',
                 'name.min' => '账号名最少1位',
+                'nickname.required' => '昵称必填',
                 'email.required' => '邮箱必填',
                 'email.email' => '邮箱格式错误',
             ]
@@ -108,6 +115,7 @@ class Admin extends Base
         }
         
         $name = $this->request->post('name');
+        $nickname = $this->request->post('nickname');
         $email = $this->request->post('email');
         $remark = $this->request->post('remark');
         $status = $this->request->post('status');
@@ -138,6 +146,7 @@ class Admin extends Base
         
         $admin = AdminModel::create([
             'name' => $name,
+            'nickname' => $nickname,
             'email' => $email,
             'remark' => $remark,
             'status' => $status,
@@ -185,7 +194,7 @@ class Admin extends Base
         
         if (! $this->getIsSuperAdmin()) {
             $childRoleIds = $this->getAuthAdmin()->getChildRoleIds();
-            $intersectRoles = AdminModel::getIntersectRoles($childRoleIds, $info->getRoleIds());
+            $intersectRoles = AdminModel::getIntersectRoles($childRoleIds, $info->getRoleIds()->toArray());
             
             if (empty($intersectRoles)) {
                 return $this->error('你不能修改该账号信息');
@@ -225,7 +234,7 @@ class Admin extends Base
         // 账号角色检测
         if (! $this->getIsSuperAdmin()) {
             $childRoleIds = $this->getAuthAdmin()->getChildRoleIds();
-            $intersectRoles = AdminModel::getIntersectRoles($childRoleIds, $info->getRoleIds());
+            $intersectRoles = AdminModel::getIntersectRoles($childRoleIds, $info->getRoleIds()->toArray());
             
             if (empty($intersectRoles)) {
                 return $this->error('你不能修改该账号信息');
@@ -235,12 +244,15 @@ class Admin extends Base
         $validator = $this->validationFactory->make(
             $this->request->all(),
             [
-                'name' => 'required|min:1',
+                'name' => 'required|alpha_dash|min:1',
+                'nickname' => 'required',
                 'email' => 'required|email|bail',
             ],
             [
                 'name.required' => '账号名必填',
+                'name.alpha_dash' => '账号名只能包含字母、数字、中划线或下划线',
                 'name.min' => '账号名最少1位',
+                'nickname.required' => '昵称必填',
                 'email.required' => '邮箱必填',
                 'email.email' => '邮箱格式错误',
             ]
@@ -250,6 +262,7 @@ class Admin extends Base
         }
         
         $name = $this->request->post('name');
+        $nickname = $this->request->post('nickname');
         $email = $this->request->post('email');
         $remark = $this->request->post('remark');
         $status = $this->request->post('status');
@@ -281,6 +294,7 @@ class Admin extends Base
             ['id', '=', $id],
         ])->update([
             'name' => $name,
+            'nickname' => $nickname,
             'email' => $email,
             'remark' => $remark,
             'status' => $status,
@@ -318,7 +332,7 @@ class Admin extends Base
         // 账号角色检测
         if (! $this->getIsSuperAdmin()) {
             $childRoleIds = $this->getAuthAdmin()->getChildRoleIds();
-            $intersectRoles = AdminModel::getIntersectRoles($childRoleIds, $info->getRoleIds());
+            $intersectRoles = AdminModel::getIntersectRoles($childRoleIds, $info->getRoleIds()->toArray());
             
             if (empty($intersectRoles)) {
                 return $this->errorJson('你不能删除该账号信息');
@@ -352,7 +366,7 @@ class Admin extends Base
         // 账号角色检测
         if (! $this->getIsSuperAdmin()) {
             $childRoleIds = $this->getAuthAdmin()->getChildRoleIds();
-            $intersectRoles = AdminModel::getIntersectRoles($childRoleIds, $info->getRoleIds());
+            $intersectRoles = AdminModel::getIntersectRoles($childRoleIds, $info->getRoleIds()->toArray());
             
             if (empty($intersectRoles)) {
                 return $this->error('你不能更新该账号密码');
@@ -389,7 +403,7 @@ class Admin extends Base
         // 账号角色检测
         if (! $this->getIsSuperAdmin()) {
             $childRoleIds = $this->getAuthAdmin()->getChildRoleIds();
-            $intersectRoles = AdminModel::getIntersectRoles($childRoleIds, $info->getRoleIds());
+            $intersectRoles = AdminModel::getIntersectRoles($childRoleIds, $info->getRoleIds()->toArray());
             
             if (empty($intersectRoles)) {
                 return $this->errorJson('你不能更新该账号密码');
@@ -456,8 +470,8 @@ class Admin extends Base
         $adminRoles = $info->getRoleIds()->toArray();
         
         $list = RoleModel
-            ::orderBy('sort', 'DESC')
-            ->orderBy('id', 'DESC')
+            ::orderBy('sort', 'ASC')
+            ->orderBy('id', 'ASC')
             ->get()
             ->toArray();
         

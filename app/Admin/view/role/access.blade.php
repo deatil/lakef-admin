@@ -8,8 +8,6 @@
     border: 1px solid #D2D2D2;
     border-radius: 2px;
     padding: 5px 0 15px 3px;
-    max-height: 500px;
-    overflow-y: scroll;
 }
 </style>
 <div class="layuimini-main">

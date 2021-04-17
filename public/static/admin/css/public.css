@@ -1,3 +1,29 @@
+::selection{
+    color:#fff !important;
+    background-color:#009688 !important;
+}
+::-moz-selection{
+    color:#fff !important;
+    background-color:#009688 !important;
+}
+
+input::-webkit-input-placeholder, 
+textarea::-webkit-input-placeholder {
+    color: #b3b3b3;
+}
+input:-moz-placeholder, 
+textarea:-moz-placeholder {
+    color:#b3b3b3;
+}
+input::-moz-placeholder, 
+textarea::-moz-placeholder {
+    color:#b3b3b3;
+}
+input:-ms-input-placeholder, 
+textarea:-ms-input-placeholder {
+    color:#b3b3b3;
+}
+
 body {
     margin: 15px 15px 15px 15px;
     background: #f2f2f2;

@@ -15,8 +15,16 @@
         <div class="layui-form-item">
             <label class="layui-form-label required">管理账号</label>
             <div class="layui-input-block">
-                <input type="text" name="username" lay-verify="required" lay-reqtext="管理账号不能为空" placeholder="请输入管理账号"  value="{{ $admin['name'] }}" class="layui-input">
-                <tip>填写自己管理账号的名称。</tip>
+                <input type="text" name="username" value="{{ $admin['name'] }}" lay-verify="required" lay-reqtext="管理账号不能为空" placeholder="请输入管理账号" class="layui-input">
+                <tip>填写自己的账号</tip>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label required">账号昵称</label>
+            <div class="layui-input-block">
+                <input type="text" name="nickname" value="{{ $admin['nickname'] }}" lay-verify="required" lay-reqtext="账号昵称不能为空" placeholder="请输入账号昵称" class="layui-input">
+                <tip>填写自己的账号昵称</tip>
             </div>
         </div>
 
@@ -53,20 +61,13 @@ layui.use(['form','miniTab'], function () {
 
     //监听提交
     form.on('submit(saveBtn)', function (data) {
-        data = data.field;
-        if (data.username == '') {
-            layer.msg('用户名不能为空');
-            return false;
-        }
-        if (data.email == '') {
-            layer.msg('用户邮箱不能为空');
-            return false;
-        }
+        var data = data.field;
         
         var href = "{{ admin_url('profile/setting') }}";
         
         $.post(href, {
             'name': data.username,
+            'nickname': data.nickname,
             'email': data.email,
             'remark': data.remark,
         }, function(data) {

@@ -4,16 +4,29 @@
 
 @section('container')
 <div class="layuimini-main">
-    <form class="layui-form" action="">
+    <form class="layui-form layuimini-form" action="">
         <div class="layui-form-item">
-            <label class="layui-form-label">账号</label>
+            <label class="layui-form-label required">账号</label>
             <div class="layui-input-block">
                 <input type="text" name="name" value="{{ $info['name'] }}" lay-verify="required" lay-reqtext="账号不能为空" placeholder="请输入账号" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-input-block">
+                <div class="layui-form-mid layui-word-aux">账号通常为字母、数字、下划线、中划线及其组合</div>
             </div>
         </div>
         
         <div class="layui-form-item">
-            <label class="layui-form-label">账号邮箱</label>
+            <label class="layui-form-label required">账号昵称</label>
+            <div class="layui-input-block">
+                <input type="text" name="nickname" value="{{ $info['nickname'] }}" lay-verify="required" lay-reqtext="账号昵称不能为空" placeholder="请输入账号昵称" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-input-block">
+                <div class="layui-form-mid layui-word-aux">设置账号的昵称，必填选项</div>
+            </div>
+        </div>
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label required">账号邮箱</label>
             <div class="layui-input-block">
                 <input type="text" name="email" value="{{ $info['email'] }}" lay-verify="required" lay-reqtext="账号邮箱不能为空" placeholder="请输入账号邮箱" autocomplete="off" class="layui-input">
             </div>
@@ -27,10 +40,13 @@
             <div class="layui-input-block">
                 <textarea name="remark" placeholder="请输入账号备注" class="layui-textarea">{{ $info['remark'] }}</textarea>
             </div>
+            <div class="layui-input-block">
+                <div class="layui-form-mid layui-word-aux">设置账号的备注信息</div>
+            </div>
         </div>
         
         <div class="layui-form-item">
-            <label class="layui-form-label">状态</label>
+            <label class="layui-form-label required">状态</label>
             <div class="layui-input-block">
                 <input type="checkbox" {{ ($info['status'] == 1 ? 'checked=""' : '') }} name="status" lay-skin="switch" lay-text="启用|禁用">
             </div>

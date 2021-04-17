@@ -32,23 +32,30 @@
         </div>
     </fieldset>
 
-    <script type="text/html" id="toolbarDemo">
-        <div class="layui-btn-container">
-            <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加 </button>
-            <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button>
-            <button class="layui-btn layui-btn-green layui-btn-sm data-tree-btn" lay-event="tree"> 菜单 </button>
-        </div>
-    </script>
-
     <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
-
-    <script type="text/html" id="currentTableBar">
-        <a class="layui-btn layui-btn-xs data-count-access" lay-event="access">授权</a>
-        <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
-        <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
-    </script>
-
 </div>
+
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加 </button>
+        <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button>
+        <button class="layui-btn layui-btn-green layui-btn-sm data-tree-btn" lay-event="tree"> 结构 </button>
+    </div>
+</script>
+
+<script type="text/html" id="currentTableBar">
+    <a class="layui-btn layui-btn-xs data-count-access" lay-event="access">授权</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-green layui-btn-xs" lay-event="add">添加</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+</script>
+    
+@verbatim
+<script type="text/html" id="guardNameTpl">
+    <span class="layui-badge layui-bg-green">{{ d.guard_name }}</span>
+</script>
+@endverbatim
+
 @endsection
 
 @section('script_after')
@@ -61,7 +68,7 @@ layui.use(['form', 'table', 'miniAdmin'], function () {
 
     table.render({
         elem: '#currentTableId',
-        url: "{{ admin_url('role/data') }}",
+        url: "{{ admin_url('role/index-data') }}",
         method: 'get',
         toolbar: '#toolbarDemo',
         defaultToolbar: ['filter', 'exports', 'print', {
@@ -72,11 +79,11 @@ layui.use(['form', 'table', 'miniAdmin'], function () {
         cols: [[
             {type: "checkbox", width: 50},
             {field: 'id', width: 80, title: 'ID', sort: true},
-            {field: 'name', title: '角色名'},
-            {field: 'guard_name', width: 135, title: '守护类型'},
+            {field: 'name', minWidth: 100, title: '角色名'},
+            {field: 'guard_name', width: 100, title: '守护类型', align: "center", templet: '#guardNameTpl'},
             {field: 'sort', width: 80, title: '排序', edit: 'text'},
             {field: 'created_at', width: 160, title: '创建时间', sort: true},
-            {title: '操作', minWidth: 80, toolbar: '#currentTableBar', align: "center"}
+            {title: '操作', width: 220, toolbar: '#currentTableBar', align: "center"}
         ]],
         limits: [10, 15, 20, 25, 50, 100],
         limit: 15,
@@ -190,6 +197,19 @@ layui.use(['form', 'table', 'miniAdmin'], function () {
                 layer.full(index);
             });
             return false;
+        } else if (obj === 'add') {
+            var index = layer.open({
+                title: '创建角色',
+                type: 2,
+                shade: 0.2,
+                maxmin:true,
+                shadeClose: true,
+                area: ['100%', '100%'],
+                content: "{{ admin_url('role/create') }}?parentid=" + data.id,
+            });
+            $(window).on("resize", function () {
+                layer.full(index);
+            });
         } else if (obj.event === 'delete') {
             layer.confirm('真的要删除该条数据吗？', function (index) {
                 var url = "{{ admin_url('role/delete') }}";

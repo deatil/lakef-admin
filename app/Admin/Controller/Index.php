@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace App\Admin\Controller;
 
 use Psr\SimpleCache\CacheInterface;
+use Hyperf\DbConnection\Db;
+
 use App\Admin\Support\Tree;
+use App\Admin\Model\Role as RoleModel;
+use App\Admin\Model\Admin as AdminModel;
 use App\Admin\Model\Permission as PermissionModel;
 
 /**
@@ -19,6 +23,7 @@ class Index extends Base
     public function getIndex()
     {
         $authAdmin = $this->getAuthAdminInfo();
+        
         return $this->view('serverlog::index.index', [
             'admin' => $authAdmin,
         ]);
@@ -27,9 +32,39 @@ class Index extends Base
     /**
      * 首页
      */
-    public function getMain()
+    public function getDashboard()
     {
-        return $this->view('serverlog::index.main');
+        $adminCount = AdminModel::query()->count();
+        $roleCount = RoleModel::query()->count();
+        $permissionCount = PermissionModel::query()->count();
+        
+        $sysInfo['ip'] = $this->request->server('remote_addr'); // 服务器IP
+        $sysInfo['php_uname'] = php_uname();
+        $sysInfo['phpv'] = phpversion(); // php版本
+        $sysInfo['time'] = date("Y年n月j日 H:i:s", $this->request->server('master_time')); //服务器时间
+        $mysqlinfo = Db::select("SELECT VERSION() as version");
+        $sysInfo['mysql_version'] = $mysqlinfo[0]->version;
+        $sysInfo['fileupload'] = @ini_get('file_uploads') ? ini_get('upload_max_filesize') : 'unknown'; //文件上传限制
+        if (function_exists("gd_info")) {
+            // GD库版本
+            $gd = gd_info();
+            $sysInfo['gdinfo'] = $gd['GD Version'];
+        } else {
+            $sysInfo['gdinfo'] = "未知";
+        }
+
+        return $this->view('serverlog::index.dashboard', [
+            'counts' => [
+                'admin' => $adminCount,
+                'role' => $roleCount,
+                'permission' => $permissionCount,
+            ],
+            'sys_info' => $sysInfo,
+            'system' => [
+                'title' => config('serverlog.admin.title'),
+                'version' => config('serverlog.admin.version'),
+            ],
+        ]);
     }
     
     /**
@@ -42,11 +77,12 @@ class Index extends Base
         if ($this->getIsSuperAdmin()) {
             // 所有权限
             $permissionMenus = PermissionModel
-                ::orderBy('sort', 'DESC')
-                ->orderBy('id', 'DESC')
+                ::orderBy('sort', 'ASC')
+                ->orderBy('id', 'ASC')
                 ->select([
                     'id', 'parent_id', 
-                    'display_name', 'url', 'target', 'icon'
+                    'display_name', 'url', 'target', 'icon', 
+                    'is_menu', 'is_click'
                 ])
                 ->get()
                 ->toArray();
@@ -60,7 +96,11 @@ class Index extends Base
         
         $permissionMenus = collect($permissionMenus)
             ->map(function($data) {
-                if ($data['url'] == '#') {
+                if ($data['is_menu'] != 1) {
+                    return [];
+                }
+                
+                if ($data['is_click'] != 1) {
                     $data['url'] = '';
                 }
                 
@@ -91,7 +131,7 @@ class Index extends Base
             ],
             'homeInfo' => [
                 'title' => '控制台',
-                'href' => '/admin/index/main',
+                'href' => '/admin/index/dashboard',
             ],
             'menuInfo' => $permissionMenus,
         ];

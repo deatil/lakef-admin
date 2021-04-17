@@ -4,18 +4,21 @@
 
 @section('container')
 <div class="layuimini-main">
-    <form class="layui-form" action="">
+    <form class="layui-form layuimini-form" action="">
         <div class="layui-form-item">
             <label class="layui-form-label">账号</label>
             <div class="layui-input-block">
                 <input type="text" value="{{ $info['name'] }}" disabled="" autocomplete="off" class="layui-input">
             </div>
+            <div class="layui-input-block">
+                <div class="layui-form-mid layui-word-aux">账号名称</div>
+            </div>
         </div>
         
         <div class="layui-form-item">
-            <label class="layui-form-label">新密码</label>
+            <label class="layui-form-label required">新密码</label>
             <div class="layui-input-block">
-                <input type="text" name="password" lay-verify="required" lay-reqtext="新密码不能为空" placeholder="请输入新密码" autocomplete="off" class="layui-input">
+                <input type="password" name="password" lay-verify="required" lay-reqtext="新密码不能为空" placeholder="请输入新密码" autocomplete="off" class="layui-input">
             </div>
             <div class="layui-input-block">
                 <div class="layui-form-mid layui-word-aux">
@@ -25,9 +28,9 @@
         </div>
         
         <div class="layui-form-item">
-            <label class="layui-form-label">确认新密码</label>
+            <label class="layui-form-label required">确认新密码</label>
             <div class="layui-input-block">
-                <input type="text" name="password_confirm" lay-verify="required" lay-reqtext="确认新密码不能为空" placeholder="请再次输入新密码" autocomplete="off" class="layui-input">
+                <input type="password" name="password_confirm" lay-verify="required" lay-reqtext="确认新密码不能为空" placeholder="请再次输入新密码" autocomplete="off" class="layui-input">
             </div>
             <div class="layui-input-block">
                 <div class="layui-form-mid layui-word-aux">
@@ -47,6 +50,7 @@
 @endsection
 
 @section('script_after')
+<script src="lib/md5.js" charset="utf-8"></script>
 <script>
 layui.use(['form'], function () {
     var $ = layui.jquery,
@@ -59,7 +63,10 @@ layui.use(['form'], function () {
         
         var href = "{{ admin_url('admin/password') }}?id={{ $info['id'] }}";
         
-        $.post(href, data, function(data) {
+        $.post(href, {
+            'password': hex_md5(data.password),
+            'password_confirm': hex_md5(data.password_confirm),
+        }, function(data) {
             if (data.code == 0) {
                 layer.msg(data.message, function () {
                     window.location.reload();

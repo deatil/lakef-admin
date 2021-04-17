@@ -4,9 +4,9 @@
 
 @section('container')
 <div class="layuimini-main">
-    <form class="layui-form" action="">
+    <form class="layui-form layuimini-form" action="">
         <div class="layui-form-item">
-            <label class="layui-form-label">父级</label>
+            <label class="layui-form-label required">父级</label>
             <div class="layui-input-block">
                 <select name="parent_id" lay-verify="required" lay-filter="parent_id">
                     <option value="0">作为顶级角色</option>
@@ -18,14 +18,14 @@
         </div>
         
         <div class="layui-form-item">
-            <label class="layui-form-label">角色名</label>
+            <label class="layui-form-label required">角色名</label>
             <div class="layui-input-block">
                 <input type="text" name="name" lay-verify="required" lay-reqtext="角色名不能为空" placeholder="请输入角色名" autocomplete="off" class="layui-input">
             </div>
         </div>
         
         <div class="layui-form-item">
-            <label class="layui-form-label">守护类型</label>
+            <label class="layui-form-label required">守护类型</label>
             <div class="layui-input-block">
                 <select name="guard_name" lay-verify="required" lay-filter="guard_name">
                     <option value=""></option>

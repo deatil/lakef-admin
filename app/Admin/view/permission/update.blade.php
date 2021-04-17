@@ -12,9 +12,9 @@
 }
 </style>
 <div class="layuimini-main">
-    <form class="layui-form" action="">
+    <form class="layui-form layuimini-form" action="">
         <div class="layui-form-item">
-            <label class="layui-form-label">父级</label>
+            <label class="layui-form-label required">父级</label>
             <div class="layui-input-block">
                 <select name="parent_id" lay-verify="required" lay-filter="parent_id">
                     <option value="0">作为顶级权限</option>
@@ -26,7 +26,7 @@
         </div>
         
         <div class="layui-form-item">
-            <label class="layui-form-label">权限名称</label>
+            <label class="layui-form-label required">权限名称</label>
             <div class="layui-input-block">
                 <input type="text" name="display_name" value="{{ $info['display_name'] }}" lay-verify="required" lay-reqtext="权限名称不能为空" placeholder="请输入权限名称" autocomplete="off" class="layui-input">
             </div>
@@ -36,7 +36,7 @@
         </div>
             
         <div class="layui-form-item">
-            <label class="layui-form-label">请求链接</label>
+            <label class="layui-form-label required">请求链接</label>
             <div class="layui-input-block">
                 <input type="text" name="url" value="{{ $info['url'] }}" lay-verify="required" lay-reqtext="请求链接不能为空" placeholder="请输入请求链接" autocomplete="off" class="layui-input">
             </div>
@@ -46,7 +46,7 @@
         </div>
         
         <div class="layui-form-item">
-            <label class="layui-form-label">请求方式</label>
+            <label class="layui-form-label required">请求方式</label>
             <div class="layui-input-block w300">
                 <select name="method" lay-verify="required">
                     <option value="">选择请求方式</option>
@@ -66,7 +66,7 @@
         </div>
         
         <div class="layui-form-item">
-            <label class="layui-form-label">跳转方式</label>
+            <label class="layui-form-label required">跳转方式</label>
             <div class="layui-input-block w300">
                 <select name="target" lay-verify="required">
                     <option value="">选择跳转方式</option>
@@ -84,7 +84,7 @@
             <label class="layui-form-label">菜单图标</label>
             <div class="layui-input-block">
                 <div class="layui-inline w200">
-                    <input type="text" name="icon" value="{{ $info['icon'] }}" autocomplete="off" lay-verify="required" lay-reqtext="菜单图标不能为空" placeholder="菜单图标" class="layui-input">
+                    <input type="text" name="icon" value="{{ $info['icon'] }}" autocomplete="off" placeholder="菜单图标" class="layui-input">
                 </div>
                 <div class="layui-inline w300">
                     <input type="text" id="iconPicker" lay-filter="iconPicker" class="hide" value="">
@@ -93,7 +93,7 @@
         </div>
             
         <div class="layui-form-item">
-            <label class="layui-form-label">守护类型</label>
+            <label class="layui-form-label required">守护类型</label>
             <div class="layui-input-block">
                 <select name="guard_name" lay-filter="guard_name" lay-verify="required" lay-reqtext="守护类型不能为空">
                     <option value=""></option>
@@ -110,7 +110,14 @@
         </div>
         
         <div class="layui-form-item">
-            <label class="layui-form-label">排序</label>
+            <label class="layui-form-label required">菜单点击</label>
+            <div class="layui-input-block">
+                <input type="checkbox" {{ ($info['is_click'] == 1 ? 'checked=""' : '') }} name="is_click" lay-skin="switch" lay-text="开启|关闭">
+            </div>
+        </div>
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label required">排序</label>
             <div class="layui-input-block">
                 <input type="text" name="sort" value="{{ $info['sort'] }}" lay-verify="required" lay-reqtext="排序不能为空" placeholder="请输入排序" autocomplete="off" class="layui-input">
             </div>
