@@ -7,7 +7,7 @@ use App\Admin\Controller;
 
 include_once 'helper.php';
 
-Router::addGroup('/admin', function ($router) {
+Router::addGroup(config('admin.route.group'), function ($router) {
     // 登陆
     $router->get('/passport/captcha', [Controller\Passport::class, 'getCaptcha']);
     $router->get('/passport/login', [Controller\Passport::class, 'getLogin']);
@@ -77,8 +77,5 @@ Router::addGroup('/admin', function ($router) {
 
 }, [
     // 中间件
-    'middleware' => [
-        \App\Admin\Middleware\Auth::class,
-        \App\Admin\Middleware\Permission::class,
-    ],
+    'middleware' => config('admin.route.middleware'),
 ]);

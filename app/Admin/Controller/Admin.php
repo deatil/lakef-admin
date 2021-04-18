@@ -432,7 +432,7 @@ class Admin extends Base
         
         // 对密码进行处理
         $encryptPassword = make(Password::class)
-            ->setSalt($this->config->get('serverlog.passport.salt'))
+            ->setSalt($this->config->get('admin.passport.salt'))
             ->encrypt($password);
         
         $data = [];

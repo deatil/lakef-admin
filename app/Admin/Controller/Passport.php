@@ -93,7 +93,7 @@ class Passport extends Base
         }
         
         $encryptPassword = make(Password::class)
-            ->setSalt($this->config->get('serverlog.passport.salt'))
+            ->setSalt($this->config->get('admin.passport.salt'))
             ->encrypt($password, $info['salt']);
         if ($info['password'] != $encryptPassword) {
             return $this->errorJson('账户不存在或者密码错误');

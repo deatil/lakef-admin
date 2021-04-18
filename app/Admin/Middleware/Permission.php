@@ -67,7 +67,7 @@ class Permission implements MiddlewareInterface
             // 当前登陆账号信息
             $info = $this->request->getAttribute('authAdmin')->getData();
             
-            if ($info['id'] != $this->config->get('serverlog.passport.super_id')) {
+            if ($info['id'] != $this->config->get('admin.passport.super_id')) {
                 $uri = $this->request->path();
                 $method = $this->request->getMethod();
                 
@@ -92,7 +92,7 @@ class Permission implements MiddlewareInterface
     
     protected function shouldPassThrough($request)
     {
-        $excepts = array_merge($this->config->get('serverlog.auth.permission_excepts', []), [
+        $excepts = array_merge($this->config->get('admin.auth.permission_excepts', []), [
             ltrim(admin_url('passport/captcha'), '/'),
             ltrim(admin_url('passport/login'), '/'),
             ltrim(admin_url('passport/logout'), '/'),

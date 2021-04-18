@@ -49,7 +49,7 @@ class Upload extends Base
         
         $sha1 = hash_file('sha1', $pathname);
         
-        $uploadDisk = config('serverlog.upload.disk', '');
+        $uploadDisk = config('admin.upload.disk', '');
         
         $driver = $uploadDisk ?: 'local';
         
@@ -84,11 +84,11 @@ class Upload extends Base
         }
         
         if ($filetype == 'image') {
-            $uploadDir = config('serverlog.upload.directory.image');
+            $uploadDir = config('admin.upload.directory.image');
         } elseif ($filetype == 'video' || $filetype == 'audio') {
-            $uploadDir = config('serverlog.upload.directory.media');
+            $uploadDir = config('admin.upload.directory.media');
         } else {
-            $uploadDir = config('serverlog.upload.directory.file');
+            $uploadDir = config('admin.upload.directory.file');
         }
         
         $path = $uploadService->writeStream(

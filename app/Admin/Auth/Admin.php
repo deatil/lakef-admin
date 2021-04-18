@@ -74,7 +74,7 @@ class Admin
             return false;
         }
         
-        return ($adminId == config('serverlog.passport.super_id'));
+        return ($adminId == config('admin.passport.super_id'));
     }
     
     /**

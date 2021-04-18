@@ -4,8 +4,81 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "261d822111fb6ffeedbc128317fd3927",
+    "content-hash": "44f281d05a0aa1f92e1cc9301c6715ee",
     "packages": [
+        {
+            "name": "chdemko/sorted-collections",
+            "version": "1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/chdemko/php-sorted-collections.git",
+                "reference": "47501ae538696dc58440ea16b9245b3995740d25"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/chdemko/php-sorted-collections/zipball/47501ae538696dc58440ea16b9245b3995740d25",
+                "reference": "47501ae538696dc58440ea16b9245b3995740d25",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "joomla/coding-standards": "~2.0@alpha",
+                "php-coveralls/php-coveralls": "^2.0",
+                "phpbench/phpbench": "^1.0@dev",
+                "phpunit/phpunit": "^7.0",
+                "sphpdox/sphpdox": "dev-master"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "chdemko\\SortedCollection\\": "src/SortedCollection"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Christophe Demko",
+                    "email": "chdemko@gmail.com",
+                    "homepage": "http://chdemko.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Sorted Collections for PHP >= 5.5",
+            "homepage": "https://php-sorted-collections.readthedocs.io/en/latest/?badge=latest",
+            "keywords": [
+                "avl",
+                "collection",
+                "iterator",
+                "map",
+                "ordered",
+                "set",
+                "sorted",
+                "tree",
+                "treemap",
+                "treeset"
+            ],
+            "support": {
+                "issues": "https://github.com/chdemko/php-sorted-collections/issues",
+                "source": "https://github.com/chdemko/php-sorted-collections/tree/1.0.5"
+            },
+            "time": "2018-10-22T12:24:26+00:00"
+        },
         {
             "name": "doctrine/annotations",
             "version": "1.12.1",
@@ -575,6 +648,56 @@
             "time": "2021-03-23T18:08:45+00:00"
         },
         {
+            "name": "exussum12/xxhash",
+            "version": "1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/exussum12/xxhash.git",
+                "reference": "f5567ec5739ffee27aa3469e5001b4759b1b9e0d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/exussum12/xxhash/zipball/f5567ec5739ffee27aa3469e5001b4759b1b9e0d",
+                "reference": "f5567ec5739ffee27aa3469e5001b4759b1b9e0d",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "ext-bcmath": "*",
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.1|^8.0|^9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "exussum12\\xxhash\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Scott Dutton",
+                    "email": "scott@exussum.co.uk"
+                }
+            ],
+            "description": "xxHash implementation in Pure PHP",
+            "support": {
+                "issues": "https://github.com/exussum12/xxhash/issues",
+                "source": "https://github.com/exussum12/xxhash/tree/1.3"
+            },
+            "time": "2020-11-30T09:04:53+00:00"
+        },
+        {
             "name": "ezimuel/guzzlestreams",
             "version": "3.0.1",
             "source": {
@@ -754,6 +877,58 @@
                 "source": "https://github.com/php-fig/http-message-util/tree/1.1.5"
             },
             "time": "2020-11-24T22:02:12+00:00"
+        },
+        {
+            "name": "google/crc32",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/google/php-crc32.git",
+                "reference": "a8525f0dea6fca1893e1bae2f6e804c5f7d007fb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/google/php-crc32/zipball/a8525f0dea6fca1893e1bae2f6e804c5f7d007fb",
+                "reference": "a8525f0dea6fca1893e1bae2f6e804c5f7d007fb",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^1.13 || v2.14.2",
+                "paragonie/random_compat": ">=2",
+                "phpunit/phpunit": "^4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Google\\CRC32\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Andrew Brampton",
+                    "email": "bramp@google.com"
+                }
+            ],
+            "description": "Various CRC32 implementations",
+            "homepage": "https://github.com/google/php-crc32",
+            "support": {
+                "issues": "https://github.com/google/php-crc32/issues",
+                "source": "https://github.com/google/php-crc32/tree/v0.1.0"
+            },
+            "time": "2019-05-09T06:24:58+00:00"
         },
         {
             "name": "graham-campbell/result-type",
@@ -2581,6 +2756,68 @@
             "time": "2021-04-04T02:15:05+00:00"
         },
         {
+            "name": "hyperf/kafka",
+            "version": "v2.1.0-beta5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hyperf/kafka.git",
+                "reference": "f2d2993ca5895621c7e9516dde2922f692742ce4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hyperf/kafka/zipball/f2d2993ca5895621c7e9516dde2922f692742ce4",
+                "reference": "f2d2993ca5895621c7e9516dde2922f692742ce4",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "hyperf/pool": "~2.1.0",
+                "hyperf/process": "~2.1.0",
+                "hyperf/utils": "~2.1.0",
+                "longlang/phpkafka": "^1.1",
+                "php": ">=7.2",
+                "psr/container": "^1.0",
+                "psr/log": "^1.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.1-dev"
+                },
+                "hyperf": {
+                    "config": "Hyperf\\Kafka\\ConfigProvider"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hyperf\\Kafka\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A kafka client for Hyperf",
+            "homepage": "https://hyperf.io",
+            "keywords": [
+                "hyperf",
+                "kafka",
+                "php"
+            ],
+            "support": {
+                "docs": "https://hyperf.wiki",
+                "issues": "https://github.com/hyperf/hyperf/issues",
+                "pull-request": "https://github.com/hyperf/hyperf/pulls",
+                "source": "https://github.com/hyperf/hyperf"
+            },
+            "time": "2021-02-18T11:04:12+00:00"
+        },
+        {
             "name": "hyperf/load-balancer",
             "version": "v2.1.0",
             "source": {
@@ -3261,6 +3498,150 @@
                 "source": "https://github.com/hyperf/hyperf"
             },
             "time": "2020-12-28T03:05:18+00:00"
+        },
+        {
+            "name": "hyperf/rpc-client",
+            "version": "v2.1.13",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hyperf/rpc-client.git",
+                "reference": "ef563f9c32992f7c0ec796a8acd26a2b0a644fd2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hyperf/rpc-client/zipball/ef563f9c32992f7c0ec796a8acd26a2b0a644fd2",
+                "reference": "ef563f9c32992f7c0ec796a8acd26a2b0a644fd2",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "hyperf/load-balancer": "~2.1.0",
+                "hyperf/rpc": "~2.1.0",
+                "hyperf/utils": "~2.1.0",
+                "php": ">=7.2",
+                "psr/container": "^1.0",
+                "roave/better-reflection": "^4.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.9",
+                "malukenho/docheader": "^0.1.6",
+                "mockery/mockery": "^1.0",
+                "phpunit/phpunit": "^9.4"
+            },
+            "suggest": {
+                "hyperf/consul": "For fetch the nodes info from consul.",
+                "hyperf/di": "For better container experience.",
+                "hyperf/pool": "Required to use connection pool."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.1-dev"
+                },
+                "hyperf": {
+                    "config": "Hyperf\\RpcClient\\ConfigProvider"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hyperf\\RpcClient\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "An abstract rpc server component for Hyperf.",
+            "homepage": "https://hyperf.io",
+            "keywords": [
+                "hyperf",
+                "json-rpc",
+                "php",
+                "rpc",
+                "rpc-client",
+                "swoole"
+            ],
+            "support": {
+                "docs": "https://hyperf.wiki",
+                "issues": "https://github.com/hyperf/hyperf/issues",
+                "pull-request": "https://github.com/hyperf/hyperf/pulls",
+                "source": "https://github.com/hyperf/hyperf"
+            },
+            "time": "2021-03-31T09:52:08+00:00"
+        },
+        {
+            "name": "hyperf/rpc-server",
+            "version": "v2.1.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hyperf/rpc-server.git",
+                "reference": "85f09de459b2b2ec9b836f3796b3a8ea74d09226"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hyperf/rpc-server/zipball/85f09de459b2b2ec9b836f3796b3a8ea74d09226",
+                "reference": "85f09de459b2b2ec9b836f3796b3a8ea74d09226",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "hyperf/http-server": "~2.1.0",
+                "hyperf/rpc": "~2.1.0",
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.9",
+                "malukenho/docheader": "^0.1.6",
+                "mockery/mockery": "^1.0",
+                "phpunit/phpunit": "^9.4"
+            },
+            "suggest": {
+                "hyperf/di": "Required to use annotations."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.1-dev"
+                },
+                "hyperf": {
+                    "config": "Hyperf\\RpcServer\\ConfigProvider"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hyperf\\RpcServer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "An abstract rpc server component for Hyperf.",
+            "homepage": "https://hyperf.io",
+            "keywords": [
+                "hyperf",
+                "php",
+                "rpc",
+                "rpc-server",
+                "swoole"
+            ],
+            "support": {
+                "docs": "https://hyperf.wiki",
+                "issues": "https://github.com/hyperf/hyperf/issues",
+                "pull-request": "https://github.com/hyperf/hyperf/pulls",
+                "source": "https://github.com/hyperf/hyperf"
+            },
+            "time": "2021-03-28T04:17:37+00:00"
         },
         {
             "name": "hyperf/server",
@@ -4387,6 +4768,56 @@
                 }
             ],
             "time": "2021-01-18T20:58:21+00:00"
+        },
+        {
+            "name": "longlang/phpkafka",
+            "version": "v1.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/longyan/phpkafka.git",
+                "reference": "ff053f4174d756c2b03b1c8cfdc04013e39304f1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/longyan/phpkafka/zipball/ff053f4174d756c2b03b1c8cfdc04013e39304f1",
+                "reference": "ff053f4174d756c2b03b1c8cfdc04013e39304f1",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "chdemko/sorted-collections": "^1.0",
+                "exussum12/xxhash": "^1.0.0",
+                "google/crc32": "^0.1.0",
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "colinodell/json5": "^2.1",
+                "friendsofphp/php-cs-fixer": "^2.18",
+                "phpstan/phpstan": "^0.12.81",
+                "phpunit/phpunit": "^7.5|^8.0|^9.0",
+                "swoole/ide-helper": "^4.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "longlang\\phpkafka\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "A kafka client. Support php-fpm and Swoole.",
+            "support": {
+                "issues": "https://github.com/longyan/phpkafka/issues",
+                "source": "https://github.com/longyan/phpkafka/tree/v1.1.3"
+            },
+            "time": "2021-04-02T11:41:33+00:00"
         },
         {
             "name": "markrogoyski/math-php",

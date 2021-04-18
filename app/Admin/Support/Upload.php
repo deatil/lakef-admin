@@ -47,7 +47,7 @@ class Upload
     
     public function getFilesystemDefaultDisk()
     {
-        return config('serverlog.upload.disk');
+        return config('admin.upload.disk');
     }
     
     public function filesystem($disk = '')
@@ -141,7 +141,7 @@ class Upload
     {
         $filetype = 'other';
         
-        $fileTypes = array_merge($this->fileTypes, config('serverlog.upload.file_types', []));
+        $fileTypes = array_merge($this->fileTypes, config('admin.upload.file_types', []));
         foreach ($fileTypes as $type => $pattern) {
             if (preg_match($pattern, $extension) === 1) {
                 $filetype = $type;

@@ -61,8 +61,8 @@ class Index extends Base
             ],
             'sys_info' => $sysInfo,
             'system' => [
-                'title' => config('serverlog.admin.title'),
-                'version' => config('serverlog.admin.version'),
+                'title' => config('admin.system.title'),
+                'version' => config('admin.system.version'),
             ],
         ]);
     }
@@ -125,8 +125,8 @@ class Index extends Base
         
         $menus = [
             'logoInfo' => [
-                'title' => config('serverlog.admin.title'),
-                'image' => config('serverlog.admin.logo'),
+                'title' => config('admin.system.title'),
+                'image' => config('admin.system.logo'),
                 'href' => 'javascript:;',
             ],
             'homeInfo' => [

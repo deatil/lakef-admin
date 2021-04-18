@@ -81,9 +81,16 @@ class Auth implements MiddlewareInterface
             
             $authAdmin = make(AuthAdmin::class)->withId($adminid);
             if (! $authAdmin->isActive()) {
-                return $this->view->render('serverlog::view.no-permission', [
-                    'message' => '账号不存在或者已被锁定',
-                ]);
+                if ($this->request->isMethod('get')) {
+                    return $this->view->render('serverlog::view.no-permission', [
+                        'message' => '账号不存在或者已被锁定',
+                    ]);
+                } else {
+                    return $this->response->json([
+                        'code' => 1,
+                        'message' => '账号不存在或者已被锁定',
+                    ]);
+                }
             }
             
             $request = Context::get(ServerRequestInterface::class);
@@ -96,7 +103,7 @@ class Auth implements MiddlewareInterface
     
     protected function shouldPassThrough($request)
     {
-        $excepts = array_merge($this->config->get('serverlog.auth.authenticate_excepts', []), [
+        $excepts = array_merge($this->config->get('admin.auth.authenticate_excepts', []), [
             ltrim(admin_url('passport/captcha'), '/'),
             ltrim(admin_url('passport/login'), '/'),
         ]);

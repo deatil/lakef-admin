@@ -19,7 +19,7 @@ if (! function_exists('admin_url')) {
      */
     function admin_url($url = null)
     {
-        return '/admin/' . ltrim($url, '/');
+        return config('admin.route.group') . '/' . ltrim($url, '/');
     }
 }
 
@@ -32,7 +32,7 @@ if (! function_exists('admin_assets')) {
      */
     function admin_assets($assets = null)
     {
-        return '/static/' . ltrim($assets, '/');
+        return config('admin.assets.static') . ltrim($assets, '/');
     }
 }
 

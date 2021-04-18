@@ -12,3 +12,4 @@ Router::get('/favicon.ico', function () {
 });
 
 include_once BASE_PATH . '/app/Admin/routes.php';
+include_once BASE_PATH . '/app/Serverlog/routes.php';
