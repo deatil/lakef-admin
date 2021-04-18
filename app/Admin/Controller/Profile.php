@@ -55,6 +55,7 @@ class Profile extends Base
         $name = $this->request->post('name');
         $nickname = $this->request->post('nickname');
         $email = $this->request->post('email');
+        $avatar = $this->request->post('avatar');
         $remark = $this->request->post('remark');
         
         // 登陆用户信息
@@ -88,6 +89,7 @@ class Profile extends Base
                 'name' => $name,
                 'nickname' => $nickname,
                 'email' => $email,
+                'avatar' => $avatar,
                 'remark' => $remark,
             ]);
         if ($status === false) {

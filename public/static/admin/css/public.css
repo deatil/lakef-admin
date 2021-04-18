@@ -7,6 +7,26 @@
     background-color:#009688 !important;
 }
 
+/**自定义滚动条样式 */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+    -webkit-border-radius: 2em;
+    -moz-border-radius: 2em;
+    border-radius: 2em;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #9c9da0;
+    -webkit-border-radius: 2em;
+    -moz-border-radius: 2em;
+    border-radius: 2em
+}
+
 input::-webkit-input-placeholder, 
 textarea::-webkit-input-placeholder {
     color: #b3b3b3;
@@ -75,22 +95,86 @@ body {
     color: #6b6b6b;
 }
 
-/**自定义滚动条样式 */
-::-webkit-scrollbar {
-    width: 6px;
-    height: 6px
-}
 
-::-webkit-scrollbar-track {
-    background-color: transparent;
-    -webkit-border-radius: 2em;
-    -moz-border-radius: 2em;
-    border-radius: 2em;
+/*百度上传*/
+.thumbnail {
+    display: block;
+    padding: 4px;
+    margin-bottom: 20px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    -webkit-transition: border .2s ease-in-out;
+    -o-transition: border .2s ease-in-out;
+    transition: border .2s ease-in-out;
+    display: inline-block;
+    position: relative;
+    margin-right:15px;
+    float: left;
 }
-
-::-webkit-scrollbar-thumb {
-    background-color: #9c9da0;
-    -webkit-border-radius: 2em;
-    -moz-border-radius: 2em;
-    border-radius: 2em
+.file-item.thumbnail .info{
+    display: none;
+}
+.file-item.thumbnail .remove-picture{
+    position: absolute;
+    right: -5px;
+    top: -5px;
+    font-size: 18px;
+    color: #CA4949;
+    cursor: pointer;
+    display: none;
+    z-index: 5;
+}
+.file-item.thumbnail .remove-picture:hover{
+    color: #EC6969;
+}
+.file-item.thumbnail .move-picture{
+    background: gainsboro;
+    padding: 2px;
+    cursor: move;
+    color: #ABABAB;
+    position: absolute;
+    left: -6px;
+    top: -5px;
+    border-radius: 50%;
+    display: none;
+    z-index: 5;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+}
+.file-item.thumbnail:hover .remove-picture,
+.file-item.thumbnail:hover .move-picture{
+    display: block;
+}
+.file-item .progress.progress-xs{
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+.file-item .error,
+.file-item .img-state{
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    color: white;
+    text-align: center;
+    height: 20px;
+    font-size: 14px;
+    line-height: 20px;
+}
+.file-item .error{
+    background: rgba(255, 0, 0, 0.67);
+}
+.file-item .success{
+    background: rgba(25, 167, 75, 0.78);
+}
+.file-item .fa-check {
+    color: #68C39F;
+    margin-top: 3px;
+}
+.uploader-list .list-group-item img{
+    width: 40px;
+    height: 40px;
 }

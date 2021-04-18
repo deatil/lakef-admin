@@ -25,6 +25,9 @@ Router::addGroup('/admin', function ($router) {
     $router->post('/profile/setting', [Controller\Profile::class, 'postSetting']);
     $router->get('/profile/password', [Controller\Profile::class, 'getPassword']);
     $router->post('/profile/password', [Controller\Profile::class, 'postPassword']);
+    
+    // 文件上传
+    $router->post('/upload/file', [Controller\Upload::class, 'postFile']);
 
     // 角色
     $router->get('/role/index', [Controller\Role::class, 'getIndex']);
@@ -65,6 +68,12 @@ Router::addGroup('/admin', function ($router) {
     $router->post('/admin/password', [Controller\Admin::class, 'postPassword']);
     $router->get('/admin/access', [Controller\Admin::class, 'getAccess']);
     $router->post('/admin/access', [Controller\Admin::class, 'postAccess']);
+
+    // 附件
+    $router->get('/attachment/index', [Controller\Attachment::class, 'getIndex']);
+    $router->get('/attachment/index-data', [Controller\Attachment::class, 'getIndexData']);
+    $router->get('/attachment/detail', [Controller\Attachment::class, 'getDetail']);
+    $router->post('/attachment/delete', [Controller\Attachment::class, 'postDelete']);
 
 }, [
     // 中间件

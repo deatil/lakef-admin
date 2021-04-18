@@ -64,7 +64,7 @@
                     <a href="javascript:;">{{ $admin['nickname'] }}</a>
                     <dl class="layui-nav-child">
                         <dd>
-                            <a href="javascript:;" layuimini-content-href="{{ admin_url('profile/setting') }}" data-title="账号设置" data-icon="fa fa-gears">基本资料<span class="layui-badge-dot"></span></a>
+                            <a href="javascript:;" layuimini-content-href="{{ admin_url('profile/setting') }}" data-title="账号设置" data-icon="fa fa-gears">账号设置<span class="layui-badge-dot"></span></a>
                         </dd>
                         <dd>
                             <a href="javascript:;" layuimini-content-href="{{ admin_url('profile/password') }}" data-title="修改密码" data-icon="fa fa-gears">修改密码</a>

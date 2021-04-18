@@ -33,6 +33,7 @@ class Admin extends Model
         'email', 
         'password', 
         'salt', 
+        'avatar', 
         'remark', 
         'status', 
     ];

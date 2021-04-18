@@ -8,6 +8,7 @@ use Hyperf\Utils\ApplicationContext;
 use Hyperf\Redis\Redis;
 use Hyperf\AsyncQueue\Driver\DriverFactory;
 use Hyperf\AsyncQueue\JobInterface;
+use App\Admin\Support\Upload;
 
 if (! function_exists('admin_url')) {
     /**
@@ -112,5 +113,90 @@ if (!function_exists('queue_push')) {
     {
         $driver = di()->get(DriverFactory::class)->get($key);
         return $driver->push($job, $delay);
+    }
+}
+
+if (! function_exists('admin_md5')) {
+    /**
+     * 返回16位md5值
+     *
+     * @param string $str 字符串
+     * @return string $str 返回16位的字符串
+     */
+    function admin_md5($str) {
+        return substr(md5($str), 8, 16);
+    }
+}
+
+if (!function_exists('admin_attachment_url')) {
+    /**
+     * 获取附件路径
+     *
+     * @param int $id 附件id
+     * @param bool $domain 是否添加域名
+     * @return string
+     */
+    function admin_attachment_url($id, $domain = false)
+    {
+        return di(Upload::class)->getAttachmentUrl($id, $domain);
+    }
+}
+
+if (!function_exists('admin_attachment_url_list')) {
+    /**
+     * 获取多附件地址
+     *
+     * @param string $ids 附件id列表
+     * @param bool $domain 是否添加域名
+     * @return 返回附件列表
+     */
+    function admin_attachment_url_list($ids, $domain = false)
+    {
+        if ($ids == '') {
+            return false;
+        }
+        
+        $id_list = explode(',', $ids);
+        foreach ($id_list as $id) {
+            $list[] = admin_attachment_url($id, $domain);
+        }
+        return $list;
+    }
+}
+
+if (!function_exists('admin_form_images')) {
+    /**
+     * 图片上传
+     * @param string $name 表单名称
+     * @param int $id 表单id
+     * @param string $value 表单默认值
+     */
+    function admin_form_images($name, $id = '', $value = '', $uploadUrl = '') {
+        if (!$id) {
+            $id = $name;
+        }
+        
+        if (empty($uploadUrl)) {
+            $uploadUrl = admin_url('file/upload');
+        }
+        
+        $string = "
+        <script type=\"text/javascript\">
+        var images_url = {
+            'image_upload_url': '".$uploadUrl."',
+            'file_upload_url': '".$uploadUrl."',
+            'webuploader_swf': 'lib/webuploader/Uploader.swf',
+        };
+        </script>
+        ";
+        
+        $string .= "<div id='file_list_{$name}' class='uploader-list'>";
+        if (! empty($value)) {
+            $path = ($attachmentUrl = admin_attachment_url($value)) ? $attachmentUrl : admin_assets("/admin/images/none.png");
+            $string .= "<div class='file-item thumbnail'><img data-original='{$path}' src='{$path}' width='100' style='max-height: 100px;'><i class='fa fa-trash-o remove-picture' data-id='{$value}' title='移除'></i></div>";
+        }
+        
+        $string .= "</div><input type='hidden' name='{$name}' id='{$id}' value='{$value}'><div class='layui-clear'></div><div id='picker_{$name}'>上传单张图片</div>";
+        return $string;
     }
 }

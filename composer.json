@@ -40,6 +40,8 @@
         "hyperf/pool": "~2.1.0",
         "hyperf/process": "~2.1.0",
         "hyperf/utils": "~2.1.0",
+        "hyperf/filesystem": "~2.1.0",
+        "hyperf/json-rpc": "~2.1.0",
         "donjan-deng/hyperf-permission": "~2.0.0",
         "gregwar/captcha": "1.*"
     },

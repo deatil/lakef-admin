@@ -35,6 +35,15 @@
             </div>
         </div>
         
+        <div class="layui-form-item">
+            <label class="layui-form-label">头像</label>
+            <div class="layui-input-inline">
+                <div class="js-upload-image">
+                    {!! admin_form_images('avatar', '', $admin['avatar']) !!}
+                </div>
+            </div>
+        </div>
+        
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">备注信息</label>
             <div class="layui-input-block">
@@ -69,6 +78,7 @@ layui.use(['form','miniTab'], function () {
             'name': data.username,
             'nickname': data.nickname,
             'email': data.email,
+            'avatar': data.avatar,
             'remark': data.remark,
         }, function(data) {
             if (data.code == 0) {
@@ -82,7 +92,12 @@ layui.use(['form','miniTab'], function () {
         
         return false;
     });
-
 });
 </script>
+<link rel="stylesheet" href="lib/viewer/viewer.min.css">
+<link rel="stylesheet" href="lib/webuploader/webuploader.css">
+<script type="text/javascript" src="lib/jquery.min.js"></script>
+<script type="text/javascript" src="lib/viewer/viewer.min.js"></script>
+<script type="text/javascript" src="lib/webuploader/webuploader.min.js"></script>
+<script type="text/javascript" src="lib/form.js"></script>
 @endsection
