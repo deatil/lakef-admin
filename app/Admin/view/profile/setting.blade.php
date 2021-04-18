@@ -39,7 +39,7 @@
             <label class="layui-form-label">头像</label>
             <div class="layui-input-inline">
                 <div class="js-upload-image">
-                    {!! admin_form_images('avatar', '', $admin['avatar']) !!}
+                    {!! admin_form_image('avatar', '', $admin['avatar']) !!}
                 </div>
             </div>
         </div>

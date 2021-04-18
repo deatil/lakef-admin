@@ -4,7 +4,7 @@ declare (strict_types = 1);
 
 namespace App\Admin\Controller;
 
-use App\Admin\Support\Upload;
+use App\Admin\Support\Upload as Uploader;
 use App\Admin\Model\Attachment as AttachmentModel;
 
 /**
@@ -53,9 +53,7 @@ class Upload extends Base
         
         $driver = $uploadDisk ?: 'local';
         
-        $uploadService = di(Upload::class);
-        
-        $mimeType = $uploadService->getMimeType($extension);
+        $uploadService = di(Uploader::class);
         
         $filetype = $uploadService->getFileType($extension);
         

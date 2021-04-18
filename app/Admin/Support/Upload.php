@@ -18,7 +18,7 @@ class Upload
         'image'  => '/^(gif|png|jpe?g|svg|webp)$/i',
         'html'   => '/^(htm|html)$/i',
         'office' => '/^(docx?|xlsx?|pptx?|pps|potx?)$/i',
-        'gdocs'  => '/^(docx?|xlsx?|pptx?|pps|potx?|rtf|ods|odt|pages|ai|dxf|ttf|tiff?|wmf|e?ps)$/i',
+        'docs'  => '/^(docx?|xlsx?|pptx?|pps|potx?|rtf|ods|odt|pages|ai|dxf|ttf|tiff?|wmf|e?ps)$/i',
         'text'   => '/^(txt|md|csv|nfo|ini|json|php|js|css|ts|sql)$/i',
         'video'  => '/^(og?|mp4|webm|mp?g|mov|3gp)$/i',
         'audio'  => '/^(og?|mp3|mp?g|wav)$/i',
@@ -32,7 +32,7 @@ class Upload
                 'id' => $id
             ])
             ->first();
-        $path = $data['uri'];
+        $path = $data['uri'] ?? '';
         
         $domainUrl = '';
         return ($path !== false) ? 
@@ -152,10 +152,8 @@ class Upload
         return $filetype;
     }
     
-    public function getMimeType($extension)
+    public function getMimeType($extension, $mimeType = 'other')
     {
-        $mimeType = 'other';
-        
         $filetype = $this->getFileType($extension);
         
         if ($filetype == 'video') {

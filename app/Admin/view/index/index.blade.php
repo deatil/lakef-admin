@@ -61,7 +61,10 @@
                     <a href="javascript:;" data-check-screen="full"><i class="fa fa-arrows-alt"></i></a>
                 </li>
                 <li class="layui-nav-item layuimini-setting">
-                    <a href="javascript:;">{{ $admin['nickname'] }}</a>
+                    <a href="javascript:;">
+                        <img src="{{ admin_attachment_url($admin['avatar']) }}" alt="{{ $admin['nickname'] }}" class="layui-nav-img admin-avatar" width="35" height="35">
+                        <span>{{ $admin['nickname'] }}</span>
+                    </a>
                     <dl class="layui-nav-child">
                         <dd>
                             <a href="javascript:;" layuimini-content-href="{{ admin_url('profile/setting') }}" data-title="账号设置" data-icon="fa fa-gears">账号设置<span class="layui-badge-dot"></span></a>

@@ -1,5 +1,5 @@
 ﻿# Host: 192.168.56.105  (Version: 5.5.5-10.5.8-MariaDB-1:10.5.8+maria~focal)
-# Date: 2021-04-18 13:21:40
+# Date: 2021-04-18 22:18:34
 # Generator: MySQL-Front 5.3  (Build 4.234)
 
 /*!40101 SET NAMES utf8 */;
@@ -22,14 +22,14 @@ CREATE TABLE `server_admin` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 #
 # Data for table "server_admin"
 #
 
 /*!40000 ALTER TABLE `server_admin` DISABLE KEYS */;
-INSERT INTO `server_admin` VALUES (1,'admin','管理员','admin@serverlog.com','16e42b2dcb70841470495c6bf59a6c98','v7aQct','ac58f2e2dc474120','后台管理员',1,'2021-03-31 01:12:59','2021-03-31 06:33:12');
+INSERT INTO `server_admin` VALUES (1,'admin','管理员','admin@serverlog.com','16e42b2dcb70841470495c6bf59a6c98','v7aQct','5767026dad7e3fec','后台管理员',1,'2021-03-31 01:12:59','2021-03-31 02:58:41'),(2,'serverlog','serverlog','serverlog@admin.com','73a7d862fe32ee950c78962e99a0a116','SaltF1','06f1d8c410bdafb6','serverlog',1,'2021-03-31 03:24:27','2021-03-31 03:25:00');
 /*!40000 ALTER TABLE `server_admin` ENABLE KEYS */;
 
 #
@@ -59,7 +59,7 @@ CREATE TABLE `server_attachment` (
 #
 
 /*!40000 ALTER TABLE `server_attachment` DISABLE KEYS */;
-INSERT INTO `server_attachment` VALUES ('72429588bce96a76','Jellyfish.jpg','images/6e804b6929a25b8a7f6772c6505ed48a.jpg','other','jpg','775702','5a44c7ba5bbe4ec867233d67e4806848','3b15be84aff20b322a93c0b9aaa62e25ad33b4b4','public',1617142339,1617143033,1617142339,'172.19.0.5'),('ac58f2e2dc474120','Tulips.jpg','images/f09f407883124a515af69a7cf77d1427.jpg','other','jpg','620888','fafa5efeaf3cbe3b23b2748d13e629a1','54c2f1a1eb6f12d681a5c7078421a5500cee02ad','public',1617142279,1617142333,1617142279,'172.19.0.5');
+INSERT INTO `server_attachment` VALUES ('06f1d8c410bdafb6','Koala.jpg','images/16fe0d31455af799fa3728ff52fc6df3.jpg','image/jpeg','jpg','780831','2b04df3ecc1d94afddff082d139c6f15','9c3dcb1f9185a314ea25d51aed3b5881b32f420c','public',1617130720,1617132298,1617130720,'172.19.0.5'),('5767026dad7e3fec','Tulips.jpg','images/bf355fad50222108b9eefcbdb3495971.jpg','image/jpeg','jpg','620888','fafa5efeaf3cbe3b23b2748d13e629a1','54c2f1a1eb6f12d681a5c7078421a5500cee02ad','public',1617130536,1617130536,1617130536,'172.19.0.5');
 /*!40000 ALTER TABLE `server_attachment` ENABLE KEYS */;
 
 #
@@ -100,6 +100,7 @@ CREATE TABLE `server_model_has_roles` (
 #
 
 /*!40000 ALTER TABLE `server_model_has_roles` DISABLE KEYS */;
+INSERT INTO `server_model_has_roles` VALUES (5,'App\\Admin\\Model\\Admin',2);
 /*!40000 ALTER TABLE `server_model_has_roles` ENABLE KEYS */;
 
 #
@@ -123,7 +124,7 @@ CREATE TABLE `server_permissions` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 #
 # Data for table "server_permissions"
@@ -150,7 +151,7 @@ CREATE TABLE `server_role_has_permissions` (
 #
 
 /*!40000 ALTER TABLE `server_role_has_permissions` DISABLE KEYS */;
-INSERT INTO `server_role_has_permissions` VALUES (1,1),(1,2),(1,3),(1,4),(2,1),(2,2),(2,4),(3,1),(3,4),(4,1),(5,2),(7,2),(7,3),(7,4),(8,2),(8,3),(8,4),(9,2),(9,3),(9,4),(10,2),(10,3),(10,4),(11,2),(11,3),(11,4),(12,2),(12,3),(12,4),(13,2),(13,3),(13,4),(14,2),(14,3),(14,4),(15,2),(15,3),(15,4),(16,2),(16,3),(16,4),(17,2),(17,3),(17,4),(18,2),(18,3),(18,4),(19,2),(19,3),(19,4),(20,2),(20,3),(20,4),(21,4),(22,4),(23,4),(24,4),(25,4),(26,4),(27,4),(28,4),(29,4),(30,4),(31,4),(42,2),(43,2),(44,2),(45,2),(46,2),(47,2),(48,2),(49,2),(50,2),(51,2);
+INSERT INTO `server_role_has_permissions` VALUES (1,1),(1,2),(1,3),(1,4),(1,5),(2,1),(2,2),(2,4),(2,5),(3,1),(3,4),(4,1),(5,2),(7,2),(7,3),(7,4),(7,5),(8,2),(8,3),(8,4),(8,5),(9,2),(9,3),(9,4),(9,5),(10,2),(10,3),(10,4),(10,5),(11,2),(11,3),(11,4),(11,5),(12,2),(12,3),(12,4),(12,5),(13,2),(13,3),(13,4),(13,5),(14,2),(14,3),(14,4),(14,5),(15,2),(15,3),(15,4),(15,5),(16,2),(16,3),(16,4),(16,5),(17,2),(17,3),(17,4),(17,5),(18,2),(18,3),(18,4),(18,5),(19,2),(19,3),(19,4),(20,2),(20,3),(20,4),(21,4),(22,4),(23,4),(24,4),(25,4),(26,4),(27,4),(28,4),(29,4),(30,4),(31,4),(42,2),(43,2),(44,2),(45,2),(46,2),(47,2),(48,2),(49,2),(50,2),(51,2),(52,5),(53,5),(54,5),(55,5),(56,5);
 /*!40000 ALTER TABLE `server_role_has_permissions` ENABLE KEYS */;
 
 #

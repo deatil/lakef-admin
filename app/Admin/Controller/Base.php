@@ -14,6 +14,10 @@ use Hyperf\Validation\Contract\ValidatorFactoryInterface;
 use Hyperf\View\RenderInterface;
 use Hyperf\Utils\Arr;
 
+use App\Admin\Traits\Json as JsonTrait;
+use App\Admin\Traits\View as ViewTrait;
+use App\Admin\Traits\AuthAdmin as AuthAdminTrait;
+
 abstract class Base
 {
     /**
@@ -59,115 +63,18 @@ abstract class Base
     protected $validationFactory;
     
     /**
-     * 视图
-     */
-    protected function view(string $path, array $data = [])
-    {
-        return $this->view->render($path, $data);
-    }
-    
-    /**
-     * 成功
-     */
-    protected function success(string $message)
-    {
-        return $this->view('serverlog::view.success', [
-            'message' => $message,
-        ]);
-    }
-    
-    /**
-     * 失败
-     */
-    protected function error(string $message)
-    {
-        return $this->view('serverlog::view.error', [
-            'message' => $message,
-        ]);
-    }
-    
-    /**
-     * 表格数据 json
-     */
-    protected function tableJson($list, $count, $msg = '获取成功')
-    {
-        return $this->response->json([
-            'code' => 0,
-            'msg' => $msg,
-            'data' => $list,
-            'count' => $count,
-        ]);
-    }
-    
-    /**
      * json
      */
-    protected function json(
-        $success = true, 
-        $code = 0, 
-        $message = "", 
-        $data = []
-    ) {
-        $result = [];
-        $result['success'] = $success;
-        $result['code'] = $code;
-        $message ? $result['message'] = $message : null;
-        $data ? $result['data'] = $data : null;
-        
-        return $this->response->json($result);
-    }
+    use JsonTrait;
     
     /**
-     * 返回错误json
+     * 视图
      */
-    protected function errorJson(
-        $message = null, 
-        $code = 1, 
-        $data = []
-    ) {
-        return $this->json(false, $code, $message, $data);
-    }
+    use ViewTrait;
     
     /**
-     * 返回成功json
+     * 当前登陆账号
      */
-    protected function successJson(
-        $message = null, 
-        $data = [], 
-        $code = 0
-    ) {
-        return $this->json(true, $code, $message, $data);
-    }
+    use AuthAdminTrait;
     
-    /**
-     * 当前管理员
-     */
-    public function getAuthAdmin()
-    {
-        return $this->request->getAttribute('authAdmin');
-    }
-    
-    /**
-     * 当前管理员信息
-     */
-    public function getAuthAdminInfo()
-    {
-        return $this->getAuthAdmin()->getData();
-    }
-    
-    /**
-     * 当前管理员ID
-     */
-    public function getAuthAdminId()
-    {
-        return $this->getAuthAdmin()->getId();
-    }
-    
-    /**
-     * 管理员是否为超级管理员
-     */
-    public function getIsSuperAdmin()
-    {
-        return $this->getAuthAdmin()->isSuperAdmin();
-    }
 }

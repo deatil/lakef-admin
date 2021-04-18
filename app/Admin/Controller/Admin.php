@@ -264,6 +264,7 @@ class Admin extends Base
         $name = $this->request->post('name');
         $nickname = $this->request->post('nickname');
         $email = $this->request->post('email');
+        $avatar = $this->request->post('avatar');
         $remark = $this->request->post('remark');
         $status = $this->request->post('status');
         if (! empty($status)) {
@@ -296,6 +297,7 @@ class Admin extends Base
             'name' => $name,
             'nickname' => $nickname,
             'email' => $email,
+            'avatar' => $avatar,
             'remark' => $remark,
             'status' => $status,
         ]);

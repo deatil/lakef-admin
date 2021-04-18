@@ -81,7 +81,7 @@ class Auth implements MiddlewareInterface
             
             $authAdmin = make(AuthAdmin::class)->withId($adminid);
             if (! $authAdmin->isActive()) {
-                return $this->view->render('serverlog::no-permission', [
+                return $this->view->render('serverlog::view.no-permission', [
                     'message' => '账号不存在或者已被锁定',
                 ]);
             }

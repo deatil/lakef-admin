@@ -63,7 +63,7 @@ if (! function_exists('stdLog')) {
     }
 }
 
-if (!function_exists('logger')) {
+if (! function_exists('logger')) {
     /**
      * 文件日志
      */
@@ -73,7 +73,7 @@ if (!function_exists('logger')) {
     }
 }
 
-if (!function_exists('redis')) {
+if (! function_exists('redis')) {
     /**
      * redis 客户端实例
      */
@@ -83,7 +83,7 @@ if (!function_exists('redis')) {
     }
 }
 
-if (!function_exists('cache')) {
+if (! function_exists('cache')) {
     /**
      * 缓存实例 简单的缓存
      */
@@ -93,7 +93,7 @@ if (!function_exists('cache')) {
     }
 }
 
-if (!function_exists('format_throwable')) {
+if (! function_exists('format_throwable')) {
     /**
      * Format a throwable to string.
      * @param Throwable $throwable
@@ -105,7 +105,7 @@ if (!function_exists('format_throwable')) {
     }
 }
 
-if (!function_exists('queue_push')) {
+if (! function_exists('queue_push')) {
     /**
      * Push a job to async queue.
      */
@@ -128,7 +128,7 @@ if (! function_exists('admin_md5')) {
     }
 }
 
-if (!function_exists('admin_attachment_url')) {
+if (! function_exists('admin_attachment_url')) {
     /**
      * 获取附件路径
      *
@@ -142,7 +142,7 @@ if (!function_exists('admin_attachment_url')) {
     }
 }
 
-if (!function_exists('admin_attachment_url_list')) {
+if (! function_exists('admin_attachment_url_list')) {
     /**
      * 获取多附件地址
      *
@@ -164,20 +164,25 @@ if (!function_exists('admin_attachment_url_list')) {
     }
 }
 
-if (!function_exists('admin_form_images')) {
+if (! function_exists('admin_form_image')) {
     /**
-     * 图片上传
+     * 单图片上传
      * @param string $name 表单名称
      * @param int $id 表单id
      * @param string $value 表单默认值
      */
-    function admin_form_images($name, $id = '', $value = '', $uploadUrl = '') {
+    function admin_form_image(
+        $name, 
+        $id = '', 
+        $value = '', 
+        $uploadUrl = ''
+    ) {
         if (!$id) {
             $id = $name;
         }
         
         if (empty($uploadUrl)) {
-            $uploadUrl = admin_url('file/upload');
+            $uploadUrl = admin_url('upload/file');
         }
         
         $string = "
@@ -197,6 +202,48 @@ if (!function_exists('admin_form_images')) {
         }
         
         $string .= "</div><input type='hidden' name='{$name}' id='{$id}' value='{$value}'><div class='layui-clear'></div><div id='picker_{$name}'>上传单张图片</div>";
+        return $string;
+    }
+}
+
+if (! function_exists('admin_form_images')) {
+    /**
+     * 多图片上传
+     * @param string $name 表单名称
+     * @param int $id 表单id
+     * @param string $value 表单默认值
+     */
+    function admin_form_images(
+        $name, 
+        $id = '', 
+        $value = '', 
+        $uploadUrl = ''
+    ) {
+        if (!$id) {
+            $id = $name;
+        }
+        
+        if (empty($uploadUrl)) {
+            $uploadUrl = admin_url('upload/file');
+        }
+        
+        $string = "
+        <script type=\"text/javascript\">
+        var images_url = {
+            'image_upload_url': '".$uploadUrl."',
+            'file_upload_url': '".$uploadUrl."',
+            'webuploader_swf': 'lib/webuploader/Uploader.swf',
+        };
+        </script>
+        ";
+        
+        $string .= "<div id='file_list_{$name}' class='uploader-list'>";
+        if (! empty($value)) {
+            $path = ($attachmentUrl = admin_attachment_url($value)) ? $attachmentUrl : admin_assets("/admin/images/none.png");
+            $string .= "<div class='file-item thumbnail'><img data-original='{$path}' src='{$path}' width='100' style='max-height: 100px;'><i class='fa fa-trash-o remove-picture' data-id='{$value}' title='移除'></i></div>";
+        }
+        
+        $string .= "</div><input type='hidden' name='{$name}' id='{$id}' value='{$value}' data-multiple='true'><div class='layui-clear'></div><div id='picker_{$name}'>上传单张图片</div>";
         return $string;
     }
 }
