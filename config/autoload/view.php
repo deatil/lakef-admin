@@ -24,6 +24,6 @@ return [
 
     # 视图命名空间 (主要用于扩展包中)
     'namespaces' => [
-        'serverlog' => BASE_PATH . '/app/Admin/view',
+        'admin' => BASE_PATH . '/app/Admin/view',
     ],
 ];

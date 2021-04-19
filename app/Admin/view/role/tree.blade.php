@@ -1,4 +1,4 @@
-@extends('serverlog::layout')
+@extends('admin::layout')
 
 @section('title', '查看菜单')
 

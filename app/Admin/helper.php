@@ -1,13 +1,19 @@
 <?php
 
 use Psr\SimpleCache\CacheInterface;
+use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Hyperf\Contract\StdoutLoggerInterface;
 use Hyperf\Logger\LoggerFactory;
 use Hyperf\ExceptionHandler\Formatter\FormatterInterface;
+use Hyperf\Utils\Context;
 use Hyperf\Utils\ApplicationContext;
 use Hyperf\Redis\Redis;
+use Hyperf\HttpServer\Contract\RequestInterface;
+use Hyperf\HttpServer\Contract\ResponseInterface;
 use Hyperf\AsyncQueue\Driver\DriverFactory;
 use Hyperf\AsyncQueue\JobInterface;
+
 use App\Admin\Support\Upload;
 
 if (! function_exists('admin_url')) {
@@ -50,6 +56,79 @@ if (! function_exists('di')) {
             return $container->get($id);
         }
         return $container;
+    }
+}
+
+if (! function_exists('context')) {
+    /**
+     * 获取上下文
+     * 
+     * @param mixed $interface
+     * @return mixed
+     */
+    function context($interface, $object = null)
+    {
+        if (empty($interface)) {
+            return null;
+        }
+        
+        if (empty($object)) {
+            return Context::get($interface);
+        }
+        
+        return Context::set($interface, $object);
+    }
+}
+
+if (! function_exists('context_request')) {
+    /**
+     * 当前上下文请求
+     */
+    function context_request($request = null)
+    {
+        if (! empty($request) 
+            && $request instanceof ServerRequestInterface
+        ) {
+            return context(ServerRequestInterface::class, $request);
+        }
+        
+        return context(ServerRequestInterface::class);
+    }
+}
+
+if (! function_exists('context_response')) {
+    /**
+     * 当前上下文响应
+     */
+    function context_response($response = null)
+    {
+        if (! empty($response) 
+            && $response instanceof PsrResponseInterface
+        ) {
+            return context(PsrResponseInterface::class, $response);
+        }
+        
+        return context(PsrResponseInterface);
+    }
+}
+
+if (! function_exists('request')) {
+    /**
+     * 常规请求
+     */
+    function request($request = null)
+    {
+        return di(RequestInterface::class);
+    }
+}
+
+if (! function_exists('response')) {
+    /**
+     * 常规响应
+     */
+    function response($response = null)
+    {
+        return di(ResponseInterface);
     }
 }
 
@@ -125,6 +204,15 @@ if (! function_exists('admin_md5')) {
      */
     function admin_md5($str) {
         return substr(md5($str), 8, 16);
+    }
+}
+
+if (! function_exists('admin_json_encode')) {
+    /**
+     * 返回可阅读json
+     */
+    function admin_json_encode(array $data) {
+        return json_encode($data, JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
     }
 }
 

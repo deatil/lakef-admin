@@ -2,18 +2,17 @@
 
 declare (strict_types = 1);
 
-namespace App\Admin\Controller;
+namespace App\Serverlog\Controller;
 
-use App\Admin\Support\Upload;
 use App\Admin\Model\Attachment as AttachmentModel;
 
 /**
- * 附件
+ * app
  *
- * create: 2021-4-17
+ * create: 2021-4-19
  * author: deatil
  */
-class Attachment extends Base
+class App extends Base
 {
     /**
      * 列表
@@ -102,8 +101,6 @@ class Attachment extends Base
         if ($deleteStatus === false) {
             return $this->errorJson('文件删除失败');
         }
-        
-        di(Upload::class)->deleteFile($fileInfo['path']);
         
         return $this->successJson('文件删除成功');
     }

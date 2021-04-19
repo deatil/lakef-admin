@@ -18,7 +18,7 @@ class Role extends Base
      */
     public function getIndex()
     {
-        return $this->view('serverlog::role.index');
+        return $this->view('admin::role.index');
     }
     
     /**
@@ -58,7 +58,7 @@ class Role extends Base
      */
     public function getTree()
     {
-        return $this->view('serverlog::role.tree');
+        return $this->view('admin::role.tree');
     }
     
     /**
@@ -96,7 +96,7 @@ class Role extends Base
             ->buildArray(0);
         $parents = $tree->buildFormatList($treeData);
         
-        return $this->view('serverlog::role.create', [
+        return $this->view('admin::role.create', [
             'parentid' => $parentid,
             'parents' => $parents,
         ]);
@@ -195,7 +195,7 @@ class Role extends Base
             ->buildArray(0);
         $parents = $tree->buildFormatList($parentTree);
         
-        return $this->view('serverlog::role.update', [
+        return $this->view('admin::role.update', [
             'parentid' => $info['parent_id'],
             'parents' => $parents,
             'info' => $info,
@@ -368,7 +368,7 @@ class Role extends Base
             return $this->error('获取角色授权信息失败');
         }
 
-        return $this->view('serverlog::role.access', [
+        return $this->view('admin::role.access', [
             'info' => $info,
             'permissions' => $permissions,
             'access_permissions' => $accessPermissions,

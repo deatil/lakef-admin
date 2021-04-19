@@ -16,6 +16,7 @@ return [
         'middleware' => [
             \App\Admin\Middleware\Auth::class,
             \App\Admin\Middleware\Permission::class,
+            \App\Admin\Middleware\OperationLog::class,
         ],
     ],
     

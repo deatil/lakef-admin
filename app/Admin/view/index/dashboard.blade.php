@@ -1,4 +1,4 @@
-@extends('serverlog::layout')
+@extends('admin::layout')
 
 @section('title', '首页')
 
@@ -187,8 +187,8 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>服务器IP</td>
-                                <td class="domains">{{ $sys_info['ip'] }}</td>
+                                <td>服务器</td>
+                                <td class="domains">{{ $sys_info['host'] }} [ {{ $sys_info['ip'] }} ]</td>
                             </tr>
                             <tr>
                                 <td>服务器信息</td>

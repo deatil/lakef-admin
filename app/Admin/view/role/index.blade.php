@@ -1,4 +1,4 @@
-@extends('serverlog::layout')
+@extends('admin::layout')
 
 @section('title', '角色')
 
@@ -35,7 +35,7 @@
     <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 </div>
 
-<script type="text/html" id="toolbarDemo">
+<script type="text/html" id="toolbarTpl">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加 </button>
         <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button>
@@ -70,7 +70,7 @@ layui.use(['form', 'table', 'miniAdmin'], function () {
         elem: '#currentTableId',
         url: "{{ admin_url('role/index-data') }}",
         method: 'get',
-        toolbar: '#toolbarDemo',
+        toolbar: '#toolbarTpl',
         defaultToolbar: ['filter', 'exports', 'print', {
             title: '提示',
             layEvent: 'LAYTABLE_TIPS',

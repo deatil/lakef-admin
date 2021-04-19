@@ -17,7 +17,7 @@ class Permission extends Base
      */
     public function getIndex()
     {
-        return $this->view('serverlog::permission.index');
+        return $this->view('admin::permission.index');
     }
     
     /**
@@ -73,7 +73,7 @@ class Permission extends Base
      */
     public function getMenu()
     {
-        return $this->view('serverlog::permission.menu');
+        return $this->view('admin::permission.menu');
     }
     
     /**
@@ -111,7 +111,7 @@ class Permission extends Base
             ->buildArray(0);
         $permissions = $tree->buildFormatList($permissionTree);
         
-        return $this->view('serverlog::permission.create', [
+        return $this->view('admin::permission.create', [
             'parentid' => $parentid,
             'permissions' => $permissions,
         ]);
@@ -239,7 +239,7 @@ class Permission extends Base
         $info['method'] = $method;
         $info['url'] = $url;
         
-        return $this->view('serverlog::permission.update', [
+        return $this->view('admin::permission.update', [
             'parentid' => $info['parent_id'],
             'permissions' => $permissions,
             'info' => $info,

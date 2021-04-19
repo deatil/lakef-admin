@@ -19,7 +19,7 @@ class Admin extends Base
      */
     public function getIndex()
     {
-        return $this->view('serverlog::admin.index');
+        return $this->view('admin::admin.index');
     }
     
     /**
@@ -56,6 +56,7 @@ class Admin extends Base
                     $query->whereIn('id', $childRoleIds);
                 })
                 ->where($where)
+                ->orderBy('id', 'ASC')
                 ->offset($page - 1)
                 ->limit($limit)
                 ->get();
@@ -86,7 +87,7 @@ class Admin extends Base
      */
     public function getCreate()
     {
-        return $this->view('serverlog::admin.create');
+        return $this->view('admin::admin.create');
     }
     
     /**
@@ -201,7 +202,7 @@ class Admin extends Base
             }
         }
         
-        return $this->view('serverlog::admin.update', [
+        return $this->view('admin::admin.update', [
             'info' => $info,
         ]);
     }
@@ -375,7 +376,7 @@ class Admin extends Base
             }
         }
         
-        return $this->view('serverlog::admin.password', [
+        return $this->view('admin::admin.password', [
             'info' => $info,
         ]);
     }
@@ -483,7 +484,7 @@ class Admin extends Base
             ->buildArray(0);
         $roles = $tree->buildFormatList($treeData);
         
-        return $this->view('serverlog::admin.access', [
+        return $this->view('admin::admin.access', [
             'info' => $info,
             'roles' => $roles,
             'admin_roles' => $adminRoles,

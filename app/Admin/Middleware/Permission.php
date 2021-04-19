@@ -74,7 +74,7 @@ class Permission implements MiddlewareInterface
                 $permission = strtoupper($method).':/'.$uri;
                 if (! $info->can($permission)) {
                     if ($this->request->isMethod('get')) {
-                        return $this->view->render('serverlog::view.no-permission', [
+                        return $this->view->render('admin::view.no-permission', [
                             'message' => '权限被限制',
                         ]);
                     } else {

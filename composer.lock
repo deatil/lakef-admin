@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "44f281d05a0aa1f92e1cc9301c6715ee",
+    "content-hash": "c6693d9b3db59028aa0a073a644d37a9",
     "packages": [
         {
             "name": "chdemko/sorted-collections",
@@ -1811,16 +1811,16 @@
         },
         {
             "name": "hyperf/database",
-            "version": "v2.1.10",
+            "version": "v2.1.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hyperf/database.git",
-                "reference": "4e5d3e5a02d7d4316f8b99595cf0889e3baafed2"
+                "reference": "a094528e2a9a93f025d2c9ddd0fbb64add33adde"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hyperf/database/zipball/4e5d3e5a02d7d4316f8b99595cf0889e3baafed2",
-                "reference": "4e5d3e5a02d7d4316f8b99595cf0889e3baafed2",
+                "url": "https://api.github.com/repos/hyperf/database/zipball/a094528e2a9a93f025d2c9ddd0fbb64add33adde",
+                "reference": "a094528e2a9a93f025d2c9ddd0fbb64add33adde",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1874,7 +1874,7 @@
                 "pull-request": "https://github.com/hyperf/hyperf/pulls",
                 "source": "https://github.com/hyperf/hyperf"
             },
-            "time": "2021-03-14T09:49:28+00:00"
+            "time": "2021-04-16T08:49:34+00:00"
         },
         {
             "name": "hyperf/db-connection",
@@ -1947,16 +1947,16 @@
         },
         {
             "name": "hyperf/di",
-            "version": "v2.1.14",
+            "version": "v2.1.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hyperf/di.git",
-                "reference": "ec834526068baa03f8c2885ee88ff975f728a443"
+                "reference": "560b4878f272bc0c849aed02e0721510707ebf78"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hyperf/di/zipball/ec834526068baa03f8c2885ee88ff975f728a443",
-                "reference": "ec834526068baa03f8c2885ee88ff975f728a443",
+                "url": "https://api.github.com/repos/hyperf/di/zipball/560b4878f272bc0c849aed02e0721510707ebf78",
+                "reference": "560b4878f272bc0c849aed02e0721510707ebf78",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -2011,7 +2011,7 @@
                 "pull-request": "https://github.com/hyperf/hyperf/pulls",
                 "source": "https://github.com/hyperf/hyperf"
             },
-            "time": "2021-04-09T10:00:23+00:00"
+            "time": "2021-04-12T05:03:28+00:00"
         },
         {
             "name": "hyperf/dispatcher",

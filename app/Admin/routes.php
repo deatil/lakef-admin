@@ -75,6 +75,13 @@ Router::addGroup(config('admin.route.group'), function ($router) {
     $router->get('/attachment/detail', [Controller\Attachment::class, 'getDetail']);
     $router->post('/attachment/delete', [Controller\Attachment::class, 'postDelete']);
 
+    // 日志
+    $router->get('/operation-log/index', [Controller\OperationLog::class, 'getIndex']);
+    $router->get('/operation-log/index-data', [Controller\OperationLog::class, 'getIndexData']);
+    $router->get('/operation-log/detail', [Controller\OperationLog::class, 'getDetail']);
+    $router->post('/operation-log/delete', [Controller\OperationLog::class, 'postDelete']);
+    $router->post('/operation-log/clear', [Controller\OperationLog::class, 'postClear']);
+
 }, [
     // 中间件
     'middleware' => config('admin.route.middleware'),

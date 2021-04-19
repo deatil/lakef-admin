@@ -24,7 +24,7 @@ class Index extends Base
     {
         $authAdmin = $this->getAuthAdminInfo();
         
-        return $this->view('serverlog::index.index', [
+        return $this->view('admin::index.index', [
             'admin' => $authAdmin,
         ]);
     }
@@ -39,6 +39,7 @@ class Index extends Base
         $permissionCount = PermissionModel::query()->count();
         
         $sysInfo['ip'] = $this->request->server('remote_addr'); // 服务器IP
+        $sysInfo['host'] = parse_url(request()->url())['host'];
         $sysInfo['php_uname'] = php_uname();
         $sysInfo['phpv'] = phpversion(); // php版本
         $sysInfo['time'] = date("Y年n月j日 H:i:s", $this->request->server('master_time')); //服务器时间
@@ -53,7 +54,7 @@ class Index extends Base
             $sysInfo['gdinfo'] = "未知";
         }
 
-        return $this->view('serverlog::index.dashboard', [
+        return $this->view('admin::index.dashboard', [
             'counts' => [
                 'admin' => $adminCount,
                 'role' => $roleCount,

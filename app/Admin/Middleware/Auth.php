@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Admin\Middleware;
 
 use Psr\Container\ContainerInterface;
-use Psr\Http\Message\ResponseInterface as PsrResponseInterface;;
+use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -82,7 +82,7 @@ class Auth implements MiddlewareInterface
             $authAdmin = make(AuthAdmin::class)->withId($adminid);
             if (! $authAdmin->isActive()) {
                 if ($this->request->isMethod('get')) {
-                    return $this->view->render('serverlog::view.no-permission', [
+                    return $this->view->render('admin::view.no-permission', [
                         'message' => '账号不存在或者已被锁定',
                     ]);
                 } else {

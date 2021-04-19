@@ -49,7 +49,7 @@ trait View
     protected function success(string $message)
     {
         if ($this->request->isMethod('post')) {
-            return $this->view('serverlog::view.success', [
+            return $this->view('admin::view.success', [
                 'message' => $message,
             ]);
         } else {
@@ -63,7 +63,7 @@ trait View
     protected function error(string $message)
     {
         if ($this->request->isMethod('post')) {
-            return $this->view('serverlog::view.error', [
+            return $this->view('admin::view.error', [
                 'message' => $message,
             ]);
         } else {

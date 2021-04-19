@@ -38,7 +38,7 @@ class Passport extends Base
             return $this->response->redirect(admin_url('index'));
         }
         
-        return $this->view('serverlog::passport.login');
+        return $this->view('admin::passport.login');
     }
     
     /**
