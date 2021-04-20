@@ -35,19 +35,25 @@ class OperationLog extends Model
      */
     public static function record(array $data = [])
     {
-        $authAdmin = context_request()
-            ->getAttribute('authAdmin')
-            ->getData();
+        $authAdmin = context_request()->getAttribute('authAdmin');
+        if (! empty($authAdmin)) {
+            $admimData = $authAdmin->getData();
+        } else {
+            $admimData = [
+                'id' => 0,
+                'name' => '',
+            ];
+        }
         
         $data = array_merge([
             'id' => admin_md5(microtime().mt_rand(10000, 99999)),
-            'admin_id' => $authAdmin['id'],
-            'admin_name' => $authAdmin['name'],
+            'admin_id' => $admimData['id'],
+            'admin_name' => $admimData['name'],
             'method' => request()->getMethod(),
             'url' => request()->fullUrl(),
             'info' => admin_json_encode(request()->all()),
             'ip' => request()->server('remote_addr'),
-            'useragent' => request()->server('user_agent'),
+            'useragent' => request()->server('HTTP_USER_AGENT'),
             'create_time' => time(),
         ], $data);
         

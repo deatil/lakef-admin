@@ -63,11 +63,13 @@ class OperationLog extends Base
         }
         
         $page = max($page, 1);
+        $offset = ($page - 1) * $limit;
+        $limit = max($limit, 1);
         
         $list = OperationLogModel::query()
             ->where($where)
             ->orderBy('create_time', 'DESC')
-            ->offset($page - 1)
+            ->offset($offset)
             ->limit($limit)
             ->get();
             

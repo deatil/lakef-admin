@@ -16,32 +16,6 @@ use Hyperf\AsyncQueue\JobInterface;
 
 use App\Admin\Support\Upload;
 
-if (! function_exists('admin_url')) {
-    /**
-     * 后台url
-     * 
-     * @param null|mixed $url
-     * @return mixed
-     */
-    function admin_url($url = null)
-    {
-        return config('admin.route.group') . '/' . ltrim($url, '/');
-    }
-}
-
-if (! function_exists('admin_assets')) {
-    /**
-     * 后台资源
-     * 
-     * @param null|mixed $assets
-     * @return mixed
-     */
-    function admin_assets($assets = null)
-    {
-        return config('admin.assets.static') . ltrim($assets, '/');
-    }
-}
-
 if (! function_exists('di')) {
     /**
      * 获取Container
@@ -195,6 +169,32 @@ if (! function_exists('queue_push')) {
     }
 }
 
+if (! function_exists('admin_url')) {
+    /**
+     * 后台url
+     * 
+     * @param null|mixed $url
+     * @return mixed
+     */
+    function admin_url($url = null)
+    {
+        return config('admin.route.group') . '/' . ltrim($url, '/');
+    }
+}
+
+if (! function_exists('admin_assets')) {
+    /**
+     * 后台资源
+     * 
+     * @param null|mixed $assets
+     * @return mixed
+     */
+    function admin_assets($assets = null)
+    {
+        return config('admin.assets.static') . ltrim($assets, '/');
+    }
+}
+
 if (! function_exists('admin_md5')) {
     /**
      * 返回16位md5值
@@ -204,6 +204,17 @@ if (! function_exists('admin_md5')) {
      */
     function admin_md5($str) {
         return substr(md5($str), 8, 16);
+    }
+}
+
+if (! function_exists('admin_rand_id')) {
+    /**
+     * 生成16位ID
+     *
+     * @return string 返回16位的字符串
+     */
+    function admin_rand_id() {
+        return admin_md5(microtime().mt_rand(10000, 99999));
     }
 }
 

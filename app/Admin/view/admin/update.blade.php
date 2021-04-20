@@ -75,8 +75,7 @@
 <script>
 layui.use(['form'], function () {
     var $ = layui.jquery,
-        form = layui.form,
-        $ = layui.jquery;
+        form = layui.form;
 
     // 监听提交
     form.on('submit(saveBtn)', function (data) {

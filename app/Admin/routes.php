@@ -82,6 +82,23 @@ Router::addGroup(config('admin.route.group'), function ($router) {
     $router->post('/operation-log/delete', [Controller\OperationLog::class, 'postDelete']);
     $router->post('/operation-log/clear', [Controller\OperationLog::class, 'postClear']);
 
+    // 日志系统 - 应用
+    $router->get('/server-log/app/index', [Controller\Serverlog\App::class, 'getIndex']);
+    $router->get('/server-log/app/index-data', [Controller\Serverlog\App::class, 'getIndexData']);
+    $router->get('/server-log/app/create', [Controller\Serverlog\App::class, 'getCreate']);
+    $router->post('/server-log/app/create', [Controller\Serverlog\App::class, 'postCreate']);
+    $router->get('/server-log/app/update', [Controller\Serverlog\App::class, 'getUpdate']);
+    $router->post('/server-log/app/update', [Controller\Serverlog\App::class, 'postUpdate']);
+    $router->get('/server-log/app/detail', [Controller\Serverlog\App::class, 'getDetail']);
+    $router->post('/server-log/app/delete', [Controller\Serverlog\App::class, 'postDelete']);
+
+    // 日志系统 - 日志
+    $router->get('/server-log/logs/index', [Controller\Serverlog\Logs::class, 'getIndex']);
+    $router->get('/server-log/logs/index-data', [Controller\Serverlog\Logs::class, 'getIndexData']);
+    $router->get('/server-log/logs/detail', [Controller\Serverlog\Logs::class, 'getDetail']);
+    $router->post('/server-log/logs/delete', [Controller\Serverlog\Logs::class, 'postDelete']);
+    $router->post('/server-log/logs/clear', [Controller\Serverlog\Logs::class, 'postClear']);
+
 }, [
     // 中间件
     'middleware' => config('admin.route.middleware'),

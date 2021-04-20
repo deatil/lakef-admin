@@ -42,8 +42,11 @@ class Role extends Base
         }
         
         $page = max($page, 1);
+        $offset = ($page - 1) * $limit;
+        $limit = max($limit, 1);
+        
         $list = RoleModel::where($where)
-            ->offset($page - 1)
+            ->offset($offset)
             ->limit($limit)
             ->get();
             

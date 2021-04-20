@@ -43,6 +43,8 @@ class Admin extends Base
         }
         
         $page = max($page, 1);
+        $offset = ($page - 1) * $limit;
+        $limit = max($limit, 1);
         
         if (! $this->getIsSuperAdmin()) {
             try {
@@ -57,7 +59,7 @@ class Admin extends Base
                 })
                 ->where($where)
                 ->orderBy('id', 'ASC')
-                ->offset($page - 1)
+                ->offset($offset)
                 ->limit($limit)
                 ->get();
                 
@@ -70,7 +72,7 @@ class Admin extends Base
         } else {
             $list = AdminModel::with('roles')
                 ->where($where)
-                ->offset($page - 1)
+                ->offset($offset)
                 ->limit($limit)
                 ->get();
                 

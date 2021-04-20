@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\Serverlog\Controller;
 
 use App\Admin\Controller\Base as BaseController;
-use App\Serverlog\Client\CalculatorServiceConsumer;
+use App\Serverlog\Client\AppServiceConsumer;
+use App\Serverlog\Client\LogsServiceConsumer;
 
 /**
  * 首页
@@ -17,9 +18,9 @@ class Index extends BaseController
      */
     public function getIndex()
     {
-        $client = di(CalculatorServiceConsumer::class);
+        $client = di(LogsServiceConsumer::class);
 
-        $result = $client->add(1, 2);
+        $result = $client->dataCount();
         
         return $result;
     }

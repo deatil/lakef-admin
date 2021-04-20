@@ -9,6 +9,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface as PsrResponseInterface;;
 use Hyperf\Utils\Arr;
+use Hyperf\Utils\Str;
 use Hyperf\Utils\Context;
 use Hyperf\HttpServer\Contract\RequestInterface;
 
@@ -26,20 +27,22 @@ class OperationLog implements MiddlewareInterface
     {
         $response = $handler->handle($request);
         
-        $info = request()->all();
-        
-        // 过滤密码相关
-        Arr::forget($info, [
-            'password',
-            'password_confirm',
-            'old_password',
-            'new_password',
-            'again_password',
-        ]);
-        
-        OperationLogModel::record([
-            'info' => admin_json_encode($info),
-        ]);
+        if (Str::startsWith('/'.request()->decodedPath(), config('admin.route.group'))) {
+            $info = request()->all();
+            
+            // 过滤密码相关
+            Arr::forget($info, [
+                'password',
+                'password_confirm',
+                'old_password',
+                'new_password',
+                'again_password',
+            ]);
+            
+            OperationLogModel::record([
+                'info' => admin_json_encode($info),
+            ]);
+        }
         
         return $response;
     }
