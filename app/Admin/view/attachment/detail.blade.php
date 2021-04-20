@@ -73,15 +73,11 @@
                 </tr>
                 <tr>
                     <td>添加时间</td>
-                    <td>
-                        {{ date('Y-m-d H:i:s', $data['create_time']) }}
-                    </td>
+                    <td>{{ $data['created_at'] }}</td>
                 </tr>
                 <tr>
                     <td>更新时间</td>
-                    <td>
-                        {{ date('Y-m-d H:i:s', $data['update_time']) }}
-                    </td>
+                    <td>{{ $data['updated_at'] }}</td>
                 </tr>
 
             </tbody>

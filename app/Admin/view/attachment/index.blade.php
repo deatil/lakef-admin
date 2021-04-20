@@ -74,7 +74,7 @@ layui.use(['form', 'table'], function () {
         cols: [[
             {field: 'name', minWidth: 100, title: '名称'},
             {field: 'sizes', width: 120, title: '大小'},
-            {field: 'mime', width: 100, title: '类型', align: "center"},
+            {field: 'mime', width: 100, title: '类型'},
             {field: 'ext', width: 100, title: '后缀', align: "center", templet: '#extTpl'},
             {field: 'driver', width: 100, title: '驱动', align: "center", templet: '#driverTpl'},
             {field: 'create_time', width: 160, title: '添加时间', sort: true, templet: '#createTimeTpl'},

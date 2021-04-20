@@ -30,8 +30,8 @@ class AppService implements AppInterface
         $sorts = (array) Arr::get($param, 'sort', []);
         
         $list = AppModel::query()
-            ->where($where)
-            ->orWhere($orWhere)
+            ->wheres($where)
+            ->orWheres($orWhere)
             ->offset($offset)
             ->limit($limit);
         
@@ -53,8 +53,8 @@ class AppService implements AppInterface
         $orWhere = (array) Arr::get($param, 'orWhere', []);
         
         $count = AppModel::query()
-            ->where($where)
-            ->orWhere($orWhere)
+            ->wheres($where)
+            ->orWheres($orWhere)
             ->count();
         
         return (int) $count;
@@ -68,7 +68,7 @@ class AppService implements AppInterface
         $where = (array) Arr::get($param, 'where', []);
         
         $info = AppModel
-            ::where($where)
+            ::wheres($where)
             ->first();
         
         return $info;
@@ -79,10 +79,11 @@ class AppService implements AppInterface
      */
     public function create(array $data = [])
     {
+        $appId = config('serverlog.app.prefix').date('YmdHis').mt_rand(1000, 9999);
         $defaultData = [
             'id' => serverlog_rand_id(),
-            'app_id' => serverlog_rand_id(),
-            'app_secret' => serverlog_rand_id(),
+            'app_id' => $appId,
+            'app_secret' => serverlog_secret_id(),
         ];
         
         $data = array_merge($defaultData, $data);
@@ -106,10 +107,15 @@ class AppService implements AppInterface
         
         $defaultData = [];
         if ($makeSecret) {
-            $defaultData['app_secret'] = serverlog_rand_id();
+            $defaultData['app_secret'] = serverlog_secret_id();
         }
         
         $data = array_merge($defaultData, $data);
+        
+        // 移除对 app_id 的修改
+        Arr::forget($data, [
+            'app_id',
+        ]);
         
         $update = AppModel
             ::where('id', $id)
@@ -130,8 +136,8 @@ class AppService implements AppInterface
         $orWhere = (array) Arr::get($param, 'orWhere', []);
         
         $delete = AppModel
-            ::where($where)
-            ->orWhere($orWhere)
+            ::wheres($where)
+            ->orWheres($orWhere)
             ->delete();
         if ($delete === false) {
             return false;

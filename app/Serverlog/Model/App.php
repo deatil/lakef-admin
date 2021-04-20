@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace App\Serverlog\Model;
 
-use Hyperf\DbConnection\Model\Model;
-
 /**
  * App
  */
-class App extends Model
+class App extends Base
 {
     /**
      * The table associated with the model.

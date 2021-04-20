@@ -2,14 +2,17 @@
 
 declare(strict_types=1);
 
-use App\Admin\Extension\Admin;
+use Hyperf\HttpServer\Router\Router;
 use App\Serverlog\Controller;
 
 include_once 'helper.php';
 
-Admin::routes(function ($router) {
-    // 日志
-    $router->get('/serverlog/index', [Controller\Index::class, 'getIndex']);
-    // $router->post('/passport/login', [Controller\Passport::class, 'postLogin']);
+Router::addGroup(config('serverlog.route.group'), function ($router) {
+    
+    // 接收日志
+    $router->post('/add', [Controller\Index::class, 'postAdd']);
 
-});
+}, [
+    // 中间件
+    'middleware' => config('serverlog.route.middleware'),
+]);

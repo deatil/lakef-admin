@@ -48,7 +48,7 @@ trait View
      */
     protected function success(string $message)
     {
-        if ($this->request->isMethod('post')) {
+        if ($this->request->isMethod('get')) {
             return $this->view('admin::view.success', [
                 'message' => $message,
             ]);
@@ -62,7 +62,7 @@ trait View
      */
     protected function error(string $message)
     {
-        if ($this->request->isMethod('post')) {
+        if ($this->request->isMethod('get')) {
             return $this->view('admin::view.error', [
                 'message' => $message,
             ]);

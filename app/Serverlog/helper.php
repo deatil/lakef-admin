@@ -23,3 +23,22 @@ if (! function_exists('serverlog_rand_id')) {
     }
 }
 
+if (! function_exists('serverlog_secret_id')) {
+    /**
+     * 生成32位ID
+     *
+     * @return string 返回16位的字符串
+     */
+    function serverlog_secret_id() {
+        return md5(microtime().mt_rand(10000, 99999));
+    }
+}
+
+if (! function_exists('serverlog_json_encode')) {
+    /**
+     * 返回可阅读json
+     */
+    function serverlog_json_encode(array $data) {
+        return json_encode($data, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+    }
+}

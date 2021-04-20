@@ -29,8 +29,6 @@ class Attachment extends Model
         'id' => 'string', 
     ];
     
-    public $timestamps = false;
-    
     protected $guarded = [];
     
     protected $appends = [

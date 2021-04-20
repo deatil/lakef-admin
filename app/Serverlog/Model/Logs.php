@@ -4,18 +4,11 @@ declare(strict_types=1);
 
 namespace App\Serverlog\Model;
 
-use Hyperf\DbConnection\Model\Model;
-
 /**
  * 日志记录
  */
-class Logs extends Model
+class Logs extends Base
 {
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
     protected $table = 'serverlog_log';
     
     protected $keyType = 'string';

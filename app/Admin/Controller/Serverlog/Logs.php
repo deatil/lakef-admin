@@ -4,8 +4,9 @@ declare (strict_types = 1);
 
 namespace App\Admin\Controller\Serverlog;
 
-use App\Serverlog\Client\LogsServiceConsumer;
 use App\Admin\Controller\Base;
+use App\Serverlog\Client\LogsServiceConsumer;
+use App\Serverlog\Client\AppServiceConsumer;
 
 /**
  * 日志
@@ -34,7 +35,7 @@ class Logs extends Base
         $where = [];
         
         $appId = $this->request->input('app_id');
-        if (! empty($ext)) {
+        if (! empty($appId)) {
             $where[] = ['app_id', 'like', '%'.$appId.'%'];
         }
         
@@ -52,7 +53,7 @@ class Logs extends Base
             'limit' => $limit,
             'where' => $where,
             'sort' => [
-                ['created_at', 'ASC'],
+                ['created_at', 'DESC'],
             ],
         ];
         
@@ -75,13 +76,24 @@ class Logs extends Base
         }
         
         $logsModel = di(LogsServiceConsumer::class);
-        
-        $info = $logsModel->detail(['id' => $id]);
+        $info = $logsModel->detail([
+            'where' => [
+                ['id', '=', $id]
+            ],
+        ]);
         if (empty($info)) {
             return $this->error('日志信息不存在');
         }
         
+        $appModel = di(AppServiceConsumer::class);
+        $appInfo = $appModel->detail([
+            'where' => [
+                ['app_id', '=', $info['app_id']]
+            ],
+        ]);
+        
         return $this->view('admin::server-log.logs.detail', [
+            'app' => $appInfo,
             'info' => $info,
         ]);
     }
@@ -96,9 +108,17 @@ class Logs extends Base
             return $this->errorJson('日志ID不能为空');
         }
         
+        if (! is_array($id)) {
+            $id = [$id];
+        }
+        
         $logsModel = di(LogsServiceConsumer::class);
         
-        $deleteStatus = $logsModel->delete(['id' => $id]);
+        $deleteStatus = $logsModel->delete([
+            'where' => [
+                ['id', 'in', $id],
+            ],
+        ]);
         if ($deleteStatus === false) {
             return $this->errorJson('日志删除失败');
         }
@@ -111,18 +131,17 @@ class Logs extends Base
      */
     public function postClear()
     {
-        $id = $this->request->input('id');
-        if (empty($id)) {
-            return $this->errorJson('日志ID不能为空');
-        }
-        
         $logsModel = di(LogsServiceConsumer::class);
         
-        $deleteStatus = $logsModel->delete('create_time', '<=', time() - (86400 * 30));
+        $deleteStatus = $logsModel->delete([
+            'where' => [
+                ['add_time', '<=', time() - (86400 * 30)],
+            ],
+        ]);
         if ($deleteStatus === false) {
-            return $this->errorJson('日志删除失败');
+            return $this->errorJson('清空日志失败');
         }
         
-        return $this->successJson('日志删除成功');
+        return $this->successJson('清空日志成功');
     }
 }

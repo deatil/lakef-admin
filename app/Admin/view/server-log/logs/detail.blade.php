@@ -20,44 +20,50 @@
             <tbody>
                 <tr>
                     <td>ID</td>
-                    <td class="break-all">{{ $data['id'] }}</td>
+                    <td class="break-all">{{ $info['id'] }}</td>
                 </tr>
                 <tr>
-                    <td>请求链接</td>
-                    <td class="break-all">{{ $data['url'] }}</td>
+                    <td>AppId</td>
+                    <td class="break-all">{{ $info['app_id'] }}</td>
                 </tr>
                 <tr>
-                    <td>请求方式</td>
-                    <td class="break-all">{{ $data['method'] }}</td>
+                    <td>App应用名称</td>
+                    <td class="break-all">{{ $app['name'] }}</td>
                 </tr>
                 <tr>
-                    <td>请求详情</td>
-                    <td class="break-all">{{ $data['info'] }}</td>
+                    <td>日志内容</td>
+                    <td class="break-all" id="json_view">{!! $info['content'] !!}</td>
                 </tr>
                 <tr>
-                    <td>请求头信息</td>
-                    <td class="break-all">{{ $data['useragent'] }}</td>
+                    <td>日志时间</td>
+                    <td class="break-all">{{ date('Y-m-d H:i:s', $info['add_time']) }}</td>
                 </tr>
                 <tr>
                     <td>来源IP</td>
-                    <td class="break-all">{{ $data['ip'] }}</td>
+                    <td class="break-all">{{ $info['add_ip'] }}</td>
                 </tr>
                 <tr>
-                    <td>管理员ID</td>
-                    <td class="break-all">{{ $data['admin_id'] }}</td>
-                </tr>
-                <tr>
-                    <td>管理员</td>
-                    <td class="break-all">{{ $data['admin_name'] }}</td>
-                </tr>
-                <tr>
-                    <td>请求时间</td>
-                    <td class="break-all">
-                        {{ date('Y-m-d H:i:s', $data['create_time']) }}
-                    </td>
+                    <td>创建时间</td>
+                    <td class="break-all">{{ $info['created_at'] }}</td>
                 </tr>
             </tbody>
         </table>
     </div>
 </div>
+@endsection
+
+@section('script_after')
+<script type="text/javascript" src="lib/jquery.min.js"></script>
+<script type="text/javascript" src="lib/jquery.jsonview/jquery.jsonview.js"></script>
+<link rel="stylesheet" href="lib/jquery.jsonview/jquery.jsonview.css" />
+<script type="text/javascript">
+$(function() {
+    var json = $("#json_view").html();
+    $("#json_view").JSONView(json, { 
+        collapsed: true, 
+        nl2br: true, 
+        recursive_collapser: true 
+    });
+});
+</script>
 @endsection

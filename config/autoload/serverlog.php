@@ -3,11 +3,16 @@
 declare(strict_types=1);
 
 return [
-    // 提供的服务
-    'services' => [
+    // 应用
+    'app' => [
+        // 字符最大7位
+        'prefix' => 'SL',
     ],
     
-    // 消费的服务
-    'consumers' => [
+    // 路由
+    'route' => [
+        'group' => '/server-log',
+        'middleware' => [
+        ],
     ],
 ];

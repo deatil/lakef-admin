@@ -925,3 +925,17 @@
         display: none;
     }
 }
+
+.layui-layout-admin .layui-footer {
+    height: 38px;
+    line-height: 38px;
+    color: #999;
+}
+.layuimini-mini .layui-footer {
+    left: 60px;
+}
+@media screen and (max-width: 1024px) {
+    .layui-layout-admin .layui-footer {
+        left: 0;
+    }
+}

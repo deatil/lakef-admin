@@ -67,7 +67,7 @@ class Upload extends Base
                     'md5' => $md5
                 ])
                 ->update([
-                    'update_time' => time(), 
+                    'name' => $name, 
                 ]);
             
             $res = [
@@ -106,8 +106,6 @@ class Upload extends Base
             'md5' => $md5,
             'sha1' => $sha1,
             'driver' => $driver,
-            'create_time' => time(),
-            'update_time' => time(),
             'add_time' => time(),
             'add_ip' => $this->request->server('remote_addr'),
         ];

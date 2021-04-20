@@ -1,16 +1,25 @@
 {
-    "name": "hyperf/hyperf-skeleton",
+    "name": "lakef/server-log",
     "type": "project",
     "keywords": [
         "php",
         "swoole",
-        "framework",
         "hyperf",
-        "microservice",
-        "middleware"
+        "lakef",
+        "server-log",
+        "lakef",
+        "log"
     ],
-    "description": "A coroutine framework that focuses on hyperspeed and flexible, specifically use for build microservices and middlewares.",
+    "description": "A server log system base on hyperf, swoole and layui.",
     "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "deatil",
+            "email": "deatil@github.com",
+            "homepage": "https://github.com/deatil",
+            "role": "Developer"
+        }
+    ],
     "require": {
         "php": ">=7.3",
         "hyperf/cache": "~2.1.0",

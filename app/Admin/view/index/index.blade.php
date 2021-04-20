@@ -62,7 +62,7 @@
                 </li>
                 <li class="layui-nav-item layuimini-setting">
                     <a href="javascript:;">
-                        <img src="{{ admin_attachment_url($admin['avatar']) }}" alt="{{ $admin['nickname'] }}" class="layui-nav-img admin-avatar" width="35" height="35">
+                        <img src="{{ admin_attachment_url($admin['avatar']) ?: 'images/avatar.png' }}" alt="{{ $admin['nickname'] }}" class="layui-nav-img admin-avatar" width="35" height="35">
                         <span>{{ $admin['nickname'] }}</span>
                     </a>
                     <dl class="layui-nav-child">
@@ -126,6 +126,9 @@
             </div>
             <div class="layui-tab-content">
                 <div id="layuiminiHomeTabIframe" class="layui-tab-item layui-show"></div>
+            </div>
+            <div class="layui-footer">
+                Copyright © {{ config('admin.system.title') }} v{{ config('admin.system.version') }}
             </div>
         </div>
 

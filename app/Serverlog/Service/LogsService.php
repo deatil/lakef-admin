@@ -30,8 +30,8 @@ class LogsService implements LogsInterface
         $sorts = (array) Arr::get($param, 'sort', []);
         
         $list = LogsModel::query()
-            ->where($where)
-            ->orWhere($orWhere)
+            ->wheres($where)
+            ->orWheres($orWhere)
             ->offset($offset)
             ->limit($limit);
         
@@ -53,8 +53,8 @@ class LogsService implements LogsInterface
         $orWhere = (array) Arr::get($param, 'orWhere', []);
         
         $count = LogsModel::query()
-            ->where($where)
-            ->orWhere($orWhere)
+            ->wheres($where)
+            ->orWheres($orWhere)
             ->count();
         
         return (int) $count;
@@ -68,7 +68,7 @@ class LogsService implements LogsInterface
         $where = (array) Arr::get($param, 'where', []);
         
         $info = LogsModel
-            ::where($where)
+            ::wheres($where)
             ->first();
         
         return $info;
@@ -83,8 +83,8 @@ class LogsService implements LogsInterface
         $orWhere = (array) Arr::get($param, 'orWhere', []);
         
         $delete = LogsModel
-            ::where($where)
-            ->orWhere($orWhere)
+            ::wheres($where)
+            ->orWheres($orWhere)
             ->delete();
         if ($delete === false) {
             return false;

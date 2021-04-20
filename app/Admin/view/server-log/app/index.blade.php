@@ -91,7 +91,7 @@ layui.use(['form', 'table'], function () {
         defaultToolbar: ['filter', 'exports', 'print'],
         cols: [[
             {field: 'name', minWidth: 100, title: '应用名称'},
-            {field: 'app_id', width: 180, title: 'AppId'},
+            {field: 'app_id', width: 220, title: 'AppId'},
             {field: 'allow_origin', width: 80, title: '跨域', templet: '#allowOriginTpl', align: "center"},
             {field: 'is_check', width: 80, title: '验证', templet: '#checkTpl', align: "center"},
             {field: 'status', width: 80, title: '状态', templet: '#statusTpl', align: "center"},

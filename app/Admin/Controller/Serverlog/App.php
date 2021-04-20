@@ -39,7 +39,7 @@ class App extends Base
         }
         
         $appId = $this->request->input('app_id');
-        if (! empty($ext)) {
+        if (! empty($appId)) {
             $where[] = ['app_id', 'like', '%'.$appId.'%'];
         }
         
@@ -144,8 +144,11 @@ class App extends Base
         }
         
         $appModel = di(AppServiceConsumer::class);
-        
-        $info = $appModel->detail(['id' => $id]);
+        $info = $appModel->detail([
+            'where' => [
+                ['id', '=', $id]
+            ],
+        ]);
         if (empty($info)) {
             return $this->error('应用信息不存在');
         }
@@ -167,7 +170,11 @@ class App extends Base
         
         $appModel = di(AppServiceConsumer::class);
         
-        $info = $appModel->detail(['id' => $id]);
+        $info = $appModel->detail([
+            'where' => [
+                ['id', '=', $id]
+            ],
+        ]);
         if (empty($info)) {
             return $this->errorJson('应用信息不存在');
         }
@@ -246,7 +253,11 @@ class App extends Base
         
         $appModel = di(AppServiceConsumer::class);
         
-        $info = $appModel->detail(['id' => $id]);
+        $info = $appModel->detail([
+            'where' => [
+                ['id', '=', $id]
+            ],
+        ]);
         if (empty($info)) {
             return $this->error('应用信息不存在');
         }
@@ -268,9 +279,13 @@ class App extends Base
         
         $appModel = di(AppServiceConsumer::class);
         
-        $info = $appModel->detail(['id' => $id]);
+        $info = $appModel->detail([
+            'where' => [
+                ['id', '=', $id]
+            ],
+        ]);
         if (empty($info)) {
-            return $this->error('应用信息不存在');
+            return $this->errorJson('应用信息不存在');
         }
         
         $deleteStatus = $appModel->delete(['id' => $id]);

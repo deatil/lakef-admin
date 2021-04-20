@@ -70,7 +70,7 @@
 <script type="text/html" id="toolbarTpl">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button>
-        <button class="layui-btn layui-btn-sm layui-btn-green data-clear-btn" lay-event="clear"> 删除 </button>
+        <button class="layui-btn layui-btn-sm layui-btn-green data-clear-btn" lay-event="clear"> 清空 </button>
     </div>
 </script>
 
