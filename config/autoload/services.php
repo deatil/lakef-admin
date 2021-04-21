@@ -1,12 +1,14 @@
 <?php
 
+use Lakef\Serverlog\Contracts as ServerlogContract;
+
 $consumer = [
     // name 需与服务提供者的 name 属性相同
-    'name' => 'AppService',
+    'name' => '',
     // 服务接口名，可选，默认值等于 name 配置的值，如果 name 直接定义为接口类则可忽略此行配置，如 name 为字符串则需要配置 service 对应到接口类
-    'service' => \App\Serverlog\Contracts\AppInterface::class,
+    'service' => '',
     // 对应容器对象 ID，可选，默认值等于 service 配置的值，用来定义依赖注入的 key
-    'id' => \App\Serverlog\Contracts\AppInterface::class,
+    'id' => '',
     // 服务提供者的服务协议，可选，默认值为 jsonrpc-http
     // 可选 jsonrpc-http jsonrpc jsonrpc-tcp-length-check
     'protocol' => 'jsonrpc-http',
@@ -56,17 +58,17 @@ $consumerApp = array_merge($consumer, [
     // name 需与服务提供者的 name 属性相同
     'name' => 'AppService',
     // 服务接口名，可选，默认值等于 name 配置的值，如果 name 直接定义为接口类则可忽略此行配置，如 name 为字符串则需要配置 service 对应到接口类
-    'service' => \App\Serverlog\Contracts\AppInterface::class,
+    'service' => ServerlogContract\AppInterface::class,
     // 对应容器对象 ID，可选，默认值等于 service 配置的值，用来定义依赖注入的 key
-    'id' => \App\Serverlog\Contracts\AppInterface::class,
+    'id' => ServerlogContract\AppInterface::class,
 ]);
 $consumerLogs = array_merge($consumer, [
     // name 需与服务提供者的 name 属性相同
     'name' => 'LogsService',
     // 服务接口名，可选，默认值等于 name 配置的值，如果 name 直接定义为接口类则可忽略此行配置，如 name 为字符串则需要配置 service 对应到接口类
-    'service' => \App\Serverlog\Contracts\LogsInterface::class,
+    'service' => ServerlogContract\LogsInterface::class,
     // 对应容器对象 ID，可选，默认值等于 service 配置的值，用来定义依赖注入的 key
-    'id' => \App\Serverlog\Contracts\LogsInterface::class,
+    'id' => ServerlogContract\LogsInterface::class,
 ]);
 
 return [

@@ -7,16 +7,16 @@ return [
     'system' => [
         'title' => 'ServerLog',
         'logo' => 'images/logo.png',
-        'version' => '1.0.0',
+        'version' => '1.0.1',
     ],
     
     // 路由
     'route' => [
         'group' => '/admin',
         'middleware' => [
-            \App\Admin\Middleware\Auth::class,
-            \App\Admin\Middleware\Permission::class,
-            \App\Admin\Middleware\OperationLog::class,
+            \Lakef\Admin\Middleware\Auth::class,
+            \Lakef\Admin\Middleware\Permission::class,
+            \Lakef\Admin\Middleware\OperationLog::class,
         ],
     ],
     
