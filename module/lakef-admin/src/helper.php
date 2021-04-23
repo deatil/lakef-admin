@@ -169,6 +169,21 @@ if (! function_exists('queue_push')) {
     }
 }
 
+if (! function_exists('admin_can')) {
+    /**
+     * 权限检测
+     * 
+     * @param null|mixed $permission
+     * @return bool
+     */
+    function admin_can($permission = null)
+    {
+        // $permission = 'GET:/admin/group/index'
+        $info = context_request()->getAttribute('authAdmin')->getData();
+        return $info->can($permission);
+    }
+}
+
 if (! function_exists('admin_url')) {
     /**
      * 后台url

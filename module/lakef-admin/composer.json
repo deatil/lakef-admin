@@ -1,0 +1,39 @@
+{
+    "name": "lakef/lakef-admin",
+    "description": "An admin library base hyperf.",
+    "keywords": [
+        "hyperf",
+        "lakef",
+        "admin",
+        "lakef-admin"
+    ],
+    "homepage": "https://github.com/deatil/lakef-admin",
+    "type": "library",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "deatil",
+            "email": "deatil@github.com",
+            "homepage": "https://github.com/deatil",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.1.0",
+        "donjan-deng/hyperf-permission": "~2.0.0",
+        "gregwar/captcha": "1.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Lakef\\Admin\\": "src"
+        },
+        "files": [
+            "src/helper.php"
+        ]
+    },
+    "extra": {
+        "hyperf": {
+            "config": "Lakef\\Admin\\ConfigProvider"
+        }
+    }
+}

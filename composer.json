@@ -55,7 +55,9 @@
         "hyperf/json-rpc": "~2.1.0",
         "hyperf/kafka": "~2.1.0",
         "donjan-deng/hyperf-permission": "~2.0.0",
-        "gregwar/captcha": "1.*"
+        "gregwar/captcha": "1.*",
+        "lakef/lakef-admin": "*",
+        "lakef/lakef-serverlog": "*"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.14",
@@ -75,8 +77,7 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/",
-            "Lakef\\": "module/"
+            "App\\": "app/"
         },
         "files": []
     },
@@ -111,6 +112,14 @@
         "packagist": {
             "type": "composer",
             "url": "https://mirrors.aliyun.com/composer/"
+        },
+        "lakef/lakef-admin": {
+            "type": "path",
+            "url": "module/admin"
+        },
+        "lakef/lakef-serverlog": {
+            "type": "path",
+            "url": "module/server-log"
         }
     }
 }

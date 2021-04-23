@@ -10,7 +10,4 @@ declare(strict_types=1);
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
 return [
-    \Lakef\Serverlog\Listener\BeforeMainServerStartListener::class,
-    \Lakef\Admin\Listener\BeforeMainServerStartListener::class,
-    \Lakef\Admin\Listener\MorphMapRelationListener::class,
 ];

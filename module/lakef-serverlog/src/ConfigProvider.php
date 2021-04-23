@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lakef\Admin;
+namespace Lakef\Serverlog;
 
-use Lakef\Admin\Listener\MorphMapRelationListener;
-use Lakef\Admin\Listener\BeforeMainServerStartListener;
+use Lakef\Serverlog\Listener\BeforeMainServerStartListener;
 
 class ConfigProvider
 {
@@ -13,7 +12,6 @@ class ConfigProvider
     {
         return [
             'listeners' => [
-                MorphMapRelationListener::class => 99,
                 BeforeMainServerStartListener::class => 99,
             ],
             'annotations' => [
@@ -26,8 +24,16 @@ class ConfigProvider
             'watcher' => [
                 'watch' => [
                     'dir' => [
-                        __DIR__,
+                       str_replace(BASE_PATH . '/', '', __DIR__),
                     ],
+                ],
+            ],
+            'publish' => [
+                [
+                    'id' => 'lakef-serverlog-config',
+                    'description' => 'The config for lakef-serverlog.',
+                    'source' => __DIR__ . '/../publish/serverlog.php',
+                    'destination' => BASE_PATH . '/config/autoload/serverlog.php',
                 ],
             ],
         ];

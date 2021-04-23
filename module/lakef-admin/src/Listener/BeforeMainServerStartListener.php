@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Lakef\Serverlog\Listener;
+namespace Lakef\Admin\Listener;
 
 use Hyperf\Event\Contract\ListenerInterface;
 use Hyperf\Framework\Event\BeforeMainServerStart;
-use Hyperf\Server\Event\MainCoroutineServerStart;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -23,7 +22,6 @@ class BeforeMainServerStartListener implements ListenerInterface
      * 导入文件
      */
     protected $files = [
-        __DIR__ . '/../helper.php',
         __DIR__ . '/../routes.php',
     ];
 
@@ -39,7 +37,6 @@ class BeforeMainServerStartListener implements ListenerInterface
     {
         return [
             BeforeMainServerStart::class,
-            MainCoroutineServerStart::class,
         ];
     }
 
