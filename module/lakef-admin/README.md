@@ -1,4 +1,4 @@
-## Server-log
+## hyperf-admin
 
 
 ### 项目介绍
@@ -15,10 +15,6 @@
 
 
 ### 截图预览
-
-![ServeLog-login](https://user-images.githubusercontent.com/24578855/115948429-efff4880-a500-11eb-8698-9d2937e15e71.png)
-
-![ServeLog6](https://user-images.githubusercontent.com/24578855/115948433-f7beed00-a500-11eb-8f4b-318bb28bdc46.png)
 
 ![ServeLog](https://user-images.githubusercontent.com/24578855/115424780-93b2d500-a231-11eb-91a8-ee6fcb33ac06.png)
 
