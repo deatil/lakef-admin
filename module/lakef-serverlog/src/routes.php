@@ -8,7 +8,7 @@ use Lakef\Serverlog\Controller;
 Router::addGroup(config('serverlog.route.group'), function ($router) {
     
     // 接收日志
-    $router->post('/add', [Controller\Index::class, 'postAdd']);
+    $router->post('/add', [Controller\Logs::class, 'postAdd']);
 
 }, [
     // 中间件

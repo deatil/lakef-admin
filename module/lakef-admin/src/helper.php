@@ -90,7 +90,7 @@ if (! function_exists('request')) {
     /**
      * 常规请求
      */
-    function request($request = null)
+    function request()
     {
         return di(RequestInterface::class);
     }
@@ -100,9 +100,9 @@ if (! function_exists('response')) {
     /**
      * 常规响应
      */
-    function response($response = null)
+    function response()
     {
-        return di(ResponseInterface);
+        return di(ResponseInterface::class);
     }
 }
 

@@ -288,7 +288,11 @@ class App extends Base
             return $this->errorJson('应用信息不存在');
         }
         
-        $deleteStatus = $appModel->delete(['id' => $id]);
+        $deleteStatus = $appModel->delete([
+            'where' => [
+                ['id', '=', $id]
+            ],
+        ]);
         if ($deleteStatus === false) {
             return $this->errorJson('应用删除失败');
         }
