@@ -53,6 +53,6 @@ class LogsAddKafka implements ListenerInterface
         $data = $event->data;
         
         // 记录日志
-        $this->kafkaProducer->send('server-log', json_encode($data), 'data');
+        $this->kafkaProducer->send('serverlog', json_encode($data), 'data');
     }
 }

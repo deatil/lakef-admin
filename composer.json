@@ -115,11 +115,11 @@
         },
         "lakef/lakef-admin": {
             "type": "path",
-            "url": "module/admin"
+            "url": "module/lakef-admin"
         },
         "lakef/lakef-serverlog": {
             "type": "path",
-            "url": "module/server-log"
+            "url": "module/lakef-serverlog"
         }
     }
 }

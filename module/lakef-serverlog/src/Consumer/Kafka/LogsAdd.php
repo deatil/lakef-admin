@@ -11,7 +11,7 @@ use longlang\phpkafka\Consumer\ConsumeMessage;
 use Lakef\Serverlog\Model\Logs as LogsModel;
 
 /**
- * @Consumer(topic="serverlog", nums=5, groupId="serverlog", autoCommit=true)
+ * @Consumer(topic="serverlog", nums=5, groupId="serverlogGroup", autoCommit=true)
  */
 class LogsAdd extends AbstractConsumer
 {

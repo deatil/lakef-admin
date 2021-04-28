@@ -4,8 +4,8 @@ return [
     // model设置
     'models' => [
         'user' => Lakef\Admin\Model\Admin::class,
-        'permission' => Donjan\Permission\Models\Permission::class,
-        'role' => Donjan\Permission\Models\Role::class,
+        'permission' => Lakef\Admin\Model\Permission::class,
+        'role' => Lakef\Admin\Model\Role::class,
     ],
     
     //表名设置
