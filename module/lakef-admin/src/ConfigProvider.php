@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 namespace Lakef\Admin;
 
-use Lakef\Admin\Listener\MorphMapRelationListener;
-use Lakef\Admin\Listener\BeforeMainServerStartListener;
+use Lakef\Admin\Listener;
+use Lakef\Admin\Command;
 
 class ConfigProvider
 {
     public function __invoke(): array
     {
         return [
+            'commands' => [
+                Command\Install::class,
+            ],
             'listeners' => [
-                MorphMapRelationListener::class => 99,
-                BeforeMainServerStartListener::class => 99,
+                Listener\MorphMapRelationListener::class => 99,
+                Listener\BeforeMainServerStartListener::class => 99,
             ],
             'annotations' => [
                 'scan' => [
@@ -26,7 +29,7 @@ class ConfigProvider
             'watcher' => [
                 'watch' => [
                     'dir' => [
-                        str_replace(BASE_PATH . '/', '', __DIR__),
+                        str_replace(BASE_PATH . DIRECTORY_SEPARATOR, '', __DIR__),
                     ],
                 ],
             ],
