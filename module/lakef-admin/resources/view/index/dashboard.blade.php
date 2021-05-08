@@ -201,7 +201,7 @@
                             <tr>
                                 <td>Github</td>
                                 <td>
-                                    <a href="https://github.com/deatil/hyperf-server-log" target="_blank">hyperf-server-log</a> 
+                                    <a href="https://github.com/deatil/lakef-serverlog" target="_blank">lakef-serverlog</a> 
                                 </td>
                             </tr>
                             <tr>
