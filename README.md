@@ -90,6 +90,10 @@ config/autoload/listeners.php
  - donjan-deng/hyperf-permission
 
  - gregwar/captcha
+ 
+ - layui
+ 
+ - layuimini
 
 
 ### 开源协议
