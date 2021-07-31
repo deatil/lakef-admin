@@ -5,7 +5,7 @@ declare(strict_types=1);
 return [
     // 系统信息
     'system' => [
-        'title' => 'ServerLog',
+        'title' => 'Lakef-Admin',
         'logo' => 'images/logo.png',
         'version' => '1.0.1',
     ],

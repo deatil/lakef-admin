@@ -2,9 +2,9 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>ServeLog后台</title>
-    <meta name="keywords" content="ServeLog后台,日志记录,日志分析,swoole,hyperf,api,微服务">
-    <meta name="description" content="基于hyperf的ServeLog后台,日志记录及日志分析">
+    <title>Lakef-Admin</title>
+    <meta name="keywords" content="lakef,lakef-admin,swoole,hyperf,api,微服务">
+    <meta name="description" content="基于swoole，使用 hyperf 框架开发的通用后台管理">
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
