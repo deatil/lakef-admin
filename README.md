@@ -100,7 +100,7 @@ config/autoload/listeners.php
 
 ### 开源协议
 
-*  `lakef-serverlog` 遵循 `Apache2` 开源协议发布，在保留本系统版权的情况下提供个人及商业免费使用。 
+*  `lakef-admin` 遵循 `Apache2` 开源协议发布，在保留本系统版权的情况下提供个人及商业免费使用。 
 
 
 ### 版权
